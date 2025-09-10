@@ -1,0 +1,10 @@
+*.php linguist-language=PHP
+# Bỏ qua thư viện vendor (nếu dùng composer)
+vendor/* linguist-vendored
+
+# Bỏ qua thư mục assets (CSS, JS, ảnh…)
+assets/* linguist-vendored
+
+# Bỏ qua file JS/CSS bên ngoài
+*.min.js linguist-vendored
+*.min.css linguist-vendored
