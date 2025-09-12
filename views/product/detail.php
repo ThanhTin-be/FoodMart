@@ -1,5 +1,5 @@
-<?php include '../includes/header.php'; ?>
 
+<!-- Single Product Page -->
 <section id="selling-product" class="single-product mt-0 mt-md-5">  
       <div class="container-fluid">
         <nav class="breadcrumb">
@@ -603,4 +603,3 @@
         
       </div>
     </section>
-<?php include '../includes/footer.php'; ?>

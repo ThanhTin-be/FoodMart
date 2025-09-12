@@ -13,7 +13,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
- <link rel="stylesheet" href="/FoodMartLab/assets/css/vendor.css">
+ <link rel="stylesheet" href="FoodMartLab/assets/css/vendor.css">
 <link rel="stylesheet" href="/FoodMartLab/assets/css/style.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -251,18 +251,18 @@
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" role="button" id="pages" data-bs-toggle="dropdown" aria-expanded="false">Pages</a>
                       <ul class="dropdown-menu" aria-labelledby="pages">
-                        <li><a href="/FoodMartLab/index.php" class="dropdown-item">About Us </a></li>
-                        <li><a href="/FoodMartLab/index.php" class="dropdown-item">Shop </a></li>
-                        <li><a href="/FoodMartLab/index.php" class="dropdown-item">Single Product </a></li>
-                        <li><a href="/FoodMartLab/index.php" class="dropdown-item">Cart </a></li>
-                        <li><a href="/FoodMartLab/index.php" class="dropdown-item">Checkout </a></li>
-                        <li><a href="/FoodMartLab/index.php" class="dropdown-item">Blog </a></li>
-                        <li><a href="/FoodMartLab/index.php" class="dropdown-item">Single Post </a></li>
-                        <li><a href="/FoodMartLab/index.php" class="dropdown-item">Styles </a></li>
-                        <li><a href="/FoodMartLab/index.php" class="dropdown-item">Contact </a></li>
-                        <li><a href="/FoodMartLab/index.php" class="dropdown-item">Thank You </a></li>
-                        <li><a href="/FoodMartLab/index.php" class="dropdown-item">My Account </a></li>
-                        <li><a href="/FoodMartLab/index.php" class="dropdown-item">404 Error </a></li>
+                        <li><a href="/FoodMartLab/pages/about" class="dropdown-item">About Us </a></li>
+                        <li><a href="/FoodMartLab/shop/index" class="dropdown-item">Shop </a></li>
+                        <li><a href="/FoodMartLab/product/detail" class="dropdown-item">Single Product </a></li>
+                        <li><a href="/FoodMartLab/cart/index" class="dropdown-item">Cart </a></li>
+                        <li><a href="/FoodMartLab/checkout/index" class="dropdown-item">Checkout </a></li>
+                        <li><a href="/FoodMartLab/blog/index" class="dropdown-item">Blog </a></li>
+                        <li><a href="/FoodMartLab/blog/detail" class="dropdown-item">Single Post </a></li>
+                        <li><a href="/FoodMartLab/demo/style" class="dropdown-item">Styles </a></li>
+                        <li><a href="/FoodMartLab/pages/contact" class="dropdown-item">Contact </a></li>
+                        <li><a href="/FoodMartLab/checkout/thankyou" class="dropdown-item">Thank You </a></li>
+                        <li><a href="/FoodMartLab/user/login" class="dropdown-item">My Account </a></li>
+                        <li><a href="/FoodMartLab/errors/404" class="dropdown-item">404 Error </a></li>
                       </ul>
                     </li>
                     <li class="nav-item">

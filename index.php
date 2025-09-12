@@ -1,5 +1,11 @@
 <?php
-include 'includes/header.php';
-include 'pages/homepage.php';
-include 'includes/footer.php';
-?>
+// Định nghĩa hằng ROOT: thư mục gốc của project
+define('ROOT', __DIR__ . DIRECTORY_SEPARATOR);
+
+// Nạp file core
+require_once ROOT . "core" . DIRECTORY_SEPARATOR . "app.php";
+require_once ROOT . "core" . DIRECTORY_SEPARATOR . "controller.php";
+require_once ROOT . "core" . DIRECTORY_SEPARATOR . "database.php";
+
+// Khởi tạo app
+$app = new App();

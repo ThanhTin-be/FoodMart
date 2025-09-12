@@ -326,7 +326,7 @@
                         <span class="badge bg-success position-absolute m-3">-30%</span>
                         <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
                         <figure>
-                          <a href="/FoodMartLab/index.php" title="Product Title">
+                          <a href="/FoodMartLab/product/detail/1" title="Product Title">
                             <img src="assets/images/thumb-bananas.png"  class="tab-image">
                           </a>
                         </figure>
@@ -347,7 +347,7 @@
                                   </button>
                               </span>
                           </div>
-                          <a href="/FoodMartLab/pages/single-product.php" class="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"></a>
+                          <a href="/FoodMartLab/product/detail" class="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"></a>
                         </div>
                       </div>
                     </div>
@@ -357,7 +357,7 @@
                         <span class="badge bg-success position-absolute m-3">-30%</span>
                         <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
                         <figure>
-                          <a href="/FoodMartLab/index.php" title="Product Title">
+                          <a href="/FoodMartLab/product/detail" title="Product Title">
                             <img src="assets/images/thumb-biscuits.png"  class="tab-image">
                           </a>
                         </figure>
