@@ -118,7 +118,7 @@
                   <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
                   <figure>
                     <a href="single-product.html" title="Product Title">
-                      <img src="images/thumb-orange-juice.png" alt="Product Thumbnail" class="tab-image">
+                      <img src="assets/images/thumb-orange-juice.png" alt="Product Thumbnail" class="tab-image">
                     </a>
                   </figure>
                   <h3>Sunstar Fresh Melon Juice</h3>
@@ -148,7 +148,7 @@
                   <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
                   <figure>
                     <a href="single-product.html" title="Product Title">
-                      <img src="images/thumb-raspberries.png" alt="Product Thumbnail" class="tab-image">
+                      <img src="assets/images/thumb-raspberries.png" alt="Product Thumbnail" class="tab-image">
                     </a>
                   </figure>
                   <h3>Sunstar Fresh Melon Juice</h3>
@@ -178,7 +178,7 @@
                   <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
                   <figure>
                     <a href="single-product.html" title="Product Title">
-                      <img src="images/thumb-bananas.png"  class="tab-image">
+                      <img src="assets/images/thumb-bananas.png"  class="tab-image">
                     </a>
                   </figure>
                   <h3>Sunstar Fresh Melon Juice</h3>
@@ -208,7 +208,7 @@
                   <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
                   <figure>
                     <a href="single-product.html" title="Product Title">
-                      <img src="images/thumb-biscuits.png"  class="tab-image">
+                      <img src="assets/images/thumb-biscuits.png"  class="tab-image">
                     </a>
                   </figure>
                   <h3>Sunstar Fresh Melon Juice</h3>
@@ -238,7 +238,7 @@
                   <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
                   <figure>
                     <a href="single-product.html" title="Product Title">
-                      <img src="images/thumb-cucumber.png"  class="tab-image">
+                      <img src="assets/images/thumb-cucumber.png"  class="tab-image">
                     </a>
                   </figure>
                   <h3>Sunstar Fresh Melon Juice</h3>
@@ -268,7 +268,7 @@
                   <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
                   <figure>
                     <a href="single-product.html" title="Product Title">
-                      <img src="images/thumb-milk.png"  class="tab-image">
+                      <img src="assets/images/thumb-milk.png"  class="tab-image">
                     </a>
                   </figure>
                   <h3>Sunstar Fresh Melon Juice</h3>
@@ -298,7 +298,7 @@
                   <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
                   <figure>
                     <a href="single-product.html" title="Product Title">
-                      <img src="images/thumb-bananas.png"  class="tab-image">
+                      <img src="assets/images/thumb-bananas.png"  class="tab-image">
                     </a>
                   </figure>
                   <h3>Sunstar Fresh Melon Juice</h3>
@@ -328,7 +328,7 @@
                   <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
                   <figure>
                     <a href="single-product.html" title="Product Title">
-                      <img src="images/thumb-biscuits.png"  class="tab-image">
+                      <img src="assets/images/thumb-biscuits.png"  class="tab-image">
                     </a>
                   </figure>
                   <h3>Sunstar Fresh Melon Juice</h3>
@@ -358,7 +358,7 @@
                   <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
                   <figure>
                     <a href="single-product.html" title="Product Title">
-                      <img src="images/thumb-cucumber.png"  class="tab-image">
+                      <img src="assets/images/thumb-cucumber.png"  class="tab-image">
                     </a>
                   </figure>
                   <h3>Sunstar Fresh Melon Juice</h3>
@@ -388,7 +388,7 @@
                   <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
                   <figure>
                     <a href="single-product.html" title="Product Title">
-                      <img src="images/thumb-milk.png"  class="tab-image">
+                      <img src="assets/images/thumb-milk.png"  class="tab-image">
                     </a>
                   </figure>
                   <h3>Sunstar Fresh Melon Juice</h3>
@@ -418,7 +418,7 @@
                   <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
                   <figure>
                     <a href="single-product.html" title="Product Title">
-                      <img src="images/thumb-bananas.png"  class="tab-image">
+                      <img src="assets/images/thumb-bananas.png"  class="tab-image">
                     </a>
                   </figure>
                   <h3>Sunstar Fresh Melon Juice</h3>
@@ -448,7 +448,7 @@
                   <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
                   <figure>
                     <a href="single-product.html" title="Product Title">
-                      <img src="images/thumb-biscuits.png"  class="tab-image">
+                      <img src="assets/images/thumb-biscuits.png"  class="tab-image">
                     </a>
                   </figure>
                   <h3>Sunstar Fresh Melon Juice</h3>

@@ -68,7 +68,7 @@
   </div>
 
 
-  <section class="py-5 mb-5" style="background: url(images/background-pattern.jpg);">
+  <section class="py-5 mb-5" style="background: url(assets/images/background-pattern.jpg);">
     <div class="container-fluid">
       <div class="d-flex justify-content-between">
         <h1 class="page-title pb-2">Cart</h1>
@@ -102,7 +102,7 @@
                     <div class="cart-info d-flex flex-wrap align-items-center mb-4">
                       <div class="col-lg-3">
                         <div class="card-image">
-                          <img src="images/product-thumb-11.jpg" alt="cloth" class="img-fluid">
+                          <img src="assets/images/product-thumb-11.jpg" alt="cloth" class="img-fluid">
                         </div>
                       </div>
                       <div class="col-lg-9">
@@ -155,7 +155,7 @@
                     <div class="cart-info d-flex flex-wrap align-items-center">
                       <div class="col-lg-3">
                         <div class="card-image">
-                          <img src="images/product-thumb-12.jpg" alt="product" class="img-fluid">
+                          <img src="assets/images/product-thumb-12.jpg" alt="product" class="img-fluid">
                         </div>
                       </div>
                       <div class="col-lg-9">

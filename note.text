@@ -149,3 +149,51 @@
     └───user
             login.php
             register.php
+
+
+
+
+            1️⃣ Trang chủ
+URL	Controller	Method	View
+/ hoặc /home/index	HomeController	index()	views/home/index.php
+2️⃣ Trang shop
+URL	Controller	Method	View
+/shop/index	ShopController	index()	views/shop/index.php
+3️⃣ Trang sản phẩm
+URL	Controller	Method	View
+/product/detail/{id}	ProductController	detail($id)	views/product/detail.php
+4️⃣ Trang blog
+URL	Controller	Method	View
+/blog/detail/{id}	BlogController	detail($id)	views/blog/detail.php
+5️⃣ Giỏ hàng
+URL	Controller	Method	View
+/cart/index	CartController	index()	views/cart/index.php
+6️⃣ Checkout
+URL	Controller	Method	View
+/checkout/index	CheckoutController	index()	views/checkout/index.php
+/checkout/thankyou	CheckoutController	thankyou()	views/checkout/thankyou.php
+7️⃣ Trang người dùng
+URL	Controller	Method	View
+/user/login	UserController	login()	views/user/login.php
+/user/register	UserController	register()	views/user/register.php
+8️⃣ Trang tĩnh (About, Contact, …)
+
+Tất cả trang tĩnh sẽ đi qua PageController->view($page)
+
+URL	Controller	Method	View
+/pages/about	PageController	view('about')	views/pages/about.php
+/pages/contact	PageController	view('contact')	views/pages/contact.php
+/pages/{page}	PageController	view($page)	views/pages/$page.php
+
+Nếu $page không tồn tại → hiển thị 404 (views/errors/404.php)
+
+9️⃣ Trang lỗi
+URL	Controller	Method	View
+/404 hoặc bất kỳ URL không hợp lệ	ErrorController	notFound()	views/errors/404.php
+10️⃣ Lưu ý về header/footer
+
+Mọi controller (trừ ErrorController standalone nếu bạn muốn) sẽ require header.php + footer.php
+
+Trang tĩnh cũng load header/footer thông qua PageController
+
+CSS/JS sẽ hoạt động đầy đủ.
