@@ -8,10 +8,11 @@ class PagesController extends Controller {
 
         if (file_exists($fullPath)) {
             echo "<pre>DEBUG Found file: $fullPath</pre>";
-            parent::view($viewPath, $data);
+            parent::view($viewPath, $data); // mặc định -> layout user
         } else {
             echo "<pre>DEBUG Not found: $fullPath</pre>";
-            parent::view("errors/404");
+            // ⚠️ Sử dụng layout none để không bị dính header/footer user
+            parent::view("errors/404", [], "none");
         }
     }
 }

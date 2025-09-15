@@ -8,9 +8,10 @@ class App {
     public function __construct() {
         $url = $this->parseUrl();
 
-        echo "<pre>DEBUG URL: ";
-        print_r($url);
-        echo "</pre>";
+        // @@ debug @@
+        // echo "<pre>DEBUG URL: ";
+        // print_r($url);
+        // echo "</pre>";
 
         if (isset($url[0])) {
             $controllerName = ucfirst($url[0]) . "Controller";
@@ -52,13 +53,24 @@ class App {
             require_once ROOT . "controllers" . DIRECTORY_SEPARATOR . $this->controller . ".php";
             $this->controller = new $this->controller;
         }
-          // Nếu method không tồn tại trong controller hiện tại → 404
+          // Nếu method không tồn tại trong controller hiện tại → 404   
         if (!method_exists($this->controller, $this->method)) {
             require_once ROOT . "controllers" . DIRECTORY_SEPARATOR . "ErrorController.php";
             $this->controller = new ErrorController();
+
+            // 🔹 Mặc định cho user
             $this->method = "notFound";
+
+            // /*
+            // 🔹 Sau này khi có trang admin_404.php thì mở đoạn này:
+            // if (isset($url[0]) && $url[0] === 'admin') {
+            //     $this->method = "adminNotFound";
+            // }
+            // */
+
             $this->params = [];
         }
+
         // Thực thi controller/method/params
         call_user_func_array([$this->controller, $this->method], $this->params);
     }

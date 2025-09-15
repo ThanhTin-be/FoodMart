@@ -1,199 +1,28 @@
-│   .gitattributes
-│   .htaccess
-│   index.php
-│   note.text
-│   README.md
-│   
-├───assets
-│   ├───css
-│   │       ajax-loader.gif
-│   │       normalize.css
-│   │       style.css
-│   │       vendor.css
-│   │       
-│   ├───images
-│   │   │   ad-bg-pattern.png
-│   │   │   ad-image-1.png
-│   │   │   ad-image-2.png
-│   │   │   ad-image-3.png
-│   │   │   ad-image-4.png
-│   │   │   app-store.jpg
-│   │   │   background-pattern.jpg
-│   │   │   banner-image-1.jpg
-│   │   │   banner-image-2.jpg
-│   │   │   bg-dot-pattern.png
-│   │   │   bg-leaves-img-pattern.png
-│   │   │   bg-leaves-pattern.png
-│   │   │   bg-light.jpg
-│   │   │   bg-pattern-2.png
-│   │   │   gift.svg
-│   │   │   google-play.jpg
-│   │   │   icon-animal-products-drumsticks.png
-│   │   │   icon-bread-baguette.png
-│   │   │   icon-bread-herb-flour.png
-│   │   │   icon-soft-drinks-bottle.png
-│   │   │   icon-vegetables-broccoli.png
-│   │   │   icon-wine-glass-bottle.png
-│   │   │   logo.png
-│   │   │   phone.png
-│   │   │   post-thumb-1.jpg
-│   │   │   post-thumb-2.jpg
-│   │   │   post-thumb-3.jpg
-│   │   │   product-large-1.jpg
-│   │   │   product-large-2.jpg
-│   │   │   product-large-3.jpg
-│   │   │   product-large-4.jpg
-│   │   │   product-large-5.jpg
-│   │   │   product-thumb-1.png
-│   │   │   product-thumb-11.jpg
-│   │   │   product-thumb-12.jpg
-│   │   │   product-thumb-13.jpg
-│   │   │   product-thumb-14.jpg
-│   │   │   product-thumb-2.png
-│   │   │   product-thumbnail-1.jpg
-│   │   │   product-thumbnail-2.jpg
-│   │   │   product-thumbnail-3.jpg
-│   │   │   product-thumbnail-4.jpg
-│   │   │   product-thumbnail-5.jpg
-│   │   │   reviewer-1.jpg
-│   │   │   reviewer-2.jpg
-│   │   │   reviewer-3.jpg
-│   │   │   singel-product-item.jpg
-│   │   │   slide-1.jpg
-│   │   │   slide-2.jpg
-│   │   │   slide-3.jpg
-│   │   │   slide-4.jpg
-│   │   │   thumb-avocado.png
-│   │   │   thumb-bananas.png
-│   │   │   thumb-biscuits.png
-│   │   │   thumb-cucumber.png
-│   │   │   thumb-herb.jpg
-│   │   │   thumb-honey.jpg
-│   │   │   thumb-junk.jpg
-│   │   │   thumb-milk.png
-│   │   │   thumb-orange-juice.png
-│   │   │   thumb-raspberries.png
-│   │   │   thumb-tomatoes.png
-│   │   │   thumb-tomatoketchup.png
-│   │   │   thumb-tuna.jpg
-│   │   │
-│   │   └───chocolat
-│   │           close.png
-│   │           fullscreen-black.png
-│   │           fullscreen.png
-│   │           left.png
-│   │           loader.gif
-│   │           right.png
-│   │
-│   └───js
-│           jquery-1.11.0.min.js
-│           modernizr.js
-│           plugins.js
-│           script.js
-│
-├───config
-│       config.php
-│
-├───controllers
-│       BlogController.php
-│       CartController.php
-│       CheckoutController.php
-│       HomeController.php
-│       PageController.php
-│       ProductController.php
-│       ShopController.php
-│       UserController.php
-│
-├───core
-│       app.php
-│       controller.php
-│       database.php
-│
-├───models
-├───pages
-└───views
-    ├───admin
-    ├───blog
-    │       detail.php
-    │
-    ├───cart
-    │       index.php
-    │       
-    ├───checkout
-    │       index.php
-    │       thankyou.php
-    │
-    ├───demo
-    │       style.php
-    │
-    ├───errors
-    │       404.php
-    │
-    ├───home
-    │       index.php
-    │
-    ├───layouts
-    │       footer.php
-    │       header.php
-    │
-    ├───pages
-    │       about.php
-    │       contact.php
-    │
-    ├───product
-    │       detail.php
-    │
-    ├───shop
-    │       index.php
-    │
-    └───user
-            login.php
-            register.php
+# Tóm tắt luồng chạy
+
+- User truy cập → `index.php`
+- `index` gọi → `core/app.php` (`App` class)
+- `App` phân tích URL → gọi Controller tương ứng
+- Controller gọi Model (nếu cần DB)
+- Controller đẩy dữ liệu sang View
+- View load kèm assets (css/js/images) → render ra HTML cho user.
 
 
+# database
+🏠 Trang chủ (Home)
 
+🛒 Shop (danh sách sản phẩm)
 
-            1️⃣ Trang chủ
-URL	Controller	Method	View
-/ hoặc /home/index	HomeController	index()	views/home/index.php
-2️⃣ Trang shop
-URL	Controller	Method	View
-/shop/index	ShopController	index()	views/shop/index.php
-3️⃣ Trang sản phẩm
-URL	Controller	Method	View
-/product/detail/{id}	ProductController	detail($id)	views/product/detail.php
-4️⃣ Trang blog
-URL	Controller	Method	View
-/blog/detail/{id}	BlogController	detail($id)	views/blog/detail.php
-5️⃣ Giỏ hàng
-URL	Controller	Method	View
-/cart/index	CartController	index()	views/cart/index.php
-6️⃣ Checkout
-URL	Controller	Method	View
-/checkout/index	CheckoutController	index()	views/checkout/index.php
-/checkout/thankyou	CheckoutController	thankyou()	views/checkout/thankyou.php
-7️⃣ Trang người dùng
-URL	Controller	Method	View
-/user/login	UserController	login()	views/user/login.php
-/user/register	UserController	register()	views/user/register.php
-8️⃣ Trang tĩnh (About, Contact, …)
+📦 Product (chi tiết sản phẩm)
 
-Tất cả trang tĩnh sẽ đi qua PageController->view($page)
+🛍️ Cart (giỏ hàng)
 
-URL	Controller	Method	View
-/pages/about	PageController	view('about')	views/pages/about.php
-/pages/contact	PageController	view('contact')	views/pages/contact.php
-/pages/{page}	PageController	view($page)	views/pages/$page.php
+💳 Checkout (thanh toán)
 
-Nếu $page không tồn tại → hiển thị 404 (views/errors/404.php)
+👤 User (login, register)
 
-9️⃣ Trang lỗi
-URL	Controller	Method	View
-/404 hoặc bất kỳ URL không hợp lệ	ErrorController	notFound()	views/errors/404.php
-10️⃣ Lưu ý về header/footer
+📰 Blog (our blog, detail)
 
-Mọi controller (trừ ErrorController standalone nếu bạn muốn) sẽ require header.php + footer.php
+📄 Pages (about, contact)
 
-Trang tĩnh cũng load header/footer thông qua PageController
-
-CSS/JS sẽ hoạt động đầy đủ.
+⚙️ Admin (dashboard quản lý)

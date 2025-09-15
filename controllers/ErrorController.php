@@ -1,7 +1,16 @@
 <?php
 class ErrorController extends Controller {
     public function notFound() {
-        // Chỉ load view 404, không cần header/footer nếu bạn muốn
-        require ROOT . "views" . DIRECTORY_SEPARATOR . "errors" . DIRECTORY_SEPARATOR . "404.php";
+        echo "<pre>DEBUG ErrorController → notFound()</pre>";
+        // Luôn gọi view 404 mà không kèm header/footer
+        parent::view("errors/404", [], "none");
     }
+
+    // ⚠️ Sau này nếu có admin 404 riêng thì thêm method:
+    /*
+    public function adminNotFound() {
+        echo "<pre>DEBUG ErrorController → adminNotFound()</pre>";
+        parent::view("errors/admin_404", [], "none");
+    }
+    */
 }
