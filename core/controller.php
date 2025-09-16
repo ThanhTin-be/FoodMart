@@ -1,11 +1,17 @@
 <?php
+
 class Controller {
-    protected function model($model) {
-       require_once __DIR__ . "../models/" . $model . ".php";
-        return new $model();
+    public function model($model) {
+        $path = ROOT . "models" . DIRECTORY_SEPARATOR . $model . ".php";
+        if (file_exists($path)) {
+            require_once $path;
+            return new $model;
+        } else {
+            die("❌ Model not found: " . $path);
+        }
     }
 
-    protected function view($view, $data = [], $layout = 'default') {
+  protected function view($view, $data = [], $layout = 'default') {
     // DEBUG xem layout nhận giá trị gì
     // var_dump($layout); 
     // exit;
@@ -39,3 +45,7 @@ class Controller {
         }
     }
 }
+
+
+    
+

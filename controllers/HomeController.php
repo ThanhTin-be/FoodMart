@@ -1,11 +1,16 @@
 <?php
 class HomeController extends Controller {
     public function index() {
-        // gọi model Product
-        $productModel = $this->model('Product');
-        $products = $productModel->getAllActive(); // chỉ lấy sp status=1
+        
+        $productModel =  $this->model("ProductModel");
 
-        // truyền sang view
-        $this->view('home/index', ['products' => $products]);
+        $products = $productModel->getAllProducts(20);
+        // Lấy danh sách sp bán chạy
+        $bestSellers = $productModel->getBestSellers(10);
+        $data = [
+            'products' => $products,
+            'bestSellers' => $bestSellers
+        ];
+        $this->view("home/index", $data, "default");
     }
 }
