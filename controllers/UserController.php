@@ -25,6 +25,20 @@ class UserController extends Controller {
                         'role'  => $user['role']
                     ];
 
+                    if (!empty($_SESSION['return_url'])) {
+                        $redirectUrl = $_SESSION['return_url'];
+                        unset($_SESSION['return_url']);
+
+                        if (preg_match('#^https?://#i', $redirectUrl)) {
+                            header('Location: ' . $redirectUrl);
+                        } elseif (strpos($redirectUrl, '/') === 0) {
+                            header('Location: ' . $redirectUrl);
+                        } else {
+                            header('Location: ' . BASE_URL . ltrim($redirectUrl, '/'));
+                        }
+                        exit;
+                    }
+
                     // Điều hướng
                     if ($user['role'] === 'admin') {
                         header("Location: " . BASE_URL . "admin/dashboard");
