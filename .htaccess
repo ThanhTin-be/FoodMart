@@ -1,0 +1,8 @@
+Options -Multiviews
+RewriteEngine On
+RewriteBase /FoodMartLab/
+
+# Nếu file hoặc thư mục không tồn tại → đẩy về index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
