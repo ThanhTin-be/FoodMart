@@ -1,0 +1,28 @@
+# Tóm tắt luồng chạy
+
+- User truy cập → `index.php`
+- `index` gọi → `core/app.php` (`App` class)
+- `App` phân tích URL → gọi Controller tương ứng
+- Controller gọi Model (nếu cần DB)
+- Controller đẩy dữ liệu sang View
+- View load kèm assets (css/js/images) → render ra HTML cho user.
+
+
+# database
+🏠 Trang chủ (Home)
+
+🛒 Shop (danh sách sản phẩm)
+
+📦 Product (chi tiết sản phẩm)
+
+🛍️ Cart (giỏ hàng)
+
+💳 Checkout (thanh toán)
+
+👤 User (login, register)
+
+📰 Blog (our blog, detail)
+
+📄 Pages (about, contact)
+
+⚙️ Admin (dashboard quản lý)
