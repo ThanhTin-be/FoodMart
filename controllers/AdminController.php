@@ -9,6 +9,11 @@ class AdminController extends Controller {
     }
 
     public function dashboard() {
-        $this->view('admin/dashboard', [], 'none');
+        $stats = [
+        'totalUsers' => 100,
+        'totalProducts' => 50,
+        'totalOrders' => 20
+    ];
+    $this->view('admin/dashboard', ['stats' => $stats], 'admin');
     }
 }

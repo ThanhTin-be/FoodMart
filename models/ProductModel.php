@@ -68,4 +68,31 @@ class ProductModel extends Database {
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    // Lấy danh sách review theo product_id
+    public function getReviewsByProductId($productId) {
+        $sql = "SELECT r.*, u.name AS user_name 
+                FROM reviews r
+                JOIN users u ON r.user_id = u.id
+                WHERE r.product_id = ?
+                ORDER BY r.created_at DESC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $productId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // Lấy sản phẩm liên quan
+    public function getRelatedProducts($categoryId, $excludeId, $limit = 6) {
+        $sql = "SELECT * FROM {$this->table} 
+                WHERE category_id = ? AND id != ? 
+                ORDER BY created_at DESC 
+                LIMIT ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("iii", $categoryId, $excludeId, $limit);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+}
+
 }

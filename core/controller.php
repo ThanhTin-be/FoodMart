@@ -32,9 +32,9 @@ class Controller {
         }
 
         if ($layout === 'admin') {
-            require ROOT . "views/layouts/admin_header.php";
+            require ROOT . "views/layouts/admin/header.php";
             require ROOT . "views/$view.php";
-            require ROOT . "views/layouts/admin_footer.php";
+            require ROOT . "views/layouts/admin/footer.php";
             return;
         }
     }

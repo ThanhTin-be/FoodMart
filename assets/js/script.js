@@ -2,16 +2,24 @@
 
   "use strict";
 
+  // preloader
   var initPreloader = function () {
-    $(document).ready(function ($) {
-      var Body = $('body');
-      Body.addClass('preloader-site');
-    });
-    $(window).load(function () {
-      $('.preloader-wrapper').fadeOut();
+    $('body').addClass('preloader-site');
+
+    $(window).on('load', function () {
+      $('.preloader-wrapper').fadeOut('slow');
       $('body').removeClass('preloader-site');
     });
-  }
+
+    // fallback tránh kẹt nếu ảnh lỗi không load
+    setTimeout(function () {
+      if ($('.preloader-wrapper').is(':visible')) {
+        $('.preloader-wrapper').fadeOut('slow');
+        $('body').removeClass('preloader-site');
+      }
+    }, 3000);
+  };
+
 
   // init Chocolat light box
   var initChocolat = function () {
@@ -22,7 +30,6 @@
   }
 
   var initSwiper = function () {
-
     var swiper = new Swiper(".main-swiper", {
       speed: 500,
       pagination: {
@@ -40,18 +47,10 @@
         prevEl: ".category-carousel-prev",
       },
       breakpoints: {
-        0: {
-          slidesPerView: 2,
-        },
-        768: {
-          slidesPerView: 3,
-        },
-        991: {
-          slidesPerView: 4,
-        },
-        1500: {
-          slidesPerView: 6,
-        },
+        0: { slidesPerView: 2 },
+        768: { slidesPerView: 3 },
+        991: { slidesPerView: 4 },
+        1500: { slidesPerView: 6 },
       }
     });
 
@@ -64,18 +63,10 @@
         prevEl: ".brand-carousel-prev",
       },
       breakpoints: {
-        0: {
-          slidesPerView: 2,
-        },
-        768: {
-          slidesPerView: 2,
-        },
-        991: {
-          slidesPerView: 3,
-        },
-        1500: {
-          slidesPerView: 4,
-        },
+        0: { slidesPerView: 2 },
+        768: { slidesPerView: 2 },
+        991: { slidesPerView: 3 },
+        1500: { slidesPerView: 4 },
       }
     });
 
@@ -88,45 +79,28 @@
         prevEl: ".products-carousel-prev",
       },
       breakpoints: {
-        0: {
-          slidesPerView: 1,
-        },
-        768: {
-          slidesPerView: 3,
-        },
-        991: {
-          slidesPerView: 4,
-        },
-        1500: {
-          slidesPerView: 6,
-        },
+        0: { slidesPerView: 1 },
+        768: { slidesPerView: 3 },
+        991: { slidesPerView: 4 },
+        1500: { slidesPerView: 6 },
       }
     });
 
-    // product single page
     var thumb_slider = new Swiper(".product-thumbnail-slider", {
       slidesPerView: 5,
       spaceBetween: 20,
-      // autoplay: true,
       direction: "vertical",
       breakpoints: {
-        0: {
-          direction: "horizontal"
-        },
-        992: {
-          direction: "vertical"
-        },
+        0: { direction: "horizontal" },
+        992: { direction: "vertical" },
       },
     });
 
     var large_slider = new Swiper(".product-large-slider", {
       slidesPerView: 1,
-      // autoplay: true,
       spaceBetween: 0,
       effect: 'fade',
-      thumbs: {
-        swiper: thumb_slider,
-      },
+      thumbs: { swiper: thumb_slider },
       pagination: {
         el: ".swiper-pagination",
         clickable: true,
@@ -136,11 +110,8 @@
 
   // input spinner
   var initProductQty = function () {
-
     $('.product-qty').each(function () {
-
       var $el_product = $(this);
-      var quantity = 0;
 
       $el_product.find('.quantity-right-plus').click(function (e) {
         e.preventDefault();
@@ -155,29 +126,22 @@
           $el_product.find('#quantity').val(quantity - 1);
         }
       });
-
     });
-
   }
 
   // init jarallax parallax
   var initJarallax = function () {
     jarallax(document.querySelectorAll(".jarallax"));
-
-    jarallax(document.querySelectorAll(".jarallax-keep-img"), {
-      keepImg: true,
-    });
+    jarallax(document.querySelectorAll(".jarallax-keep-img"), { keepImg: true });
   }
 
   // document ready
   $(document).ready(function () {
-
     initPreloader();
     initSwiper();
     initProductQty();
     initJarallax();
     initChocolat();
-
-  }); // End of a document
+  });
 
 })(jQuery);
