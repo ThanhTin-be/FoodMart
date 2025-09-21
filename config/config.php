@@ -5,17 +5,35 @@ define("DB_USER", "root");          // tài khoản mặc định của XAMPP
 define("DB_PASS", "");              // mật khẩu mặc định trống
 define("DB_NAME", "foodmart_full"); // tên database
 
-// BASE URL (để link asset, routes…)
+// Địa chỉ gốc website (dùng cho link, asset, redirect)
+// Khi deploy chỉ cần đổi dòng này
 define("BASE_URL", "http://localhost/FoodMartLab/");
 
-/**
- * Helper: trả về đường dẫn tuyệt đối tới asset
- * Ví dụ: asset("assets/admin/css/app.css")
- * Kết quả: /FoodMartLab/assets/admin/css/app.css
- */
+// Đường dẫn gốc tuyệt đối trên server (dùng cho include/require PHP)
+define("BASE_PATH", dirname(__DIR__));
+// __DIR__ = C:\xampp\htdocs\FoodMartLab (với XAMPP)
 
+// ==============================
+// Helper functions
+// ==============================
+
+/**
+ * Trả về URL tuyệt đối tới file asset (css, js, img)
+ * Ví dụ: asset("assets/css/style.css")
+ * Kết quả: http://localhost/FoodMartLab/assets/css/style.css
+ */
 function asset($path) {
     return BASE_URL . "/" . ltrim($path, "/");
 }
+
+/**
+ * Trả về đường dẫn file tuyệt đối (trên server) – cho include/require
+ * Ví dụ: view_path("admin/dashboard.php")
+ * Kết quả: C:\xampp\htdocs\FoodMartLab\views\admin\dashboard.php
+ */
+function view_path($path) {
+    return BASE_PATH . "/views/" . ltrim($path, "/");
+}
+
 
 ?>
