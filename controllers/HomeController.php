@@ -15,7 +15,7 @@ class HomeController extends Controller {
         // Lấy sản phẩm theo category, giới hạn 20 mỗi category
         $categoryProducts = [];
         foreach ($categories as $cat) {
-            $categoryProducts[$cat['slug']] = $productModel->getByCategory($cat['id'], 20);
+            $categoryProducts[$cat['slug']] = $productModel->getFeaturedByCategory($cat['id'], 20);
         }
 
         // Truyền data xuống view
