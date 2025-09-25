@@ -211,49 +211,96 @@
   </div>
 </section>
 
+
+
 <!-- Related Products -->
-<section id="related-products" class="product-store position-relative py-5">
+<section id="related-products" class="my-5">
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <div class="section-header d-flex justify-content-between my-5">
-          <h2 class="section-title">Related Products</h2>
-          <div class="swiper-buttons">
-            <button class="swiper-prev products-carousel-prev btn btn-primary">❮</button>
-            <button class="swiper-next products-carousel-next btn btn-primary">❯</button>
-          </div>  
+        <!-- Header -->
+        <div class="section-header d-flex justify-content-between mb-4">
+          <h2 class="section-title">Sản phẩm liên quan</h2>
+
+          <div class="d-flex align-items-center">
+            <!-- View All (sang category của sp hiện tại) -->
+            <a href="<?= BASE_URL ?>/category/<?= $product['category_id'] ?>" 
+               class="btn-link text-decoration-none me-3">
+              View All →
+            </a>
+
+            <!-- Arrow -->
+            <div class="swiper-buttons">
+              <button class="swiper-prev related-carousel-prev btn btn-yellow">❮</button>
+              <button class="swiper-next related-carousel-next btn btn-yellow">❯</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
+    <!-- Slider -->
     <div class="row">
       <div class="col-md-12">
-        <div class="products-carousel swiper">
+        <div class="products-carousel swiper" id="related-carousel">
           <div class="swiper-wrapper">
             <?php if (!empty($relatedProducts)): ?>
               <?php foreach ($relatedProducts as $item): ?>
-                <div class="product-item swiper-slide">
-                  <a href="<?= BASE_URL ?>/product/detail/<?= $item['id'] ?>" class="btn-wishlist">
-                    <svg width="24" height="24"><use xlink:href="#heart"></use></svg>
-                  </a>
-                    <figure>
-                      <a href="<?= BASE_URL ?>/product/detail/<?= $item['id'] ?>" title="<?= htmlspecialchars($item['name']) ?>">
-                        <img src="/FoodMartLab/assets/images/<?= htmlspecialchars($item['image']) ?>" class="tab-image">
-                      </a>
-                    </figure>
-                        <h3><?= htmlspecialchars($item['name']) ?></h3>
-                        <span class="qty"><?= htmlspecialchars($item['unit']) ?></span>
-                        <span class="price">$<?= number_format($item['price'], 2) ?></span>
-                        <div class="d-flex align-items-center justify-content-between">
-                        <div class="input-group product-qty">
-                        <input type="text" class="form-control input-number" value="1" min="1" max="100">
-                         </div>
-                          <a href="<?= BASE_URL ?>/cart/add/<?= $item['id'] ?>" class="nav-link">
-                            Add to Cart <iconify-icon icon="uil:shopping-cart"></iconify-icon> </a>
+                <div class="product-item swiper-slide bg-white rounded-2xl p-4 
+                    shadow-md hover:shadow-xl hover:-translate-y-1 transition transform relative">
+                  
+                  <!-- Badge giảm giá -->
+                  <?php 
+                    $price     = (float)$item['price'];
+                    $old_price = (float)$item['old_price'];
+                    if ($old_price > $price) {
+                      $discount = round((($old_price - $price) / $old_price) * 100);
+                      echo "<span class='absolute top-2 right-2 bg-yellow-300 text-black font-semibold text-sm px-2 py-1 rounded'>-{$discount}%</span>";
+                    }
+                  ?>
+
+                  <figure>
+                    <a href="<?= BASE_URL ?>/product/<?= $item['slug'] ?>" 
+                       title="<?= htmlspecialchars($item['name']) ?>">
+                      <img src="<?= asset($item['image']) ?>" 
+                          alt="<?= htmlspecialchars($item['name']) ?>" 
+                          class="h-40 w-full object-contain object-center mb-3 mix-blend-multiply transition-transform duration-300 ease-in-out hover:scale-105">
+                    </a>
+                  </figure>
+
+                  <h6 class="text-truncate font-medium"><?= htmlspecialchars($item['name']) ?></h6>
+
+                  <!-- Giá -->
+                  <div class="mt-2">
+                    <div class="text-red-600 font-bold text-base sm:text-lg">
+                      <?= number_format($price, 0, ',', '.') ?> đ
+                    </div>
+                    <?php if ($old_price > $price): ?>
+                      <div class="flex items-center gap-2 text-xs mt-1 whitespace-nowrap">
+                        <span class="text-gray-500 line-through">
+                          <?= number_format($old_price, 0, ',', '.') ?> đ
+                        </span>
+                        <span class="text-green-600">
+                          Tiết kiệm <?= number_format($old_price - $price, 0, ',', '.') ?> đ
+                        </span>
                       </div>
-                   </div>
-                 <?php endforeach; ?>
-               <?php else: ?>
+                    <?php endif; ?>
+                  </div>
+
+                  <!-- Nút mua -->
+                  <button class="w-full flex items-center justify-center gap-2 bg-sky-500/75 text-white 
+                                font-medium py-2 px-3 rounded-md hover:bg-gray-500 active:bg-gray-300 
+                                active:text-gray-800 transition mt-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
+                        viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                          d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9h14l-2-9M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z" />
+                    </svg>
+                    Mua
+                  </button>
+                </div>
+              <?php endforeach; ?>
+            <?php else: ?>
               <p class="text-muted">Không có sản phẩm liên quan.</p>
             <?php endif; ?>
           </div>

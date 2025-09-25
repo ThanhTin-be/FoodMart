@@ -1,37 +1,42 @@
 <?php
+// controllers/ProductController.php
+
 class ProductController extends Controller {
-    public function detail($id = null) {
-        if (!$id) {
-            header("Location: " . BASE_URL . "/home/index");
-            exit;
-        }
-
-        global $conn;
-        require_once ROOT . "models/ProductModel.php";
-        $productModel = new ProductModel($conn);
-
-        // Lấy sản phẩm
-        $product = $productModel->getById($id);
-
+    // Trang detail theo slug
+    public function index($slug) {
+        $product = $this->model("ProductModel")->getBySlug($slug);
         if (!$product) {
-            require_once ROOT . "controllers/ErrorController.php";
-            $errorController = new ErrorController();
-            $errorController->notFound();
+            $this->view("errors/404");
             return;
         }
 
-        // Lấy review của sản phẩm
-        $reviews = $productModel->getReviewsByProductId($id);
+        $relatedProducts = $this->model("ProductModel")->getRelated($product['category_id'], $product['id']);
 
-        // Lấy sản phẩm liên quan
-        $relatedProducts = $productModel->getRelatedProducts($product['category_id'], 4, $id);
-
-        $data = [
-            'product' => $product,
-            'reviews' => $reviews,
-            'relatedProducts' => $relatedProducts
-        ];
-        $this->view("product/detail", $data, "default");
+        $this->view("product/detail", [
+            "product" => $product,
+            "relatedProducts" => $relatedProducts,
+  
+        ]);
     }
-}
 
+    // fallback: /product/detail/{id} (cho link cũ)
+    public function detail($id) {
+        $product = $this->model("ProductModel")->getById($id);
+        if (!$product) {
+            $this->view("errors/404");
+            return;
+        }
+
+        $relatedProducts = $this->model("ProductModel")->getRelated($product['category_id'], $product['id']);
+        $reviews = $this->model("ReviewModel")->getByProduct($product['id']);
+
+        $this->view("product/detail", [
+            "product" => $product,
+            "relatedProducts" => $relatedProducts,
+            "reviews" => $reviews
+        ]);
+    }
+
+       
+
+}
