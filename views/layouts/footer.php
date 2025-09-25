@@ -1,5 +1,5 @@
 <footer class="py-5">
-  <!-- ==== COPY NGUYÊN VĂN PHẦN <footer>...</footer> từ /FoodMartLab/index.php ==== -->
+
     <div class="container-fluid">
         <div class="row">
 

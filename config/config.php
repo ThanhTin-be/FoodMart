@@ -23,7 +23,7 @@ define("BASE_PATH", dirname(__DIR__));
  * Kết quả: http://localhost/FoodMartLab/assets/css/style.css
  */
 function asset($path) {
-    return BASE_URL . "/" . ltrim($path, "/");
+    return BASE_URL . "assets/images/" . ltrim($path, "/");
 }
 
 /**

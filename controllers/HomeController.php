@@ -1,33 +1,28 @@
 <?php
+// controllers/HomeController.php
+
 class HomeController extends Controller {
     public function index() {
-        
+        // Lấy categories có banner
+        $categories = $this->model("CategoryModel")->getAllWithBanner();
+
+        // Lấy model product
         $productModel = $this->model("ProductModel");
-        $blogModel = $this->model("BlogModel");
 
-        // Lấy danh sách sp mới nhất
-        $products = $productModel->getAllProducts(20);
+        // Lấy blog
+        $blogs = $this->model("BlogModel")->getLatestBlogs();
 
-        // Lấy danh sách sp bán chạy
-        $bestSellers = $productModel->getBestSellers(10);
+        // Lấy sản phẩm theo category, giới hạn 20 mỗi category
+        $categoryProducts = [];
+        foreach ($categories as $cat) {
+            $categoryProducts[$cat['slug']] = $productModel->getByCategory($cat['id'], 20);
+        }
 
-        // Lấy danh sách sp phổ biến
-        $mostPopular = $productModel->getMostPopular(10);
-
-        // Mới về
-        $justArrived = $productModel->getJustArrived(10);
-
-        // lấy danh sách blog mới nhất (Review blog)
-        $blogs = $blogModel->getLatestBlogs(3);
-        $data = [
-            'products'    => $products,
-            'bestSellers' => $bestSellers,
-            'mostPopular' => $mostPopular,
-            'justArrived' => $justArrived,
-            'blogs'       => $blogs,
-        ];
-        
-        $this->view("home/index", $data, "default");
+        // Truyền data xuống view
+        $this->view("home/index", [
+            "categories"       => $categories,
+            "categoryProducts" => $categoryProducts,
+            "blogs"            => $blogs
+        ]);
     }
 }
-    

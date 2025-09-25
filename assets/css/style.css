@@ -324,7 +324,11 @@ h6 {
   z-index: 111;
   background: #fff;
 }
-
+.section-title {
+  font-size: 2rem;   /* ~32px */
+  font-weight: 700;  /* in đậm */
+  margin-bottom: 1rem;
+}
 .preloader-wrapper .preloader {
   margin: 20% auto 0;
   transform: translateZ(0);
