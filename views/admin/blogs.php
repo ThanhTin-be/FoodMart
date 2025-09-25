@@ -26,7 +26,7 @@ ob_start();
       <td><?= htmlspecialchars($b['title'] ?? '') ?></td>
       <td>
         <?php $thumb = htmlspecialchars($b['thumbnail'] ?? ''); ?>
-        <img src="<?= $asset('assets/images/' . $thumb) ?>" alt="thumb" width="80">
+        <img src="<?= $asset('images/' . $thumb) ?>" alt="thumb" width="80">
       </td>
       <td><?= htmlspecialchars($b['created_at'] ?? '') ?></td>
       <td>
