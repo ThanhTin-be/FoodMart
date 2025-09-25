@@ -187,18 +187,18 @@
   
   
   <?php foreach ($categories as $cat): ?>
-  <section class="category-section my-5">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
+<section class="category-section my-5">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
 
-          <!-- header -->
-         <div class="gap-2 lg:grid lg:grid-cols-12 lg:rounded-lg bg-surface-tertiary">
+        <!-- header -->
+        <div class="gap-2 lg:grid lg:grid-cols-12 lg:rounded-lg bg-surface-tertiary">
           <!-- Banner desktop (5 cột) -->
           <div class="hidden rounded-lg lg:col-span-5 lg:block">
             <a class="object-cover lg:rounded-lg" href="<?= BASE_URL ?>category/<?= $cat['slug'] ?>" style="text-decoration: none;">
               <img src="<?= asset($cat['banner']) ?>"
-                  alt="<?= htmlspecialchars(  $cat['name']) ?>"
+                  alt="<?= htmlspecialchars($cat['name']) ?>"
                   class="max-h-[96px] w-full object-cover lg:rounded-lg">
             </a>
           </div>
@@ -224,54 +224,88 @@
         </div>
         <!-- /header -->
 
+        <!-- slider -->
+        <div class="products-carousel swiper" id="swiper-<?= $cat['slug'] ?>">
+          <div class="swiper-wrapper">
+            <?php if (!empty($categoryProducts[$cat['slug']])): ?>
+              <?php foreach ($categoryProducts[$cat['slug']] as $item): 
+                $price     = (float)$item['price'];
+                $old_price = (float)$item['old_price'];
+                $discount  = ($old_price > $price) ? round((($old_price - $price) / $old_price) * 100) : 0;
+              ?>
+                <div class="product-item swiper-slide bg-gray rounded-2xl p-4 
+                            shadow-md hover:shadow-xl hover:-translate-y-1 
+                            transition transform relative">
 
-          <!-- slider -->
-        
-          <div class="products-carousel swiper" id="swiper-<?= $cat['slug'] ?>">
-            <div class="swiper-wrapper">
-              <?php if (!empty($categoryProducts[$cat['slug']])): ?>
-                <?php foreach ($categoryProducts[$cat['slug']] as $item): ?>
-                  <div class="product-item swiper-slide bg-gray rounded-2xl p-4 
-            shadow-md hover:shadow-xl hover:-translate-y-1 
-            transition transform">
-                    <figure>
-                      <a href="<?= BASE_URL ?>product/detail/<?= $item['id'] ?>" 
-                        title="<?= htmlspecialchars($item['name']) ?>">
-                        <img src="<?= asset('' . $item['image']) ?>" 
-                            alt="<?= htmlspecialchars($item['name']) ?>" 
-                            class="h-full w-full object-contain object-center mix-blend-multiply transition-transform duration-300 ease-in-out hover:scale-105">
-                      </a>
-                    </figure>
-                    <h4 class="text-truncate text-lg  mt-3"><?= htmlspecialchars($item['name']) ?></h4>
-                    <div class="mb-1" style="height: 16px;"></div>
-                    <span class="price"><?= number_format($item['price'], 0, ',', '.') ?> đ</span>
-                    <!-- nút Mua -->
-                      <button 
-                        class="w-full flex items-center justify-center gap-2 bg-sky-500/75 text-white 
-                              font-medium py-2 px-3 rounded-md hover:bg-gray-500 active:bg-gray-300 
-                              active:text-gray-800 transition">
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                            class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9h14l-2-9M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z" />
-                        </svg>
-                        Mua
-                      </button>
+                  <!-- Badge giảm giá -->
+                  <?php if ($discount > 0): ?>
+                    <span class="absolute top-2 right-2 bg-yellow-300 text-black font-semibold text-sm px-2 py-1 rounded">
+                      -<?= $discount ?>%
+                    </span>
+                  <?php endif; ?>
+
+                  <figure>
+                    <a href="<?= BASE_URL ?>product/<?= $item['id'] ?>" 
+                      title="<?= htmlspecialchars($item['name']) ?>">
+                      <img src="<?= asset($item['image']) ?>" 
+                          alt="<?= htmlspecialchars($item['name']) ?>" 
+                          class="h-full w-full object-contain object-center mix-blend-multiply transition-transform duration-300 ease-in-out hover:scale-105">
+                    </a>
+                  </figure>
+
+                  <h4 class="text-truncate text-lg mt-3"><?= htmlspecialchars($item['name']) ?></h4>
+
+                  <!-- Giá -->
+                  <div class="mt-2">
+                    <!-- Giá mới -->
+                    <div class="text-red-600 font-bold text-base sm:text-lg">
+                      <?= number_format($price, 0, ',', '.') ?> đ
+                    </div>
+
+                    <?php if ($discount > 0): ?>
+                      <div class="flex items-center gap-2 mt-1 whitespace-nowrap">
+                        <!-- Giá cũ -->
+                        <span class="text-gray-500 line-through text-xs sm:text-sm">
+                          <?= number_format($old_price, 0, ',', '.') ?> đ
+                        </span>
+
+                        <!-- Tiết kiệm -->
+                        <span class="text-green-600 text-[10px] sm:text-xs md:text-sm lg:text-xs">
+                          <span class="sm:hidden">-<?= number_format($old_price - $price, 0, ',', '.') ?>đ</span>
+                          <span class="hidden sm:inline">Tiết kiệm <?= number_format($old_price - $price, 0, ',', '.') ?> đ</span>
+                        </span>
+                      </div>
+                    <?php endif; ?>
                   </div>
-                <?php endforeach; ?>
-              <?php else: ?>
-                <p>No products in this category.</p>
-              <?php endif; ?>
-            </div>
-          </div>
-          <!-- /slider -->
 
+
+                  <!-- nút Mua -->
+                  <button 
+                    class="w-full flex items-center justify-center gap-2 bg-sky-500/75 text-white 
+                          font-medium py-2 px-3 rounded-md hover:bg-gray-500 active:bg-gray-300 
+                          active:text-gray-800 transition mt-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" 
+                        class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9h14l-2-9M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z" />
+                    </svg>
+                    Mua
+                  </button>
+                </div>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <p>No products in this category.</p>
+            <?php endif; ?>
+          </div>
         </div>
+        <!-- /slider -->
+
       </div>
     </div>
-  </section>
+  </div>
+</section>
+<?php endforeach; ?>
 
-  <?php endforeach; ?>
 
 
 
@@ -312,11 +346,11 @@
                   </div>
                 </div>
                 <div class="post-header">
-                  <h3 class="post-title">
+                  <h1 class="post-title">
                     <a href="<?= BASE_URL ?>blog/detail/<?= $post['id'] ?>" class="text-decoration-none">
                       <?= htmlspecialchars($post['title']) ?>
                     </a>
-                  </h3>
+                  </h1>
                   <p><?= htmlspecialchars($post['excerpt']) ?></p>
                 </div>
               </div>
@@ -333,7 +367,7 @@
 <section class="py-5 my-5">
     <div class="container-fluid">
 
-      <div class="bg-warning py-5 rounded-5" style="background-image: url('images/bg-pattern-2.png') no-repeat;">
+      <div class="bg-warning py-5 rounded-5" style="background-image: url('bg-pattern-2.png') no-repeat;">
         <div class="container">
           <div class="row">
             <div class="col-md-4">

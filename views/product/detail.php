@@ -1,61 +1,44 @@
-<?php
-// Nhận dữ liệu sản phẩm từ controller
-// $product là 1 mảng chứa thông tin sản phẩm
-// $relatedProducts = danh sách sản phẩm liên quan
-// $reviews = danh sách review của sản phẩm
-?>
-
 <!-- Single Product Page -->
 <section id="selling-product" class="single-product mt-0 mt-md-5">  
   <div class="container-fluid">
-    <nav class="breadcrumb">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb mb-4">
       <a class="breadcrumb-item" href="<?= BASE_URL ?>/home/index">Home</a>
       <a class="breadcrumb-item" href="<?= BASE_URL ?>/shop/index">Shop</a>
       <span class="breadcrumb-item active" aria-current="page"><?= htmlspecialchars($product['name']) ?></span>
     </nav>
-    <div class="row g-5">
-      <!-- Hình ảnh sản phẩm -->
-      <div class="col-lg-7">
-        <div class="row flex-column-reverse flex-lg-row">
-          <div class="col-md-12 col-lg-2">
-            <!-- product-thumbnail-slider -->
-            <div class="swiper product-thumbnail-slider">
-              <div class="swiper-wrapper">
-                <?php 
-                // gallery: danh sách ảnh, lưu trong DB dạng JSON hoặc chuỗi phân tách bằng dấu phẩy
-                $gallery = !empty($product['gallery']) ? explode(',', $product['gallery']) : [$product['image']];
-                foreach ($gallery as $thumb): ?>
-                  <div class="swiper-slide">
-                    <img src="<?= $thumb ?>" alt="thumb" class="thumb-image img-fluid">
-                  </div>
-                <?php endforeach; ?>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-12 col-lg-10">
-            <!-- product-large-slider -->
-            <div class="swiper product-large-slider">
-              <div class="swiper-wrapper">
-                <?php foreach ($gallery as $large): ?>
-                  <div class="swiper-slide">
-                    <div class="image-zoom" data-scale="2.5" data-image="<?= $large ?>">
-                      <img src="<?= $large ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="img-fluid">
-                    </div>
-                  </div>
-                <?php endforeach; ?>
-              </div>
-              <div class="swiper-pagination"></div>
-            </div>
+
+    <!-- Product Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white p-4 rounded-lg shadow-md">
+      
+      <!-- Left: Gallery (7 cột) -->
+      <div class="lg:col-span-7">
+        <div class="flex flex-col items-center">
+          <!-- Ảnh chính -->
+          <img src="<?= asset($product['image']) ?>" 
+               alt="<?= htmlspecialchars($product['name']) ?>" 
+               class="w-full max-h-[500px] object-contain rounded mb-3 border">
+
+          <!-- Thumbnails -->
+          <div class="flex gap-2 overflow-x-auto">
+            <?php 
+            $gallery = !empty($product['gallery']) ? explode(',', $product['gallery']) : [];
+            foreach ($gallery as $img): ?>
+              <img src="<?= asset(trim($img)) ?>" 
+                   alt="Thumbnail" 
+                   class="w-24 h-24 object-contain border rounded hover:border-yellow-400 cursor-pointer">
+            <?php endforeach; ?>
           </div>
         </div>
       </div>
 
-      <!-- Thông tin sản phẩm -->
-      <div class="col-lg-5">
+      <!-- Right: Info (5 cột) -->
+      <div class="lg:col-span-5 flex flex-col justify-between">
         <div class="product-info">
           <div class="element-header">
             <h2 itemprop="name" class="display-6"><?= htmlspecialchars($product['name']) ?></h2>
-            <!-- Rating giả định (chưa có bảng reviews) -->
+            
+            <!-- Rating demo -->
             <div class="rating-container d-flex gap-0 align-items-center">
               <svg width="32" height="32" class="text-primary"><use xlink:href="#star-solid"></use></svg>
               <svg width="32" height="32" class="text-primary"><use xlink:href="#star-solid"></use></svg>
@@ -65,13 +48,38 @@
               <span class="rating-count">(3.0)</span>
             </div>
           </div>
-
-          <!-- Giá -->
+         <!-- Giá -->
+          <!-- Ép kiểu số trước khi so sánh (tránh so sánh string): -->
+          <?php 
+          $price     = (float)$product['price'];
+          $old_price = (float)$product['old_price'];
+          ?>
           <div class="product-price pt-3 pb-3">
-            <strong class="text-primary display-6 fw-bold">
-              <?= number_format($product['price']) ?> đ
-            </strong>
+            <?php if (!empty($product['old_price']) && $product['old_price'] > $product['price']): 
+              $discount = round((($product['old_price'] - $product['price']) / $product['old_price']) * 100);
+              $saved = $product['old_price'] - $product['price'];
+            ?>
+              <div class="flex items-center gap-3">
+                <span class="text-gray-500 line-through text-lg">
+                  <?= number_format($product['old_price'], 0, ',', '.') ?> đ
+                </span>
+                <span class="text-red-600 font-bold text-2xl">
+                  <?= number_format($product['price'], 0, ',', '.') ?> đ
+                </span>
+                <span class="bg-yellow-300 text-black font-semibold px-2 py-1 rounded">
+                  -<?= $discount ?>%
+                </span>
+              </div>
+              <div class="text-green-600 text-sm mt-2">
+                Tiết kiệm <?= number_format($saved, 0, ',', '.') ?> đ
+              </div>
+            <?php else: ?>
+              <span class="text-red-600 font-bold text-2xl">
+                <?= number_format($product['price'], 0, ',', '.') ?> đ
+              </span>
+            <?php endif; ?>
           </div>
+
 
           <!-- Mô tả ngắn -->
           <p><?= nl2br(htmlspecialchars($product['short_desc'])) ?></p>
@@ -124,9 +132,12 @@
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
+
+
 
 <!-- Tabs -->
 <section class="product-info-tabs py-5">

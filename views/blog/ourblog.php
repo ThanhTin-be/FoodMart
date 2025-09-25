@@ -1,7 +1,7 @@
 
 
     <section class="jarallax py-5">
-      <img src="<?= asset('assets/images/banner-image-2.jpg') ?>" class="jarallax-img">
+      <img src="<?= asset('banner-image-2.jpg') ?>" class="jarallax-img">
       <div class="hero-content py-5 my-5">
         <div class="container-fluid">
           <nav class="breadcrumb text-white">
@@ -21,7 +21,7 @@
             <article class="post-item card border-0 shadow-sm p-3">
               <div class="image-holder zoom-effect">
                 <a href="#">
-                  <img src="<?= asset('assets/images/post-thumb-1.jpg') ?>" alt="post" class="card-img-top">
+                  <img src="<?= asset('post-thumb-1.jpg') ?>" alt="post" class="card-img-top">
                 </a>
               </div>
               <div class="card-body">
@@ -42,7 +42,7 @@
             <article class="post-item card border-0 shadow-sm p-3">
               <div class="image-holder zoom-effect">
                 <a href="#">
-                  <img src="<?= asset('assets/images/post-thumb-2.jpg') ?>" alt="post" class="card-img-top">
+                  <img src="<?= asset('post-thumb-2.jpg') ?>" alt="post" class="card-img-top">
                 </a>
               </div>
               <div class="card-body">
@@ -63,7 +63,7 @@
             <article class="post-item card border-0 shadow-sm p-3">
               <div class="image-holder zoom-effect">
                 <a href="#">
-                  <img src="<?= asset('assets/images/post-thumb-3.jpg') ?>" alt="post" class="card-img-top">
+                  <img src="<?= asset('post-thumb-3.jpg') ?>" alt="post" class="card-img-top">
                 </a>
               </div>
               <div class="card-body">
@@ -84,7 +84,7 @@
             <article class="post-item card border-0 shadow-sm p-3">
               <div class="image-holder zoom-effect">
                 <a href="#">
-                  <img src="<?= asset('assets/images/post-thumb-1.jpg') ?>" alt="post" class="card-img-top">
+                  <img src="<?= asset('post-thumb-1.jpg') ?>" alt="post" class="card-img-top">
                 </a>
               </div>
               <div class="card-body">
@@ -105,7 +105,7 @@
             <article class="post-item card border-0 shadow-sm p-3">
               <div class="image-holder zoom-effect">
                 <a href="#">
-                  <img src="<?= asset('assets/images/post-thumb-2.jpg') ?>" alt="post" class="card-img-top">
+                  <img src="<?= asset('post-thumb-2.jpg') ?>" alt="post" class="card-img-top">
                 </a>
               </div>
               <div class="card-body">
@@ -126,7 +126,7 @@
             <article class="post-item card border-0 shadow-sm p-3">
               <div class="image-holder zoom-effect">
                 <a href="#">
-                  <img src="<?= asset('assets/images/post-thumb-3.jpg') ?>" alt="post" class="card-img-top">
+                  <img src="<?= asset('post-thumb-3.jpg') ?>" alt="post" class="card-img-top">
                 </a>
               </div>
               <div class="card-body">
@@ -147,7 +147,7 @@
             <article class="post-item card border-0 shadow-sm p-3">
               <div class="image-holder zoom-effect">
                 <a href="#">
-                  <img src="<?= asset('assets/images/post-thumb-1.jpg') ?>" alt="post" class="card-img-top">
+                  <img src="<?= asset('post-thumb-1.jpg') ?>" alt="post" class="card-img-top">
                 </a>
               </div>
               <div class="card-body">
@@ -168,7 +168,7 @@
             <article class="post-item card border-0 shadow-sm p-3">
               <div class="image-holder zoom-effect">
                 <a href="#">
-                  <img src="<?= asset('assets/images/post-thumb-2.jpg') ?>" alt="post" class="card-img-top">
+                  <img src="<?= asset('post-thumb-2.jpg') ?>" alt="post" class="card-img-top">
                 </a>
               </div>
               <div class="card-body">
@@ -189,7 +189,7 @@
             <article class="post-item card border-0 shadow-sm p-3">
               <div class="image-holder zoom-effect">
                 <a href="#">
-                  <img src="<?= asset('assets/images/post-thumb-3.jpg') ?>" alt="post" class="card-img-top">
+                  <img src="<?= asset('post-thumb-3.jpg') ?>" alt="post" class="card-img-top">
                 </a>
               </div>
               <div class="card-body">
