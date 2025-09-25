@@ -95,6 +95,20 @@
       });
     });
 
+    new Swiper("#related-carousel", {
+      slidesPerView: 2,
+      spaceBetween: 15,
+      navigation: {
+        nextEl: ".related-carousel-next",
+        prevEl: ".related-carousel-prev",
+      },
+      loop: true, // Cho phép quay vòng
+      breakpoints: {
+        768: { slidesPerView: 3 },
+        1024: { slidesPerView: 5 }
+      }
+    });
+
     // Thumbnail slider
     var thumb_slider = new Swiper(".product-thumbnail-slider", {
       slidesPerView: 5,
@@ -118,6 +132,8 @@
       },
     });
   };
+
+
 
   // Input spinner (quantity)
   var initProductQty = function () {

@@ -223,12 +223,11 @@
           <h2 class="section-title">Sản phẩm liên quan</h2>
 
           <div class="d-flex align-items-center">
-            <!-- View All (sang category của sp hiện tại) -->
+            <!-- View All -->
             <a href="<?= BASE_URL ?>/category/<?= $product['category_id'] ?>" 
                class="btn-link text-decoration-none me-3">
               View All →
             </a>
-
             <!-- Arrow -->
             <div class="swiper-buttons">
               <button class="swiper-prev related-carousel-prev btn btn-yellow">❮</button>
@@ -239,14 +238,14 @@
       </div>
     </div>
 
-    <!-- Slider -->
+    <!-- Swiper -->
     <div class="row">
       <div class="col-md-12">
-        <div class="products-carousel swiper" id="related-carousel">
+        <div class="swiper products-carousel" id="related-carousel">
           <div class="swiper-wrapper">
             <?php if (!empty($relatedProducts)): ?>
               <?php foreach ($relatedProducts as $item): ?>
-                <div class="product-item swiper-slide bg-white rounded-2xl p-4 
+                <div class="swiper-slide product-item bg-white rounded-2xl p-4 
                     shadow-md hover:shadow-xl hover:-translate-y-1 transition transform relative">
                   
                   <!-- Badge giảm giá -->

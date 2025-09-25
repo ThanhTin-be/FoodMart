@@ -41,7 +41,7 @@ class ProductModel extends Database {
     }
 
     // Lấy sản phẩm liên quan
-    public function getRelated($catId, $excludeId = null, $limit = 6) {
+    public function getRelated($catId, $excludeId = null, $limit = 20) {
         $sql = "SELECT * FROM {$this->table} WHERE category_id = ? ";
         if ($excludeId) {
             $sql .= "AND id != ? ";
