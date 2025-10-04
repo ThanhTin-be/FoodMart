@@ -1,299 +1,155 @@
+<?php
+// views/cart/index.php
+// Biến $cart và $total đã được truyền từ CartController@index
+?>
 
+<div class="preloader-wrapper">
+  <div class="preloader"></div>
+</div>
 
-  <div class="preloader-wrapper">
-    <div class="preloader">
-    </div>
+<!-- Offcanvas Cart (mobile) -->
+<div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasCart" aria-labelledby="My Cart">
+  <div class="offcanvas-header justify-content-center">
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
-
-  <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasCart" aria-labelledby="My Cart">
-    <div class="offcanvas-header justify-content-center">
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <div class="order-md-last">
-        <h4 class="d-flex justify-content-between align-items-center mb-3">
-          <span class="text-primary">Your cart</span>
-          <span class="badge bg-primary rounded-pill">3</span>
-        </h4>
-        <ul class="list-group mb-3">
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">Growers cider</h6>
-              <small class="text-body-secondary">Brief description</small>
-            </div>
-            <span class="text-body-secondary">$12</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">Fresh grapes</h6>
-              <small class="text-body-secondary">Brief description</small>
-            </div>
-            <span class="text-body-secondary">$8</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">Heinz tomato ketchup</h6>
-              <small class="text-body-secondary">Brief description</small>
-            </div>
-            <span class="text-body-secondary">$5</span>
-          </li>
+  <div class="offcanvas-body">
+    <div class="order-md-last">
+      <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-primary">Your cart</span>
+        <span class="badge bg-primary rounded-pill"><?= count($cart) ?></span>
+      </h4>
+      <ul class="list-group mb-3">
+        <?php if (empty($cart)): ?>
+          <li class="list-group-item text-muted">Giỏ hàng trống</li>
+        <?php else: ?>
+          <?php foreach ($cart as $item): ?>
+            <li class="list-group-item d-flex justify-content-between lh-sm">
+              <div>
+                <h6 class="my-0"><?= htmlspecialchars($item['name']) ?></h6>
+                <small class="text-body-secondary">x<?= $item['qty'] ?></small>
+              </div>
+              <span class="text-body-secondary">
+                <?= number_format($item['price'] * $item['qty'], 0, ',', '.') ?> đ
+              </span>
+            </li>
+          <?php endforeach; ?>
           <li class="list-group-item d-flex justify-content-between">
-            <span>Total (USD)</span>
-            <strong>$20</strong>
+            <span>Total</span>
+            <strong><?= number_format($total, 0, ',', '.') ?> đ</strong>
           </li>
-        </ul>
-
-        <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
-      </div>
+        <?php endif; ?>
+      </ul>
+      <?php if (!empty($cart)): ?>
+        <a href="<?= BASE_URL ?>checkout/index" class="w-100 btn btn-primary btn-lg">Continue to checkout</a>
+      <?php endif; ?>
     </div>
   </div>
+</div>
 
-  <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasSearch"
-    aria-labelledby="Search">
-    <div class="offcanvas-header justify-content-center">
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <div class="order-md-last">
-        <h4 class="d-flex justify-content-between align-items-center mb-3">
-          <span class="text-primary">Search</span>
-        </h4>
-        <form role="search" action="index.html" method="get" class="d-flex mt-3 gap-0">
-          <input class="form-control rounded-start rounded-0 bg-light" type="email"
-            placeholder="What are you looking for?" aria-label="What are you looking for?">
-          <button class="btn btn-dark rounded-end rounded-0" type="submit">Search</button>
-        </form>
-      </div>
+<!-- Breadcrumb -->
+<section class="py-5 mb-5" style="background: url('<?= asset('background-pattern.jpg') ?>');">
+  <div class="container-fluid">
+    <div class="d-flex justify-content-between">
+      <h1 class="page-title pb-2">Cart</h1>
+      <nav class="breadcrumb fs-6">
+        <a class="breadcrumb-item nav-link" href="<?= BASE_URL ?>">Home</a>
+        <a class="breadcrumb-item nav-link" href="#">Pages</a>
+        <span class="breadcrumb-item active" aria-current="page">Cart</span>
+      </nav>
     </div>
   </div>
+</section>
 
-
-  <section class="py-5 mb-5" style="background: url('<?= asset('background-pattern.jpg') ?>');">
-    <div class="container-fluid">
-      <div class="d-flex justify-content-between">
-        <h1 class="page-title pb-2">Cart</h1>
-        <nav class="breadcrumb fs-6">
-          <a class="breadcrumb-item nav-link" href="#">Home</a>
-          <a class="breadcrumb-item nav-link" href="#">Pages</a>
-          <span class="breadcrumb-item active" aria-current="page">Cart</span>
-        </nav>
-      </div>
-    </div>
-  </section>
-
-  <section class="py-5">
-    <div class="container-fluid">
-      <div class="row g-5">
-        <div class="col-md-8">
-
-          <div class="table-responsive cart">
-            <table class="table">
-              <thead>
+<!-- Cart table -->
+<section class="py-5">
+  <div class="container-fluid">
+    <div class="row g-5">
+      <div class="col-md-8">
+        <div class="table-responsive cart">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="card-title text-uppercase text-muted">Product</th>
+                <th class="card-title text-uppercase text-muted">Quantity</th>
+                <th class="card-title text-uppercase text-muted">Subtotal</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php if (empty($cart)): ?>
                 <tr>
-                  <th scope="col" class="card-title text-uppercase text-muted">Product</th>
-                  <th scope="col" class="card-title text-uppercase text-muted">Quantity</th>
-                  <th scope="col" class="card-title text-uppercase text-muted">Subtotal</th>
-                  <th scope="col" class="card-title text-uppercase text-muted"></th>
+                  <td colspan="4" class="text-center text-muted py-4">Giỏ hàng trống</td>
                 </tr>
-              </thead>
+              <?php else: ?>
+                <?php foreach ($cart as $item): ?>
+                  <tr>
+                    <td class="py-4">
+                      <div class="cart-info d-flex flex-wrap align-items-center">
+                        <div class="col-lg-3">
+                          <img src="<?= asset($item['image']) ?>" alt="<?= htmlspecialchars($item['name']) ?>" class="img-fluid">
+                        </div>
+                        <div class="col-lg-9 ps-3">
+                          <h5 class="card-title"><?= htmlspecialchars($item['name']) ?></h5>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="py-4">
+                      <div class="input-group product-qty w-50">
+                        <input type="text" 
+                               class="form-control input-number text-center" 
+                               value="<?= $item['qty'] ?>" readonly>
+                      </div>
+                    </td>
+                    <td class="py-4">
+                      <div class="total-price">
+                        <span class="money text-dark">
+                          <?= number_format($item['price'] * $item['qty'], 0, ',', '.') ?> đ
+                        </span>
+                      </div>
+                    </td>
+                    <td class="py-4">
+                      <a href="<?= BASE_URL ?>cart/remove/<?= $item['id'] ?>" class="text-danger">
+                        <svg width="24" height="24"><use xlink:href="#trash"></use></svg>
+                      </a>
+                    </td>
+                  </tr>
+                <?php endforeach; ?>
+              <?php endif; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Cart Totals -->
+      <div class="col-md-4">
+        <div class="cart-totals bg-grey py-5">
+          <h4 class="text-dark pb-4">Cart Total</h4>
+          <div class="total-price pb-5">
+            <table class="table text-uppercase">
               <tbody>
-                <tr>
-                  <td scope="row" class="py-4">
-                    <div class="cart-info d-flex flex-wrap align-items-center mb-4">
-                      <div class="col-lg-3">
-                        <div class="card-image">
-                          <img src="<?= asset('product-thumb-11.jpg') ?>" alt="cloth" class="img-fluid">
-                        </div>
-                      </div>
-                      <div class="col-lg-9">
-                        <div class="card-detail ps-3">
-                          <h5 class="card-title">
-                            <a href="#" class="text-decoration-none">Iphone 13</a>
-                          </h5>
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="py-4">
-                    <div class="input-group product-qty w-50">
-                      <span class="input-group-btn">
-                        <button type="button" class="quantity-left-minus btn btn-light btn-number" data-type="minus">
-                          <svg width="16" height="16">
-                            <use xlink:href="#minus"></use>
-                          </svg>
-                        </button>
-                      </span>
-                      <input type="text" id="quantity" name="quantity" class="form-control input-number text-center"
-                        value="1">
-                      <span class="input-group-btn">
-                        <button type="button" class="quantity-right-plus btn btn-light btn-number" data-type="plus"
-                          data-field="">
-                          <svg width="16" height="16">
-                            <use xlink:href="#plus"></use>
-                          </svg>
-                        </button>
-                      </span>
-                    </div>
-                  </td>
-                  <td class="py-4">
-                    <div class="total-price">
-                      <span class="money text-dark">$1500.00</span>
-                    </div>
-                  </td>
-                  <td class="py-4">
-                    <div class="cart-remove">
-                      <a href="#">
-                        <svg width="24" height="24">
-                          <use xlink:href="#trash"></use>
-                        </svg>
-                      </a>
-                    </div>
-                  </td>
+                <tr class="subtotal border-top border-bottom">
+                  <th>Subtotal</th>
+                  <td class="ps-5"><span class="text-dark"><?= number_format($total, 0, ',', '.') ?> đ</span></td>
                 </tr>
-                <tr>
-                  <td scope="row" class="py-4">
-                    <div class="cart-info d-flex flex-wrap align-items-center">
-                      <div class="col-lg-3">
-                        <div class="card-image">
-                          <img src="<?= asset('product-thumb-12.jpg') ?>" alt="product" class="img-fluid">
-                        </div>
-                      </div>
-                      <div class="col-lg-9">
-                        <div class="card-detail ps-3">
-                          <h5 class="card-title">
-                            <a href="#" class="text-decoration-none">Pink watch</a>
-                          </h5>
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="py-4">
-                    <div class="input-group product-qty w-50">
-                      <span class="input-group-btn">
-                        <button type="button" class="quantity-left-minus btn btn-light btn-number" data-type="minus">
-                          <svg width="16" height="16">
-                            <use xlink:href="#minus"></use>
-                          </svg>
-                        </button>
-                      </span>
-                      <input type="text" id="quantity" name="quantity" class="form-control input-number text-center"
-                        value="1">
-                      <span class="input-group-btn">
-                        <button type="button" class="quantity-right-plus btn btn-light btn-number" data-type="plus"
-                          data-field="">
-                          <svg width="16" height="16">
-                            <use xlink:href="#plus"></use>
-                          </svg>
-                        </button>
-                      </span>
-                    </div>
-                  </td>
-                  <td class="py-4">
-                    <div class="total-price">
-                      <span class="money text-dark">$870.00</span>
-                    </div>
-                  </td>
-                  <td class="py-4">
-                    <div class="cart-remove">
-                      <a href="#">
-                        <svg width="24" height="24">
-                          <use xlink:href="#trash"></use>
-                        </svg>
-                      </a>
-                    </div>
-                  </td>
+                <tr class="order-total border-bottom">
+                  <th>Total</th>
+                  <td class="ps-5"><span class="text-dark"><?= number_format($total, 0, ',', '.') ?> đ</span></td>
                 </tr>
               </tbody>
             </table>
           </div>
-          
-        </div>
-        <div class="col-md-4">
-          <div class="cart-totals bg-grey py-5">
-            <h4 class="text-dark pb-4">Cart Total</h4>
-            <div class="total-price pb-5">
-              <table cellspacing="0" class="table text-uppercase">
-                <tbody>
-                  <tr class="subtotal pt-2 pb-2 border-top border-bottom">
-                    <th>Subtotal</th>
-                    <td data-title="Subtotal">
-                      <span class="price-amount amount text-dark ps-5">
-                        <bdi>
-                          <span class="price-currency-symbol">$</span>2,370.00
-                        </bdi>
-                      </span>
-                    </td>
-                  </tr>
-                  <tr class="order-total pt-2 pb-2 border-bottom">
-                    <th>Total</th>
-                    <td data-title="Total">
-                      <span class="price-amount amount text-dark ps-5">
-                        <bdi>
-                          <span class="price-currency-symbol">$</span>2,370.00</bdi>
-                      </span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+          <div class="button-wrap row g-2">
+            <div class="col-md-6">
+              <a href="<?= BASE_URL ?>shop/index" class="btn btn-dark py-3 px-4 w-100">Continue Shopping</a>
             </div>
-            <div class="button-wrap row g-2">
-              <div class="col-md-6"><button class="btn btn-dark py-3 px-4 text-uppercase btn-rounded-none w-100">Update
-                  Cart</button></div>
-              <div class="col-md-6"><button
-                  class="btn btn-dark py-3 px-4 text-uppercase btn-rounded-none w-100">Continue Shopping</button></div>
-              <div class="col-md-12"><button
-                  class="btn btn-primary py-3 px-4 text-uppercase btn-rounded-none w-100">Proceed to checkout</button>
-              </div>
+            <?php if (!empty($cart)): ?>
+            <div class="col-md-6">
+              <a href="<?= BASE_URL ?>checkout/index" class="btn btn-primary py-3 px-4 w-100">Proceed to checkout</a>
             </div>
+            <?php endif; ?>
           </div>
         </div>
-
       </div>
     </div>
-  </section>
-
-  <section class="py-5">
-    <div class="container-fluid">
-
-      <div class="bg-secondary py-5 my-5 rounded-5"
-        style="background: url('images/bg-leaves-img-pattern.png') no-repeat;">
-        <div class="container my-5">
-          <div class="row">
-            <div class="col-md-6 p-5">
-              <div class="section-header">
-                <h2 class="section-title display-4">Get <span class="text-dark">25% Discount</span> on your first
-                  purchase</h2>
-              </div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dictumst amet, metus, sit massa posuere
-                maecenas. At tellus ut nunc amet vel egestas.</p>
-            </div>
-            <div class="col-md-6 p-5">
-              <form>
-                <div class="mb-3">
-                  <label for="name" class="form-label">Name</label>
-                  <input type="text" class="form-control form-control-lg" name="name" id="name" placeholder="Name">
-                </div>
-                <div class="mb-3">
-                  <label for="" class="form-label">Email</label>
-                  <input type="email" class="form-control form-control-lg" name="email" id="email"
-                    placeholder="abc@mail.com">
-                </div>
-                <div class="form-check form-check-inline mb-3">
-                  <label class="form-check-label" for="subscribe">
-                    <input class="form-check-input" type="checkbox" id="subscribe" value="subscribe">
-                    Subscribe to the newsletter</label>
-                </div>
-                <div class="d-grid gap-2">
-                  <button type="submit" class="btn btn-dark btn-lg">Submit</button>
-                </div>
-              </form>
-
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-  </section>
+  </div>
+</section>
