@@ -83,3 +83,14 @@ function updateMiniCart(data) {
 
     console.log("🎉 MiniCart updated!");
 }
+
+// Cập nhật Floating MiniCart
+const floatCartCount = document.querySelector(".cart-count-badge");
+const floatCartTotal = document.querySelector(".cart-total-float");
+
+if (floatCartCount) {
+    floatCartCount.textContent = data.count;
+}
+if (floatCartTotal) {
+    floatCartTotal.textContent = new Intl.NumberFormat("vi-VN").format(data.total) + " đ";
+}

@@ -142,7 +142,66 @@
 <!-- Cuối cùng mới đến script chính -->
 <script src="/FoodMartLab/assets/js/script.js"></script>
 
+<!-- Khai báo BASE_URL -->
+<script>
+  const BASE_URL = "<?= BASE_URL ?>";
+  console.log("✅ PHP BASE_URL =", BASE_URL);
+</script>
 
+<!-- JS chính -->
+<script src="<?= BASE_URL ?>assets/js/script.js"></script>
+<script src="<?= BASE_URL ?>assets/js/cart.js"></script>
+
+<!-- Floating Mini Cart (hiện khi scroll) -->
+<div id="floating-cart" class="fixed top-5 right-5 hidden z-50">
+  <button class="bg-primary text-white rounded-full shadow-lg flex items-center gap-2 px-3 py-2 hover:bg-blue-600 transition"
+          id="floatingCartBtn"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasCart"
+          aria-controls="offcanvasCart">
+      <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+        <use xlink:href="#cart"></use>
+      </svg>
+      <span class="cart-count-badge text-sm bg-danger rounded-full px-2 py-1">
+        <?= count($_SESSION['cart'] ?? []) ?>
+      </span>
+      <span class="cart-total-float font-bold">
+        <?= number_format(array_sum(array_map(fn($i) => $i['price'] * $i['qty'], $_SESSION['cart'] ?? [])), 0, ',', '.') ?> đ
+      </span>
+  </button>
+</div>
+
+<style>
+  #floating-cart {
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  #floating-cart.show {
+    display: block !important;
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  // 🎯 Floating Cart Hiện Khi Scroll
+  document.addEventListener("DOMContentLoaded", () => {
+    const floatingCart = document.getElementById("floating-cart");
+    let lastScroll = 0;
+
+    window.addEventListener("scroll", () => {
+      const currentScroll = window.scrollY;
+
+      if (currentScroll > 200 && currentScroll > lastScroll) {
+        // header đã cuộn khỏi màn hình
+        floatingCart.classList.add("show");
+      } else if (currentScroll < lastScroll || currentScroll < 100) {
+        // cuộn lên hoặc ở trên đầu
+        floatingCart.classList.remove("show");
+      }
+      lastScroll = currentScroll;
+    });
+  });
+</script>
 
 </body>
 </html>
