@@ -1,9 +1,8 @@
 // assets/js/cart.js
-
 document.addEventListener("DOMContentLoaded", () => {
     console.log("🛒 cart.js loaded, BASE_URL =", BASE_URL);
 
-    // Lắng nghe nút Thêm vào giỏ
+    // Lắng nghe nút Mua
     document.querySelectorAll(".add-to-cart").forEach(btn => {
         btn.addEventListener("click", async () => {
             const productId = btn.dataset.id;
@@ -37,28 +36,32 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /**
- * Cập nhật MiniCart trong header
+ * Cập nhật MiniCart trong header + Offcanvas
  */
 function updateMiniCart(data) {
     console.log("🔄 Update MiniCart:", data);
 
-    // Badge số lượng
+    // -------------------------------
+    // 1️⃣ Cập nhật mini-cart (header dropdown)
+    // -------------------------------
     const cartCount = document.querySelector(".cart-count");
+    const cartItemsContainer = document.querySelector(".cart-items");
+
     if (cartCount) {
         cartCount.textContent = data.count;
         cartCount.classList.toggle("d-none", data.count === 0);
     }
 
-    // Tổng tiền
-    const cartTotal = document.querySelector(".cart-total");
-    if (cartTotal) {
-        cartTotal.textContent = new Intl.NumberFormat("vi-VN").format(data.total) + " đ";
-    }
+    // Tổng tiền (update tất cả vị trí hiển thị)
+    const formattedTotal = new Intl.NumberFormat("vi-VN").format(data.total) + " đ";
+    document.querySelectorAll(".cart-total, .cart-total-float").forEach(el => {
+        el.textContent = formattedTotal;
+    });
 
-    // Danh sách sản phẩm
-    const cartItemsContainer = document.querySelector(".cart-items");
+
+
     if (cartItemsContainer) {
-        cartItemsContainer.innerHTML = ""; // reset trước
+        cartItemsContainer.innerHTML = "";
 
         if (data.cart.length === 0) {
             cartItemsContainer.innerHTML = `<p class="text-muted empty-cart">Giỏ hàng trống</p>`;
@@ -69,28 +72,58 @@ function updateMiniCart(data) {
                 el.dataset.id = item.id;
 
                 el.innerHTML = `
-                    <img src="${BASE_URL}assets/images/${item.image}" width="40" class="me-2">
+                    <img src="${BASE_URL}assets/images/${item.image}" width="40" class="me-2 rounded">
                     <div>
                         <p class="mb-0">${item.name}</p>
-                        <small>${item.qty} x ${new Intl.NumberFormat("vi-VN").format(item.price)}đ</small>
+                        <small>${item.qty} × ${new Intl.NumberFormat("vi-VN").format(item.price)} đ</small>
                     </div>
-                    <a href="${BASE_URL}cart/remove/${item.id}" class="ms-auto text-danger remove-item">&times;</a>
+                    <span class="ms-auto fw-semibold text-end">
+                        ${new Intl.NumberFormat("vi-VN").format(item.qty * item.price)} đ
+                    </span>
                 `;
                 cartItemsContainer.appendChild(el);
             });
         }
     }
 
-    console.log("🎉 MiniCart updated!");
-}
+    // -------------------------------
+    // 2️⃣ Cập nhật Offcanvas Cart (#offcanvasCart)
+    // -------------------------------
+    const offcanvasList = document.querySelector("#offcanvasCart ul.list-group");
+    const offcanvasBadge = document.querySelector("#offcanvasCart .badge");
+    const offcanvasTotal = document.querySelector("#offcanvasCart strong");
 
-// Cập nhật Floating MiniCart
-const floatCartCount = document.querySelector(".cart-count-badge");
-const floatCartTotal = document.querySelector(".cart-total-float");
+    if (offcanvasList) {
+        offcanvasList.innerHTML = "";
 
-if (floatCartCount) {
-    floatCartCount.textContent = data.count;
-}
-if (floatCartTotal) {
-    floatCartTotal.textContent = new Intl.NumberFormat("vi-VN").format(data.total) + " đ";
+        if (data.cart.length === 0) {
+            offcanvasList.innerHTML = `<li class="list-group-item text-center text-muted">Giỏ hàng trống</li>`;
+        } else {
+            data.cart.forEach(item => {
+                const li = document.createElement("li");
+                li.className = "list-group-item d-flex justify-content-between lh-sm";
+                li.innerHTML = `
+                    <div class="d-flex align-items-center">
+                        <img src="${BASE_URL}assets/images/${item.image}" width="50" class="me-2 rounded">
+                        <div>
+                            <h6 class="my-0">${item.name}</h6>
+                            <small class="text-muted">${item.qty} × ${new Intl.NumberFormat("vi-VN").format(item.price)} đ</small>
+                        </div>
+                    </div>
+                    <span class="text-body-secondary fw-bold">${new Intl.NumberFormat("vi-VN").format(item.qty * item.price)} đ</span>
+                `;
+                offcanvasList.appendChild(li);
+            });
+        }
+    }
+
+    if (offcanvasBadge) {
+        offcanvasBadge.textContent = data.count;
+    }
+
+    if (offcanvasTotal) {
+        offcanvasTotal.textContent = new Intl.NumberFormat("vi-VN").format(data.total) + " đ";
+    }
+
+    console.log("🎉 MiniCart + Offcanvas updated!");
 }
