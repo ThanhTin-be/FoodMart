@@ -81,14 +81,15 @@
         </ul>
 
         <!-- MINI CART BUTTON -->
-        <?php
-        $cart = $_SESSION['cart'] ?? [];
-        $count = count($cart);
-        $total = 0;
-        foreach ($cart as $item) {
-            $total += $item['price'] * $item['qty'];
-        }
-        ?>
+      <?php
+      $cart = $_SESSION['cart'] ?? [];
+      $total = 0;
+      $totalQty = 0;
+      foreach ($cart as $item) {
+          $total += $item['price'] * $item['qty'];
+          $totalQty += $item['qty']; // 👈 Tính tổng số món (kể cả trùng)
+      }
+      ?>
         <div class="cart text-end">
           <button class="border-0 bg-transparent d-flex flex-column gap-2 lh-1"
                   type="button"
@@ -191,7 +192,7 @@
     <div class="order-md-last">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <span class="text-secondary-black">Total items:
-          <strong class="cart-count"><?= $count ?></strong>
+          <strong class="cart-count-badge"><?= $totalQty ?></strong>
         </span>
         <span class="cart-total text-black fw-bold fs-5">
           <?= number_format($total, 0, ',', '.') ?> đ
@@ -199,7 +200,7 @@
       </div>
 
       <ul class="list-group mb-3 cart-items">
-        <?php if ($count === 0): ?>
+        <?php if ($totalQty  === 0): ?>
           <li class="list-group-item text-center text-muted empty-cart">
             Giỏ hàng trống
           </li>
