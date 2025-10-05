@@ -75,6 +75,45 @@ class CartController extends Controller {
         ]);
     }
 
+    // Cập nhật số lượng sản phẩm trong giỏ (AJAX)
+    public function update($id = null)
+    {
+        if (!isset($_SESSION)) session_start();
+        header('Content-Type: application/json');
+
+        if (!$id) {
+            echo json_encode(['success' => false, 'error' => 'Thiếu ID sản phẩm']);
+            return;
+        }
+
+        $qty = isset($_GET['qty']) ? (int)$_GET['qty'] : 1;
+
+        // Nếu qty = 0 thì xoá luôn sản phẩm
+        if ($qty <= 0) {
+            unset($_SESSION['cart'][$id]);
+        } else {
+            if (isset($_SESSION['cart'][$id])) {
+                $_SESSION['cart'][$id]['qty'] = $qty;
+            }
+        }
+
+        // Tính lại tổng tiền + tổng số món
+        $total = 0;
+        $totalQty = 0;
+        foreach ($_SESSION['cart'] as $item) {
+            $total += $item['price'] * $item['qty'];
+            $totalQty += $item['qty'];
+        }
+
+        echo json_encode([
+            'success' => true,
+            'count' => $totalQty,
+            'total' => $total,
+            'cart' => array_values($_SESSION['cart'])
+        ]);
+    }
+
+
 
 
     // Xóa sản phẩm khỏi giỏ

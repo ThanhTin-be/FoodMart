@@ -213,7 +213,22 @@
                      class="rounded" width="50" height="50" style="object-fit:cover;">
                 <div>
                   <h6 class="my-0"><?= htmlspecialchars($item['name']) ?></h6>
-                  <small class="text-muted"><?= $item['qty'] ?> x <?= number_format($item['price'], 0, ',', '.') ?>đ</small>
+                  <div class="d-flex align-items-center btn-outline-secondary">
+                    <!-- Nút trừ -->
+                    <button class="btn btn-sm btn-outline-secondary cart-minus" data-id="<?= $item['id'] ?>">−</button>
+
+                    <!-- Số lượng -->
+                    <input type="text" class="cart-qty-input form-control form-control-sm text-center" 
+                          data-id="<?= $item['id'] ?>" 
+                          value="<?= $item['qty'] ?>" 
+                          style="width:45px;">
+
+                    <!-- Nút cộng -->
+                    <button class="btn btn-sm btn-outline-secondary cart-plus" data-id="<?= $item['id'] ?>">+</button>
+
+                    <span class="text-muted">× <?= number_format($item['price'], 0, ',', '.') ?>đ</span>
+                  </div>
+
                 </div>
               </div>
               <span class="text-black fw-bold ms-auto">
