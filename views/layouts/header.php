@@ -247,7 +247,7 @@
         </strong>
       </div>
 
-      <a href="<?= BASE_URL ?>checkout/index" class="w-100 btn btn-primary btn-lg">
+      <a href="<?= BASE_URL ?>cart/index" class="w-100 btn btn-primary btn-lg">
         Continue to checkout
       </a>
     </div>
