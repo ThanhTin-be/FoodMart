@@ -81,8 +81,8 @@
                   <td colspan="4" class="text-center text-muted py-4">Giỏ hàng trống</td>
                 </tr>
               <?php else: ?>
-                <?php foreach ($cart as $item): ?>
-                  <tr>
+               <?php foreach ($cart as $item): ?>
+                  <tr data-id="<?= $item['id'] ?>"> <!-- 👈 thêm data-id -->
                     <td class="py-4">
                       <div class="cart-info d-flex flex-wrap align-items-center">
                         <div class="col-lg-3">
@@ -94,10 +94,11 @@
                       </div>
                     </td>
                     <td class="py-4">
-                      <div class="input-group product-qty w-50">
-                        <input type="text" 
-                               class="form-control input-number text-center" 
-                               value="<?= $item['qty'] ?>" readonly>
+                      <div class="d-flex align-items-center btn-outline-secondary">
+                        <button class="btn btn-sm btn-outline-secondary cart-minus" data-id="<?= $item['id'] ?>">−</button>
+                        <input type="text" class="cart-qty-input form-control form-control-sm text-center mx-1"
+                              data-id="<?= $item['id'] ?>" value="<?= $item['qty'] ?>" style="width:45px;">
+                        <button class="btn btn-sm btn-outline-secondary cart-plus" data-id="<?= $item['id'] ?>">+</button>
                       </div>
                     </td>
                     <td class="py-4">
@@ -108,8 +109,8 @@
                       </div>
                     </td>
                     <td class="py-4">
-                      <a href="<?= BASE_URL ?>cart/remove/<?= $item['id'] ?>" class="text-danger">
-                        <svg width="24" height="24"><use xlink:href="#trash"></use></svg>
+                      <a href="<?= BASE_URL ?>cart/remove/<?= $item['id'] ?>" class="text-danger cart-remove" data-id="<?= $item['id'] ?>">
+                        <svg width="24" height="24" style="color:#b00000"><use xlink:href="#trash"></use></svg>
                       </a>
                     </td>
                   </tr>

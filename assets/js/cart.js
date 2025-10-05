@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     console.log("🛒 cart.js loaded, BASE_URL =", BASE_URL);
 
-    // Sự kiện nút "Mua" hoặc "Thêm vào giỏ"
+    // ========== 1️⃣ SỰ KIỆN THÊM VÀO GIỎ ==========
     document.querySelectorAll(".add-to-cart, .btn-buy").forEach(btn => {
         btn.addEventListener("click", async () => {
             const productId = btn.dataset.id;
@@ -32,8 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Lắng nghe cộng/trừ trong mini cart (uỷ quyền sự kiện)
-    document.body.addEventListener("click", async e => {
+    // ========== 2️⃣ CỘNG / TRỪ TRONG MINI CART ==========
+    document.body.addEventListener("click", async (e) => {
         if (e.target.classList.contains("cart-plus") || e.target.classList.contains("cart-minus")) {
             const id = e.target.dataset.id;
             const input = document.querySelector(`.cart-qty-input[data-id='${id}']`);
@@ -65,64 +65,72 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     });
+
+    // ========== 3️⃣ XOÁ SẢN PHẨM TRỰC TIẾP ==========
+    document.body.addEventListener("click", async (e) => {
+        if (e.target.closest(".cart-remove")) {
+            e.preventDefault();
+            const id = e.target.closest(".cart-remove").dataset.id;
+            if (!confirm("🗑 Xóa sản phẩm này khỏi giỏ hàng?")) return;
+
+            try {
+                const url = `${BASE_URL}cart/update/${id}?qty=0&ajax=1`;
+                console.log("🗑 Removing:", url);
+
+                const response = await fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } });
+                const data = await response.json();
+                if (data.success) updateMiniCart(data);
+            } catch (err) {
+                console.error("❌ Remove error:", err);
+            }
+        }
+    });
 });
 
-/**
- * Cập nhật MiniCart trong header + Offcanvas
- */
-// Helper format tiền
+// ====================== HÀM HỖ TRỢ ======================
 function formatCurrency(n) {
     return new Intl.NumberFormat("vi-VN").format(n) + " đ";
 }
 
+// ====================== CẬP NHẬT MINI CART + CART PAGE ======================
 function updateMiniCart(data) {
     try {
-        console.log("🔄 updateMiniCart (patch mode):", data);
+        console.log("🔄 updateMiniCart:", data);
 
-        // 1) Cập nhật các badge đếm item (nhiều nơi)
-        document.querySelectorAll(".cart-count-badge, .cart-count").forEach(el => {
-            // data.count = tổng số ITEM (qty), không phải số mặt hàng
+        // 1️⃣ Cập nhật các badge đếm item (nhiều nơi)
+        document.querySelectorAll(".cart-count-badge, .cart-count").forEach((el) => {
             if (el) el.textContent = data.count;
         });
 
-        // 2) Cập nhật tổng tiền (nhiều nơi)
-        document.querySelectorAll(".cart-total, .cart-total-float").forEach(el => {
+        // 2️⃣ Cập nhật tổng tiền (nhiều nơi)
+        document.querySelectorAll(".cart-total, .cart-total-float").forEach((el) => {
             if (el) el.textContent = formatCurrency(data.total);
         });
 
-        // 3) Patch từng dòng item trong offcanvas (KHÔNG xoá container)
+        // 3️⃣ Patch danh sách sản phẩm trong Offcanvas MiniCart
         const container = document.querySelector(".cart-items");
-        if (!container) {
-            console.warn("⚠️ Không thấy .cart-items — bỏ qua patch danh sách.");
-        } else {
-            // a) Map cart server -> id : item
+        if (container) {
             const map = new Map();
-            data.cart.forEach(it => map.set(String(it.id), it));
+            data.cart.forEach((it) => map.set(String(it.id), it));
 
-            // b) Xoá dòng nào không còn trên server
-            container.querySelectorAll(".cart-item").forEach(row => {
-                const id = row.dataset.id;
-                if (!map.has(String(id))) {
-                    row.remove();
-                }
+            // Xóa sản phẩm không còn trong giỏ
+            container.querySelectorAll(".cart-item").forEach((row) => {
+                if (!map.has(row.dataset.id)) row.remove();
             });
 
-            // c) Thêm mới / cập nhật dòng hiện có
-            data.cart.forEach(item => {
+            // Cập nhật hoặc thêm mới
+            data.cart.forEach((item) => {
                 let row = container.querySelector(`.cart-item[data-id="${item.id}"]`);
                 if (!row) {
-                    // Tạo mới dòng item với CỤM +/− giống bạn đang dùng
                     row = document.createElement("li");
                     row.className = "list-group-item d-flex justify-content-between align-items-center lh-sm cart-item";
                     row.dataset.id = item.id;
-
                     row.innerHTML = `
             <div class="d-flex align-items-center gap-2">
               <img src="${BASE_URL}assets/images/${item.image}" alt="${item.name}"
                    class="rounded" width="50" height="50" style="object-fit:cover;">
               <div>
                 <h6 class="my-0">${item.name}</h6>
-
                 <div class="d-flex align-items-center btn-outline-secondary cart-qty-box">
                   <button class="btn btn-sm btn-outline-secondary cart-minus" data-id="${item.id}">−</button>
                   <input type="text" class="cart-qty-input form-control form-control-sm text-center"
@@ -136,36 +144,63 @@ function updateMiniCart(data) {
           `;
                     container.appendChild(row);
                 } else {
-                    // Cập nhật qty + line total + đơn giá hiển thị
                     const qtyInput = row.querySelector(".cart-qty-input");
                     if (qtyInput) qtyInput.value = item.qty;
 
                     const lineTotal = row.querySelector(".cart-line-total");
                     if (lineTotal) lineTotal.textContent = formatCurrency(item.price * item.qty);
-
-                    const unitPriceSpan = row.querySelector(".cart-qty-box span.text-muted");
-                    if (unitPriceSpan) unitPriceSpan.innerHTML = `× ${new Intl.NumberFormat("vi-VN").format(item.price)}đ`;
                 }
             });
 
-            // d) Nếu giỏ trống: render thông báo
             if (data.cart.length === 0) {
-                container.innerHTML = `
-          <li class="list-group-item text-center text-muted empty-cart">
-            Giỏ hàng trống
-          </li>`;
+                container.innerHTML = `<li class="list-group-item text-center text-muted empty-cart">Giỏ hàng trống</li>`;
             }
         }
 
-        // 4) Ẩn/hiện badge (optional)
-        document.querySelectorAll(".cart-count-badge").forEach(el => {
-            el?.classList?.toggle("d-none", data.count === 0);
-        });
+        // 4️⃣ Floating MiniCart (badge + total)
+        const floatCart = document.getElementById("floating-cart");
+        if (floatCart) {
+            const badge = floatCart.querySelector(".cart-count-badge");
+            const total = floatCart.querySelector(".cart-total-float");
+            if (badge) badge.textContent = data.count;
+            if (total) total.textContent = formatCurrency(data.total);
+        }
 
-        console.log("✅ MiniCart + FloatingCart đã sync xong.");
+        // 5️⃣ Cập nhật trang Cart (cart/index.php)
+        const cartPage = document.querySelector(".cart table tbody");
+        if (cartPage) {
+            console.log("🧾 Updating main cart table...");
+
+            // a) Cập nhật từng dòng
+            data.cart.forEach(item => {
+                const row = cartPage.querySelector(`tr[data-id='${item.id}']`);
+                if (row) {
+                    // Update số lượng input
+                    const qtyInput = row.querySelector(".cart-qty-input");
+                    if (qtyInput) qtyInput.value = item.qty;
+
+                    // Update subtotal
+                    const subtotal = row.querySelector(".money.text-dark");
+                    if (subtotal) subtotal.textContent = formatCurrency(item.price * item.qty);
+                }
+            });
+
+            // b) Xóa các dòng không còn trong giỏ
+            cartPage.querySelectorAll("tr[data-id]").forEach(row => {
+                const id = row.dataset.id;
+                const stillExist = data.cart.some(p => String(p.id) === String(id));
+                if (!stillExist) row.remove();
+            });
+
+            // c) Cập nhật tổng giá bên phải (Cart Total)
+            document.querySelectorAll(".cart-totals .text-dark").forEach(el => {
+                el.textContent = formatCurrency(data.total);
+            });
+        }
+
+
+        console.log("✅ MiniCart + FloatingCart + Cart page synced!");
     } catch (err) {
         console.error("❌ updateMiniCart lỗi:", err);
     }
 }
-
-
