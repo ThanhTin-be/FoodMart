@@ -8,10 +8,10 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
 
   <!-- CSS / Fonts -->
-  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
   <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/vendor.css">
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
