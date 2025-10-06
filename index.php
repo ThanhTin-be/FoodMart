@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Định nghĩa hằng ROOT: thư mục gốc của project
 define('ROOT', __DIR__ . DIRECTORY_SEPARATOR);
 

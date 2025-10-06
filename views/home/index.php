@@ -279,11 +279,12 @@
                   </div>
 
 
-                  <!-- nút Mua -->
+                 <!-- nút MUA -->
                   <button 
                     class="w-full flex items-center justify-center gap-2 bg-sky-500/75 text-white 
-                          font-medium py-2 px-3 rounded-md hover:bg-gray-500 active:bg-gray-300 
-                          active:text-gray-800 transition mt-3">
+                          font-medium py-2 px-3 rounded-md hover:bg-sky-600 active:bg-sky-700 
+                          transition mt-3 add-to-cart"
+                    data-id="<?= $item['id'] ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" 
                         class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -291,6 +292,7 @@
                     </svg>
                     Mua
                   </button>
+
                 </div>
               <?php endforeach; ?>
             <?php else: ?>

@@ -142,6 +142,67 @@
 <!-- Cuối cùng mới đến script chính -->
 <script src="/FoodMartLab/assets/js/script.js"></script>
 
+<!-- Khai báo BASE_URL -->
+<script>
+  const BASE_URL = "<?= BASE_URL ?>";
+  console.log("✅ PHP BASE_URL =", BASE_URL);
+</script>
+
+<!-- JS chính -->
+<script src="<?= BASE_URL ?>assets/js/script.js"></script>
+<script src="<?= BASE_URL ?>assets/js/cart.js"></script>
+
+<!-- ===================== Floating Mini Cart (hiện khi scroll) ===================== -->
+<?php
+$cart = $_SESSION['cart'] ?? [];
+$total = 0;
+$totalQty = 0;
+foreach ($cart as $item) {
+    $total += $item['price'] * $item['qty'];
+    $totalQty += $item['qty'];
+}
+?>
+
+<div id="floating-cart" 
+     class="fixed top-4 right-4 bg-primary text-white rounded-full shadow-lg flex items-center gap-2 px-3 py-2 hover:bg-blue-600 transition z-50 cursor-pointer"
+     data-bs-toggle="offcanvas" 
+     data-bs-target="#offcanvasCart" 
+     aria-controls="offcanvasCart"
+     style="display:none;">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-cart3">
+    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 
+             .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 
+             1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 
+             0a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+  </svg>
+
+  <span class="cart-count-badge text-sm bg-danger rounded-full px-2 py-1">
+    <?= $totalQty ?>
+  </span>
+
+  <span class="cart-total-float font-bold">
+    <?= number_format($total, 0, ',', '.') ?> đ
+  </span>
+</div>
+
+<script>
+  // ===================== Floating Cart Behavior =====================
+  document.addEventListener("DOMContentLoaded", () => {
+    const floatingCart = document.getElementById("floating-cart");
+    const header = document.querySelector("header");
+
+    // Ẩn/hiện khi scroll
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > (header?.offsetHeight || 100)) {
+        floatingCart.style.display = "flex";
+      } else {
+        floatingCart.style.display = "none";
+      }
+    });
+  });
+</script>
+<!-- ===================== END Floating Mini Cart ===================== -->
 
 
 </body>
