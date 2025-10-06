@@ -17,7 +17,7 @@
           <div class="alert alert-danger"><?= $data['error'] ?></div>
         <?php endif; ?>
 
-        <form method="POST" action="<?= BASE_URL ?>user/login">
+        <form method="POST" action="<?= BASE_URL ?>site/user/login">
           <div class="col-12 pb-3">
             <input type="email" name="email" placeholder="Email" class="form-control" required>
           </div>

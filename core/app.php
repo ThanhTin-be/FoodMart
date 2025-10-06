@@ -1,78 +1,70 @@
 <?php
-// core/app.php
 class App {
+
+    protected $area = 'site';
     protected $controller = 'HomeController';
     protected $method = 'index';
     protected $params = [];
 
     public function __construct() {
+        echo "<pre style='background:#111;color:#0f0;padding:10px;border-radius:8px'>";
+        echo "=== DEBUG ROUTER START ===\n";
+
         $url = $this->parseUrl();
+        echo "Parsed URL: ";
+        print_r($url);
 
-        // @@ debug @@
-        // echo "<pre>DEBUG URL: ";
-        // print_r($url);
-        // echo "</pre>";
+        // ✅ Xác định area (site hoặc admin)
+        if (isset($url[0]) && in_array(strtolower($url[0]), ['site', 'admin'])) {
+            $this->area = strtolower($url[0]);
+            unset($url[0]);
+        }
+        echo "Area detected: {$this->area}\n";
 
-        if (isset($url[0])) {
-            $controllerName = ucfirst($url[0]) . "Controller";
+        // ✅ Xác định controller (nếu có)
+        $controllerName = isset($url[1]) 
+            ? ucfirst($url[1]) . "Controller" 
+            : ($this->area === 'admin' ? "DashboardController" : "HomeController");
 
-            // Nếu là pages → dùng PagesController
-            if ($url[0] === "pages") {
-                $this->controller = "PagesController";
-                $this->method = "show";
-                unset($url[0]);
+        // ✅ Xác định đường dẫn controller
+        $controllerPath = ROOT . "controllers/" . $this->area . "/" . $controllerName . ".php";
+        echo "Controller Name: {$controllerName}\n";
+        echo "Controller Path: {$controllerPath}\n";
 
-                // params: tên trang
-                $this->params = $url ? array_values($url) : ["home"];
+        // Xóa phần area và controller khỏi URL
+        unset($url[1]);
 
-                require_once ROOT . "controllers" . DIRECTORY_SEPARATOR . $this->controller . ".php";
-                $this->controller = new $this->controller;
-
-                echo "<pre>DEBUG Router: PagesController, method=show, params=";
-                print_r($this->params);
-                echo "</pre>";
-            }
-
-            // Các controller khác
-            if (file_exists(ROOT . "controllers" . DIRECTORY_SEPARATOR . $controllerName . ".php")) {
-                $this->controller = $controllerName;
-                unset($url[0]);
-
-                require_once ROOT . "controllers" . DIRECTORY_SEPARATOR . $this->controller . ".php";
-                $this->controller = new $this->controller;
-
-                if (isset($url[1]) && method_exists($this->controller, $url[1])) {
-                    $this->method = $url[1];
-                    unset($url[1]);
-                }
-
-                $this->params = $url ? array_values($url) : [];
-            }
+        // ✅ Tải controller
+        if (file_exists($controllerPath)) {
+            require_once $controllerPath;
+            $this->controller = new $controllerName();
+            echo "Controller Loaded: " . get_class($this->controller) . "\n";
         } else {
-            // Controller mặc định
-            require_once ROOT . "controllers" . DIRECTORY_SEPARATOR . $this->controller . ".php";
-            $this->controller = new $this->controller;
-        }
-          // Nếu method không tồn tại trong controller hiện tại → 404   
-        if (!method_exists($this->controller, $this->method)) {
-            require_once ROOT . "controllers" . DIRECTORY_SEPARATOR . "ErrorController.php";
-            $this->controller = new ErrorController();
-
-            // 🔹 Mặc định cho user
-            $this->method = "notFound";
-
-            // /*
-            // 🔹 Sau này khi có trang admin_404.php thì mở đoạn này:
-            // if (isset($url[0]) && $url[0] === 'admin') {
-            //     $this->method = "adminNotFound";
-            // }
-            // */
-
-            $this->params = [];
+            $this->loadError("Không tìm thấy controller: {$controllerPath}");
+            echo "</pre>";
+            return;
         }
 
-        // Thực thi controller/method/params
-        call_user_func_array([$this->controller, $this->method], $this->params);
+        // ✅ Xác định method
+        if (isset($url[2]) && method_exists($this->controller, $url[2])) {
+            $this->method = $url[2];
+            unset($url[2]);
+        }
+        echo "Method: {$this->method}\n";
+
+        // ✅ Params (nếu có)
+        $this->params = $url ? array_values($url) : [];
+        echo "Params: ";
+        print_r($this->params);
+
+        echo "=== DEBUG ROUTER END ===\n</pre>";
+
+        // ✅ Gọi controller/method
+        if (method_exists($this->controller, $this->method)) {
+            call_user_func_array([$this->controller, $this->method], $this->params);
+        } else {
+            $this->loadError("Method {$this->method}() không tồn tại trong " . get_class($this->controller));
+        }
     }
 
     private function parseUrl() {
@@ -81,6 +73,10 @@ class App {
         }
         return [];
     }
+
+    private function loadError($message) {
+        require_once ROOT . "controllers/site/ErrorController.php";
+        $error = new ErrorController();
+        $error->notFound($message);
+    }
 }
-
-

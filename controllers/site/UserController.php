@@ -41,9 +41,9 @@ class UserController extends Controller {
 
                     // Điều hướng
                     if ($user['role'] === 'admin') {
-                        header("Location: " . BASE_URL . "admin/dashboard");
+                        header("Location: " . BASE_URL . "admin/dashboard/index");
                     } else {
-                        header("Location: " . BASE_URL . "home/index");
+                        header("Location: " . BASE_URL . "site/home/index");
                     }
                     exit;
                 } else {

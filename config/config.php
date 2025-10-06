@@ -3,7 +3,7 @@
 define("DB_HOST", "localhost");     // server MySQL
 define("DB_USER", "root");          // tài khoản mặc định của XAMPP
 define("DB_PASS", "");              // mật khẩu mặc định trống
-define("DB_NAME", "foodmart_full"); // tên database
+define("DB_NAME", "foodmart_full_v1"); // tên database
 
 // Địa chỉ gốc website (dùng cho link, asset, redirect)
 // Khi deploy chỉ cần đổi dòng này
