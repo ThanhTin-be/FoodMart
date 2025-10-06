@@ -245,7 +245,7 @@
                   <?php endif; ?>
 
                   <figure>
-                    <a href="<?= BASE_URL ?>product/<?= $item['slug'] ?>" 
+                    <a href="<?= BASE_URL ?>site/product/<?= $item['slug'] ?>" 
                       title="<?= htmlspecialchars($item['name']) ?>">
                       <img src="<?= asset($item['image']) ?>" 
                           alt="<?= htmlspecialchars($item['name']) ?>" 
