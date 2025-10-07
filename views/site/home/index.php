@@ -125,61 +125,61 @@
       </div>
       <div class="row">
         <div class="col-md-12">
+          <div class="categories-carousel swiper !h-auto items-center">
+            <div class="category-carousel swiper">
+              <div class="swiper-wrapper items-center !h-auto">
+                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
+                  <img src="<?= asset('icon-vegetables-broccoli.png') ?>" alt="Category Thumbnail">
+                  <h3 class="category-title">Fruits & Veges</h3>
+                </a>
+                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
+                  <img src="<?= asset('icon-bread-baguette.png') ?>" alt="Category Thumbnail">
+                  <h3 class="category-title">Breads & Sweets</h3>
+                </a>
+                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
+                  <img src="<?= asset('icon-soft-drinks-bottle.png') ?>" alt="Category Thumbnail">
+                  <h3 class="category-title">Fruits & Veges</h3>
+                </a>
+                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
+                  <img src="<?= asset('icon-wine-glass-bottle.png') ?>" alt="Category Thumbnail">
+                  <h3 class="category-title">Fruits & Veges</h3>
+                </a>
+                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
+                  <img src="<?= asset('icon-animal-products-drumsticks.png') ?>" alt="Category Thumbnail">
+                  <h3 class="category-title">Fruits & Veges</h3>
+                </a>
+                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
+                  <img src="<?= asset('icon-bread-herb-flour.png') ?>" alt="Category Thumbnail">
+                  <h3 class="category-title">Fruits & Veges</h3>
+                </a>
+                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
+                  <img src="<?= asset('icon-vegetables-broccoli.png') ?>" alt="Category Thumbnail">
+                  <h3 class="category-title">Fruits & Veges</h3>
+                </a>
+                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
+                  <img src="<?= asset('icon-vegetables-broccoli.png') ?>" alt="Category Thumbnail">
+                  <h3 class="category-title">Fruits & Veges</h3>
+                </a>
+                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
+                  <img src="<?= asset('icon-vegetables-broccoli.png') ?>" alt="Category Thumbnail">
+                  <h3 class="category-title">Fruits & Veges</h3>
+                </a>
+                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
+                  <img src="<?= asset('icon-vegetables-broccoli.png') ?>" alt="Category Thumbnail">
+                  <h3 class="category-title">Fruits & Veges</h3>
+                </a>
+                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
+                  <img src="<?= asset('icon-vegetables-broccoli.png') ?>" alt="Category Thumbnail">
+                  <h3 class="category-title">Fruits & Veges</h3>
+                </a>
+                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
+                  <img src="<?= asset('icon-vegetables-broccoli.png') ?>" alt="Category Thumbnail">
+                  <h3 class="category-title">Fruits & Veges</h3>
+                </a>
 
-          <div class="category-carousel swiper">
-            <div class="swiper-wrapper">
-              <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                <img src="<?= asset('icon-vegetables-broccoli.png') ?>" alt="Category Thumbnail">
-                <h3 class="category-title">Fruits & Veges</h3>
-              </a>
-              <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                <img src="<?= asset('icon-bread-baguette.png') ?>" alt="Category Thumbnail">
-                <h3 class="category-title">Breads & Sweets</h3>
-              </a>
-              <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                <img src="<?= asset('icon-soft-drinks-bottle.png') ?>" alt="Category Thumbnail">
-                <h3 class="category-title">Fruits & Veges</h3>
-              </a>
-              <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                <img src="<?= asset('icon-wine-glass-bottle.png') ?>" alt="Category Thumbnail">
-                <h3 class="category-title">Fruits & Veges</h3>
-              </a>
-              <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                <img src="<?= asset('icon-animal-products-drumsticks.png') ?>" alt="Category Thumbnail">
-                <h3 class="category-title">Fruits & Veges</h3>
-              </a>
-              <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                <img src="<?= asset('icon-bread-herb-flour.png') ?>" alt="Category Thumbnail">
-                <h3 class="category-title">Fruits & Veges</h3>
-              </a>
-              <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                <img src="<?= asset('icon-vegetables-broccoli.png') ?>" alt="Category Thumbnail">
-                <h3 class="category-title">Fruits & Veges</h3>
-              </a>
-              <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                <img src="<?= asset('icon-vegetables-broccoli.png') ?>" alt="Category Thumbnail">
-                <h3 class="category-title">Fruits & Veges</h3>
-              </a>
-              <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                <img src="<?= asset('icon-vegetables-broccoli.png') ?>" alt="Category Thumbnail">
-                <h3 class="category-title">Fruits & Veges</h3>
-              </a>
-              <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                <img src="<?= asset('icon-vegetables-broccoli.png') ?>" alt="Category Thumbnail">
-                <h3 class="category-title">Fruits & Veges</h3>
-              </a>
-              <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                <img src="<?= asset('icon-vegetables-broccoli.png') ?>" alt="Category Thumbnail">
-                <h3 class="category-title">Fruits & Veges</h3>
-              </a>
-              <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                <img src="<?= asset('icon-vegetables-broccoli.png') ?>" alt="Category Thumbnail">
-                <h3 class="category-title">Fruits & Veges</h3>
-              </a>
-
+              </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -226,7 +226,7 @@
 
         <!-- slider -->
         <div class="products-carousel swiper" id="swiper-<?= $cat['slug'] ?>">
-          <div class="swiper-wrapper">
+          <div class="swiper-wrapper !h-auto items-stretch">
             <?php if (!empty($categoryProducts[$cat['slug']])): ?>
               <?php foreach ($categoryProducts[$cat['slug']] as $item): 
                 $price     = (float)$item['price'];
@@ -245,7 +245,7 @@
                   <?php endif; ?>
 
                   <figure>
-                    <a href="<?= BASE_URL ?>product/<?= $item['slug'] ?>" 
+                    <a href="<?= BASE_URL ?>site/product/<?= $item['slug'] ?>" 
                       title="<?= htmlspecialchars($item['name']) ?>">
                       <img src="<?= asset($item['image']) ?>" 
                           alt="<?= htmlspecialchars($item['name']) ?>" 
