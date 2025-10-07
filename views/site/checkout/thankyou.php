@@ -1,4 +1,4 @@
-
+<!-- 
 
     <section class="py-5 mb-5" style="background: url('<?= asset('background-pattern.jpg') ?>');">
       <div class="container-fluid">
@@ -84,4 +84,13 @@
     </section>
 
 
-    
+     -->
+
+     <div class="container text-center py-5">
+  <h2 class="text-success mb-3">🎉 Cảm ơn bạn đã đặt hàng!</h2>
+  <p>Đơn hàng của bạn đã được ghi nhận và đang chờ xác nhận.</p>
+  <div class="mt-4">
+    <a href="<?= BASE_URL ?>order/myorders" class="btn btn-outline-primary me-2">Xem đơn hàng của tôi</a>
+    <a href="<?= BASE_URL ?>site/home/index" class="btn btn-primary">Tiếp tục mua sắm</a>
+  </div>
+</div>

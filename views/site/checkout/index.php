@@ -1,4 +1,4 @@
-
+<!-- 
 
     <section class="shopify-cart checkout-wrap py-5">
       <div class="container-fluid">
@@ -111,4 +111,53 @@
         </form>
       </div>
     </section>
-   
+    -->
+
+    <div class="container py-5">
+  <h2 class="mb-4">🛒 Xác nhận thanh toán</h2>
+
+  <form action="<?= BASE_URL ?>checkout/placeOrder" method="post" class="row">
+    <div class="col-md-6">
+      <h4>Thông tin người nhận</h4>
+      <div class="mb-3">
+        <label class="form-label">Họ và tên</label>
+        <input type="text" name="fullname" class="form-control"
+               value="<?= htmlspecialchars($user['name']) ?>" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-control"
+               value="<?= htmlspecialchars($user['email']) ?>" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Số điện thoại</label>
+        <input type="text" name="phone" class="form-control"
+               value="<?= htmlspecialchars($user['phone'] ?? '') ?>" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Địa chỉ giao hàng</label>
+        <textarea name="address" rows="3" class="form-control" required><?= htmlspecialchars($user['address'] ?? '') ?></textarea>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <h4>Đơn hàng của bạn</h4>
+      <ul class="list-group mb-3">
+        <?php foreach ($cart as $item): ?>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0"><?= htmlspecialchars($item['name']) ?></h6>
+              <small class="text-muted">x <?= $item['qty'] ?></small>
+            </div>
+            <span class="text-muted"><?= number_format($item['price'] * $item['qty']) ?> đ</span>
+          </li>
+        <?php endforeach; ?>
+        <li class="list-group-item d-flex justify-content-between">
+          <span><strong>Tổng cộng</strong></span>
+          <strong><?= number_format($total) ?> đ</strong>
+        </li>
+      </ul>
+      <button type="submit" class="btn btn-primary w-100 py-2">Xác nhận đặt hàng</button>
+    </div>
+  </form>
+</div>
