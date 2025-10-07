@@ -117,5 +117,17 @@ class ProductModel extends Database {
             $stmt->execute();
             return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         }
+        // ProductModel.php
+        public function countByFilter($filters) {
+            $sql = "SELECT COUNT(*) AS total FROM products WHERE 1";
+            $result = $this->conn->query($sql);
+            return $result->fetch_assoc()['total'] ?? 0;
+        }
+
+        public function filterAndPaginate($filters, $limit, $offset, $sort) {
+            $sql = "SELECT * FROM products LIMIT $limit OFFSET $offset";
+            $result = $this->conn->query($sql);
+            return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+        }
 
 }

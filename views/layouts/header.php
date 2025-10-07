@@ -183,7 +183,7 @@
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCart" aria-labelledby="MyCartLabel">
   <div class="offcanvas-header justify-content-between">
     <h5 class="offcanvas-title text-primary" id="MyCartLabel">
-      <svg width="22" height="22"><use xlink:href="#cart"></use></svg> Your Cart
+      <svg width="22" height="22" style="display: inline";><use xlink:href="#cart"></use></svg> Your Cart
     </h5>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
