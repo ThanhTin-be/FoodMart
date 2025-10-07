@@ -1,5 +1,6 @@
 <?php
 class Controller {
+    protected $area = 'site'; // mặc định là site
     // Load model
     public function model($model) {
         $db = new Database();          // tạo instance DB
@@ -19,22 +20,31 @@ class Controller {
         if (!is_array($data)) $data = [];
         extract($data);
 
+        // ✅ Tự động xác định area (site / admin)
+        if (strpos($view, 'admin/') === 0) {
+            $this->area = 'admin';
+            $view = str_replace('admin/', '', $view); // bỏ prefix admin/ khỏi đường dẫn view
+        } else {
+            $this->area = 'site';
+        }
+
+        // ✅ Nếu layout = none → chỉ load view
         if ($layout === 'none') {
-            require ROOT . "views/$view.php";
+            require ROOT . "views/{$this->area}/{$view}.php";
             return;
         }
 
+        // ✅ Nếu layout mặc định (default)
         if ($layout === 'default') {
-            require ROOT . "views/layouts/header.php";
-            require ROOT . "views/$view.php";
-            require ROOT . "views/layouts/footer.php";
+            require ROOT . "views/{$this->area}/layouts/header.php";
+            require ROOT . "views/{$this->area}/{$view}.php";
+            require ROOT . "views/{$this->area}/layouts/footer.php";
             return;
         }
 
-        if ($layout === 'admin') {
-            require ROOT . "views/layouts/admin/header.php";
-            require ROOT . "views/$view.php";
-            require ROOT . "views/layouts/admin/footer.php";
+        // ✅ Nếu layout được truyền riêng (ví dụ layout='custom')
+        if ($layout && $layout !== 'default') {
+            require ROOT . "views/{$this->area}/layouts/{$layout}.php";
             return;
         }
     }

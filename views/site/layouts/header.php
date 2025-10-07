@@ -80,7 +80,7 @@
           </li>
         </ul>
 
-        <!-- MINI CART BUTTON -->
+      <!-- MINI CART BUTTON -->
       <?php
       $cart = $_SESSION['cart'] ?? [];
       $total = 0;
@@ -102,8 +102,9 @@
             </span>
           </button>
         </div>
-
-      </div> <!-- /RIGHT SIDE -->
+      <!-- END MINI CART BUTTON -->
+      </div>
+       <!-- /RIGHT SIDE -->
     </div>
   </div>
   <div class="container-fluid">
@@ -156,7 +157,7 @@
                         <li><a href="/FoodMartLab/demo/style" class="dropdown-item">Styles </a></li>
                         <li><a href="/FoodMartLab/pages/contact" class="dropdown-item">Contact </a></li>
                         <li><a href="/FoodMartLab/checkout/thankyou" class="dropdown-item">Thank You </a></li>
-                        <li><a href="/FoodMartLab/user/login" class="dropdown-item">My Account </a></li>
+                        <li><a href="/FoodMartLab/site/user/login" class="dropdown-item">My Account </a></li>
                         <li><a href="/FoodMartLab/errors/404" class="dropdown-item">404 Error </a></li>
                       </ul>
                     </li>
