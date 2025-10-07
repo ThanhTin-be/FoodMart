@@ -1,163 +1,72 @@
-<!-- 
+<section class="shopify-cart checkout-wrap py-5">
+  <div class="container-fluid">
+    <!-- START FORM -->
+    <form action="<?= BASE_URL ?>checkout/placeOrder" method="post" class="form-group">
+      <div class="row d-flex flex-wrap">
+        <div class="col-lg-6">
+          <h4 class="text-dark pb-4">Thông tin người nhận</h4>
+          <div class="billing-details">
 
-    <section class="shopify-cart checkout-wrap py-5">
-      <div class="container-fluid">
-        <form class="form-group">
-          <div class="row d-flex flex-wrap">
-            <div class="col-lg-6">
-              <h4 class="text-dark pb-4">Billing Details</h4>
-              <div class="billing-details">
-                <label for="fname">First Name*</label>
-                <input type="text" id="fname" name="firstname" class="form-control mt-2 mb-4 ps-3">
-                <label for="lname">Last Name*</label>
-                <input type="text" id="lname" name="lastname" class="form-control mt-2 mb-4 ps-3">
-                <label for="cname">Company Name(optional)*</label>
-                <input type="text" id="cname" name="companyname" class="form-control mt-2 mb-4">
-                <label for="cname">Country / Region*</label>
-                <select class="form-select form-control mt-2 mb-4" aria-label="Default select example">
-                  <option selected="" hidden="">United States</option>
-                  <option value="1">UK</option>
-                  <option value="2">Australia</option>
-                  <option value="3">Canada</option>
-                </select>
-                <label for="address">Street Address*</label>
-                <input type="text" id="adr" name="address" placeholder="House number and street name" class="form-control mt-3 ps-3 mb-3">
-                <input type="text" id="adr" name="address" placeholder="Appartments, suite, etc." class="form-control ps-3 mb-4">
-                <label for="city">Town / City *</label>
-                <input type="text" id="city" name="city" class="form-control mt-3 ps-3 mb-4">
-                <label for="state">State *</label>
-                <select class="form-select form-control mt-2 mb-4" aria-label="Default select example">
-                  <option selected="" hidden="">Florida</option>
-                  <option value="1">New York</option>
-                  <option value="2">Chicago</option>
-                  <option value="3">Texas</option>
-                  <option value="3">San Jose</option>
-                  <option value="3">Houston</option>
-                </select>
-                <label for="zip">Zip Code *</label>
-                <input type="text" id="zip" name="zip" class="form-control mt-2 mb-4 ps-3">
-                <label for="email">Phone *</label>
-                <input type="text" id="phone" name="phone" class="form-control mt-2 mb-4 ps-3">
-                <label for="email">Email address *</label>
-                <input type="text" id="email" name="email" class="form-control mt-2 mb-4 ps-3">
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <h4 class="text-dark pb-4">Additional Information</h4>
-              <div class="billing-details">
-                <label for="fname">Order notes (optional)</label>
-                <textarea class="form-control pt-3 pb-3 ps-3 mt-2" placeholder="Notes about your order. Like special notes for delivery."></textarea>
-              </div>
-              <div class="your-order mt-5">
-                <h4 class="display-7 text-dark pb-4">Cart Totals</h4>
-                <div class="total-price">
-                  <table cellspacing="0" class="table">
-                    <tbody>
-                      <tr class="subtotal border-top border-bottom pt-2 pb-2 text-uppercase">
-                        <th>Subtotal</th>
-                        <td data-title="Subtotal">
-                          <span class="price-amount amount ps-5">
-                            <bdi>
-                              <span class="price-currency-symbol">$</span>2,370.00 </bdi>
-                          </span>
-                        </td>
-                      </tr>
-                      <tr class="order-total border-bottom pt-2 pb-2 text-uppercase">
-                        <th>Total</th>
-                        <td data-title="Total">
-                          <span class="price-amount amount ps-5">
-                            <bdi>
-                              <span class="price-currency-symbol">$</span>2,370.00 </bdi>
-                          </span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div class="list-group mt-5 mb-3">
-                    <label class="list-group-item d-flex gap-2 border-0">
-                      <input class="form-check-input flex-shrink-0" type="radio" name="listGroupRadios" id="listGroupRadios1" value="" checked>
-                      <span>
-                        <strong class="text-uppercase">Direct bank transfer</strong>
-                        <small class="d-block text-body-secondary">Make your payment directly into our bank account. Please use your Order ID. Your order will shipped after funds have cleared in our account.</small>
-                      </span>
-                    </label>
-                    <label class="list-group-item d-flex gap-2 border-0">
-                      <input class="form-check-input flex-shrink-0" type="radio" name="listGroupRadios" id="listGroupRadios2" value="">
-                      <span>
-                        <strong class="text-uppercase">Check payments</strong>
-                        <small class="d-block text-body-secondary">Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</small>
-                      </span>
-                    </label>
-                    <label class="list-group-item d-flex gap-2 border-0">
-                      <input class="form-check-input flex-shrink-0" type="radio" name="listGroupRadios" id="listGroupRadios3" value="">
-                      <span>
-                        <strong class="text-uppercase">Cash on delivery</strong>
-                        <small class="d-block text-body-secondary">Pay with cash upon delivery.</small>
-                      </span>
-                    </label>
-                    <label class="list-group-item d-flex gap-2 border-0">
-                      <input class="form-check-input flex-shrink-0" type="radio" name="listGroupRadios" id="listGroupRadios3" value="">
-                      <span>
-                        <strong class="text-uppercase">Paypal</strong>
-                        <small class="d-block text-body-secondary">Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</small>
-                      </span>
-                    </label>
-                  </div>
-                  <button type="submit" name="submit" class="btn btn-dark btn-lg text-uppercase btn-rounded-none w-100">Place an order</button>
-                </div>
-              </div>
-            </div>
+            <label>Họ và tên*</label>
+            <input type="text" name="fullname" class="form-control mt-2 mb-4 ps-3"
+                   value="<?= htmlspecialchars($_SESSION['user']['name'] ?? '') ?>" required>
+
+            <label>Số điện thoại*</label>
+            <input type="text" name="phone" class="form-control mt-2 mb-4 ps-3"
+                   value="<?= htmlspecialchars($_SESSION['user']['phone'] ?? '') ?>" required>
+
+            <label>Email*</label>
+            <input type="email" name="email" class="form-control mt-2 mb-4 ps-3"
+                   value="<?= htmlspecialchars($_SESSION['user']['email'] ?? '') ?>" required>
+
+            <label>Địa chỉ giao hàng*</label>
+            <input type="text" name="address" class="form-control mt-2 mb-4 ps-3"
+                   value="<?= htmlspecialchars($_SESSION['user']['address'] ?? '') ?>" required>
+
+            <label>Ghi chú đơn hàng (tuỳ chọn)</label>
+            <textarea name="note" rows="3" class="form-control mt-2 mb-4 ps-3"
+                      placeholder="Ghi chú cho đơn hàng (ví dụ: giao giờ hành chính)"></textarea>
           </div>
-        </form>
-      </div>
-    </section>
-    -->
+        </div>
 
-    <div class="container py-5">
-  <h2 class="mb-4">🛒 Xác nhận thanh toán</h2>
+        <div class="col-lg-6">
+          <h4 class="display-7 text-dark pb-4">Tổng đơn hàng</h4>
+          <div class="total-price">
+            <table class="table border">
+              <tbody>
+                <tr class="border-bottom text-uppercase">
+                  <th>Tạm tính</th>
+                  <td><?= number_format($total) ?> đ</td>
+                </tr>
+                <tr class="border-bottom text-uppercase">
+                  <th>Tổng cộng</th>
+                  <td><strong><?= number_format($total) ?> đ</strong></td>
+                </tr>
+              </tbody>
+            </table>
 
-  <form action="<?= BASE_URL ?>checkout/placeOrder" method="post" class="row">
-    <div class="col-md-6">
-      <h4>Thông tin người nhận</h4>
-      <div class="mb-3">
-        <label class="form-label">Họ và tên</label>
-        <input type="text" name="fullname" class="form-control"
-               value="<?= htmlspecialchars($user['name']) ?>" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Email</label>
-        <input type="email" name="email" class="form-control"
-               value="<?= htmlspecialchars($user['email']) ?>" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Số điện thoại</label>
-        <input type="text" name="phone" class="form-control"
-               value="<?= htmlspecialchars($user['phone'] ?? '') ?>" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Địa chỉ giao hàng</label>
-        <textarea name="address" rows="3" class="form-control" required><?= htmlspecialchars($user['address'] ?? '') ?></textarea>
-      </div>
-    </div>
-
-    <div class="col-md-6">
-      <h4>Đơn hàng của bạn</h4>
-      <ul class="list-group mb-3">
-        <?php foreach ($cart as $item): ?>
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0"><?= htmlspecialchars($item['name']) ?></h6>
-              <small class="text-muted">x <?= $item['qty'] ?></small>
+            <div class="list-group mt-4 mb-3">
+              <label class="list-group-item border-0">
+                <input class="form-check-input" type="radio" name="payment_method" value="cod" checked>
+                <span><strong>Thanh toán khi nhận hàng (COD)</strong></span>
+              </label>
+              <label class="list-group-item border-0">
+                <input class="form-check-input" type="radio" name="payment_method" value="bank">
+                <span><strong>Chuyển khoản ngân hàng</strong></span>
+              </label>
+              <label class="list-group-item border-0">
+                <input class="form-check-input" type="radio" name="payment_method" value="paypal">
+                <span><strong>Thanh toán qua PayPal</strong></span>
+              </label>
             </div>
-            <span class="text-muted"><?= number_format($item['price'] * $item['qty']) ?> đ</span>
-          </li>
-        <?php endforeach; ?>
-        <li class="list-group-item d-flex justify-content-between">
-          <span><strong>Tổng cộng</strong></span>
-          <strong><?= number_format($total) ?> đ</strong>
-        </li>
-      </ul>
-      <button type="submit" class="btn btn-primary w-100 py-2">Xác nhận đặt hàng</button>
-    </div>
-  </form>
-</div>
+
+            <button type="submit" class="btn btn-dark btn-lg w-100 text-uppercase">
+              Đặt hàng ngay
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <!-- END FORM -->
+  </div>
+</section>
