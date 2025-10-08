@@ -67,18 +67,44 @@
         </div>
 
         <!-- USER + HEART -->
-        <ul class="d-flex list-unstyled m-0 align-items-center gap-2">
-          <li>
-            <a href="<?= BASE_URL ?>user/login" class="rounded-circle bg-light p-2 mx-1 d-flex align-items-center justify-content-center">
-              <svg width="22" height="22"><use xlink:href="#user"></use></svg>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="rounded-circle bg-light p-2 mx-1 d-flex align-items-center justify-content-center">
-              <svg width="22" height="22"><use xlink:href="#heart"></use></svg>
-            </a>
-          </li>
-        </ul>
+     <ul class="d-flex list-unstyled m-0 align-items-center ">
+      <?php if (isset($_SESSION['user'])): ?>
+        <!-- Nếu đã đăng nhập -->
+        <li class="nav-item dropdown">
+          <a href="#" class="rounded-circle bg-light p-2 mx-1 d-flex align-items-center justify-content-center"
+            id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration:none;">
+            <svg width="22" height="22"><use xlink:href="#user"></use></svg>
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2" aria-labelledby="userDropdown">
+            <li class="px-3 py-2 text-center border-bottom">
+              <strong><?= htmlspecialchars($_SESSION['user']['name']) ?></strong><br>
+              <small class="text-muted"><?= htmlspecialchars($_SESSION['user']['email']) ?></small>
+            </li>
+            <li><a class="dropdown-item" href="<?= BASE_URL ?>user/profile"><i class="bi bi-person me-2"></i> Tài khoản của tôi</a></li>
+            <li><a class="dropdown-item" href="<?= BASE_URL ?>order/myorders"><i class="bi bi-receipt me-2"></i> Đơn hàng của tôi</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="<?= BASE_URL ?>user/logout"><i class="bi bi-box-arrow-right me-2"></i> Đăng xuất</a></li>
+          </ul>
+        </li>
+
+      <?php else: ?>
+        <!-- Nếu chưa đăng nhập -->
+        <li>
+          <a href="<?= BASE_URL ?>user/login" 
+            class="rounded-circle bg-light p-2 mx-1 d-flex align-items-center justify-content-center">
+            <svg width="22" height="22"><use xlink:href="#user"></use></svg>
+          </a>
+        </li>
+      <?php endif; ?>
+
+      <!-- Icon yêu thích -->
+      <li>
+        <a href="#" class="rounded-circle bg-light p-2 mx-1 d-flex align-items-center justify-content-center">
+          <svg width="22" height="22"><use xlink:href="#heart"></use></svg>
+        </a>
+      </li>
+    </ul>
 
       <!-- MINI CART BUTTON -->
       <?php
