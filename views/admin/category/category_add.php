@@ -8,7 +8,7 @@
 
         <main class="p-6">
             <h2 class="text-2xl font-bold mb-6">Thêm Danh Mục</h2>
-            <form action="?controller=category&action=add" method="post" class="bg-white rounded-lg shadow-sm p-6">
+            <form action="/FoodMartLab/admin/admin_category/add" method="post" class="bg-white rounded-lg shadow-sm p-6">
                 <div class="mb-4">
                     <label for="name" class="block text-sm font-medium text-gray-700">Tên danh mục</label>
                     <input type="text" id="name" name="name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm">

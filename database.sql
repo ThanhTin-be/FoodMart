@@ -160,6 +160,7 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`, `price`) VALUES
+(11, 11, 5843, 60, 100000.00),
 (12, 11, 5888, 49, 98000.00),
 (13, 12, 5844, 60, 128000.00),
 (14, 12, 5889, 42, 98000.00),
@@ -1148,7 +1149,7 @@ CREATE TABLE `reviews` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
-
+INSERT INTO `reviews` (`id`, `product_id`, `user_id`, `rating`, `comment`, `created_at`) VALUES ('1', '5888', '10', '5', 'San pham chat luong', current_timestamp());
 --
 -- Cấu trúc bảng cho bảng `subscribers`
 --
