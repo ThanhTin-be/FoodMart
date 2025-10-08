@@ -32,6 +32,10 @@ class App {
         //     echo "Controller Name: {$controllerName}\n";
         //     echo "Controller Path: {$controllerPath}\n";
         // }
+        // if (empty($_GET['ajax'])) {
+        //     echo "Controller Name: {$controllerName}\n";
+        //     echo "Controller Path: {$controllerPath}\n";
+        // }
 
         array_shift($url); // bỏ controller
 
@@ -40,9 +44,10 @@ class App {
             require_once $controllerPath;
             $this->controller = new $controllerName();
             // if (empty($_GET['ajax'])) echo "Controller Loaded: " . get_class($this->controller) . "\n";
+            // if (empty($_GET['ajax'])) echo "Controller Loaded: " . get_class($this->controller) . "\n";
         } else {
             $this->loadError("Không tìm thấy controller: {$controllerPath}");
-            if (empty($_GET['ajax'])) echo "</pre>";
+            // if (empty($_GET['ajax'])) echo "</pre>";
             return;
         }
 
@@ -52,9 +57,15 @@ class App {
             array_shift($url);
         }
         // if (empty($_GET['ajax'])) echo "Method: {$this->method}\n";
+        // if (empty($_GET['ajax'])) echo "Method: {$this->method}\n";
 
         // ✅ Params
         $this->params = $url ? array_values($url) : [];
+        // if (empty($_GET['ajax'])) {
+        //     echo "Params: ";
+        //     print_r($this->params);
+        //     echo "=== DEBUG ROUTER END ===\n</pre>";
+        // }
         // if (empty($_GET['ajax'])) {
         //     echo "Params: ";
         //     print_r($this->params);
