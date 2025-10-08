@@ -1,6 +1,6 @@
 <?php
 require_once ROOT . "core/database.php";
-
+require_once ROOT . "core/helpers.php"; // dùng generateSlug
 class User extends Database {
     protected $table = "users";
 
