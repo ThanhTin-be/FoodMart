@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 03, 2025 lúc 09:14 AM
+-- Thời gian đã tạo: Th10 06, 2025 lúc 04:41 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `foodmart_full`
+-- Cơ sở dữ liệu: `foodmart_full_v1`
 --
 
 -- --------------------------------------------------------
@@ -83,7 +83,7 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `thumbnail`, `banner`, `slug`, `parent_id`, `description`) VALUES
-(1, 'Bánh Trung Thu', NULL, 'banners/banhtrungthu.webp', 'banh-trung-thu', NULL, NULL),
+(1, 'Bánh Trung Thu', NULL, 'banners/banhtrungthu.webp', 'banh-trung-thu', NULL, ''),
 (2, 'Bánh bao - Bánh mì - Pizza', NULL, NULL, 'banh-bao-banh-mi-pizza', NULL, NULL),
 (3, 'Dầu ăn - Nước chấm - Gia vị', NULL, 'banners/7.DauAn.jpg', 'dau-an-nuoc-cham-gia-vi', NULL, NULL),
 (4, 'Trái cây', NULL, 'banners/traicaythegioi.webp', 'trai-cay', NULL, NULL),
@@ -126,7 +126,20 @@ INSERT INTO `orders` (`id`, `user_id`, `total_price`, `status`, `created_at`, `u
 (8, 9, 300000.00, 'dang_giao', '2025-09-24 22:00:00', '2025-09-24 22:30:00'),
 (9, 10, 200000.00, 'da_giao', '2025-09-24 23:00:00', '2025-09-24 23:45:00'),
 (10, 7, 100000.00, 'huy', '2025-09-25 00:00:00', '2025-09-30 08:32:13'),
-(11, 11, 10802000.00, 'thanh_cong', '2024-09-19 20:30:00', '2024-09-19 20:30:00');
+(11, 11, 10802000.00, 'thanh_cong', '2024-09-19 20:30:00', '2024-09-19 20:30:00'),
+(12, 12, 11844000.00, 'thanh_cong', '2024-10-25 03:15:00', '2024-10-25 03:15:00'),
+(13, 13, 15671000.00, 'thanh_cong', '2024-11-21 21:15:00', '2024-11-21 21:15:00'),
+(14, 14, 15947000.00, 'thanh_cong', '2024-12-28 04:20:00', '2024-12-28 04:20:00'),
+(15, 15, 20047000.00, 'thanh_cong', '2025-01-25 23:30:00', '2025-01-25 23:30:00'),
+(16, 16, 20063000.00, 'thanh_cong', '2025-02-20 05:50:00', '2025-02-20 05:50:00'),
+(17, 17, 7101000.00, 'thanh_cong', '2025-03-28 22:15:00', '2025-09-26 03:16:48'),
+(18, 18, 7098000.00, 'thanh_cong', '2025-04-21 06:25:00', '2025-04-21 06:25:00'),
+(19, 19, 8121000.00, 'thanh_cong', '2025-05-30 00:20:00', '2025-05-30 00:20:00'),
+(20, 20, 8164000.00, 'thanh_cong', '2025-06-22 05:10:00', '2025-06-22 05:10:00'),
+(21, 21, 12035000.00, 'thanh_cong', '2025-07-26 21:10:00', '2025-07-26 21:10:00'),
+(22, 22, 12049000.00, 'thanh_cong', '2025-08-19 06:50:00', '2025-08-19 06:50:00'),
+(23, 23, 10035000.00, 'thanh_cong', '2025-09-22 20:45:00', '2025-09-22 20:45:00'),
+(24, 24, 10037000.00, 'thanh_cong', '2025-10-25 06:30:00', '2025-10-25 06:30:00');
 
 -- --------------------------------------------------------
 
@@ -147,7 +160,34 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`, `price`) VALUES
-(12, 11, 5888, 49, 98000.00);
+(11, 11, 5843, 60, 100000.00),
+(12, 11, 5888, 49, 98000.00),
+(13, 12, 5844, 60, 128000.00),
+(14, 12, 5889, 42, 98000.00),
+(15, 13, 5991, 89, 75000.00),
+(16, 13, 6081, 30, 299000.00),
+(17, 14, 5992, 93, 79000.00),
+(18, 14, 6082, 29, 299000.00),
+(19, 15, 6165, 127, 79000.00),
+(20, 15, 6175, 118, 85000.00),
+(21, 16, 6166, 145, 69000.00),
+(22, 16, 6176, 228, 44000.00),
+(27, 17, 6269, 31, 91000.00),
+(28, 17, 6271, 28, 155000.00),
+(29, 18, 6270, 41, 78000.00),
+(30, 18, 6272, 100, 39000.00),
+(31, 19, 6382, 31, 129000.00),
+(32, 19, 6384, 41, 100000.00),
+(33, 20, 6383, 94, 26000.00),
+(34, 20, 6385, 63, 90000.00),
+(35, 21, 6467, 500, 11000.00),
+(36, 21, 6469, 187, 35000.00),
+(37, 22, 6468, 73, 102000.00),
+(38, 22, 6470, 131, 35000.00),
+(39, 23, 6590, 265, 19000.00),
+(40, 23, 6592, 200, 25000.00),
+(41, 24, 6591, 103, 54000.00),
+(42, 24, 6593, 128, 35000.00);
 
 -- --------------------------------------------------------
 
@@ -179,10 +219,10 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `category_id`, `name`, `slug`, `description`, `short_desc`, `unit`, `price`, `old_price`, `image`, `gallery`, `stock`, `is_featured`, `status`, `created_at`, `updated_at`) VALUES
-(5843, 1, 'Hộp Bánh Trung Thu Hoa Nguyệt 1 Maison 240g (1 Hộp)', 'hop-banh-trung-thu-hoa-nguyet-1-maison-240g-1-hop', NULL, NULL, NULL, 100000.00, 150000.00, 'products/631555-8938528019131.webp', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-09-25 10:43:59'),
-(5844, 1, 'Hộp Bánh Trung Thu Hân Hoan Maison 320g (1 Hộp)', 'hop-banh-trung-thu-han-hoan-maison-320g-1-hop', NULL, NULL, NULL, 128000.00, NULL, 'products/631558-8938528019032.webp', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-09-25 10:43:59'),
-(5845, 1, 'Hộp Bánh Trung Thu Dịu Dàng Maison 480g (1 Hộp)', 'hop-banh-trung-thu-diu-dang-maison-480g-1-hop', NULL, NULL, NULL, 71000.00, NULL, 'products/631561-8938528019049.webp', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-09-25 10:43:59'),
-(5846, 1, 'Hộp Bánh Trung Thu Hứng Khởi Maison 640g (1 Hộp)', 'hop-banh-trung-thu-hung-khoi-maison-640g-1-hop', NULL, NULL, NULL, 61000.00, NULL, 'products/631564-8938528019025.webp', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-09-25 10:43:59'),
+(5843, 1, 'Hộp Bánh Trung Thu Hoa Nguyệt 1 Maison 240g (1 Hộp)', 'hop-banh-trung-thu-hoa-nguyet-1-maison-240g-1-hop', 'abc', NULL, NULL, 100000.00, 150000.00, 'products/631555-8938528019131.webp', NULL, 100, 1, 1, '2025-09-24 01:59:45', '2025-10-05 14:17:17'),
+(5844, 1, 'Hộp Bánh Trung Thu Hân Hoan Maison 320g (1 Hộp)', 'hop-banh-trung-thu-han-hoan-maison-320g-1-hop', 'null', NULL, NULL, 128000.00, NULL, 'products/631558-8938528019032.webp', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-10-05 14:06:58'),
+(5845, 1, 'Hộp Bánh Trung Thu Dịu Dàng Maison 480g (1 Hộp)', 'hop-banh-trung-thu-diu-dang-maison-480g-1-hop', '', NULL, NULL, 71000.00, NULL, 'products/631561-8938528019049.webp', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-10-05 14:07:06'),
+(5846, 1, 'Hộp Bánh Trung Thu Hứng Khởi Maison 640g (1 Hộp)', 'hop-banh-trung-thu-hung-khoi-maison-640g-1-hop', '', NULL, NULL, 61000.00, NULL, 'products/631564-8938528019025.webp', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-10-05 14:07:11'),
 (5847, 1, 'Bánh Trung Thu Thập Cẩm Gà Quay Savoure 150g (1 Cái)', 'banh-trung-thu-thap-cam-ga-quay-savoure-150g-1-cai', NULL, NULL, NULL, 31000.00, NULL, 'products/8936076272657.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-09-25 10:43:59'),
 (5848, 1, 'Bánh Trung Thu Matcha Đậu Đỏ Hạt Sen Savoure 185g (1 Cái)', 'banh-trung-thu-matcha-dau-do-hat-sen-savoure-185g-1-cai', NULL, NULL, NULL, 121000.00, NULL, 'products/8936076272367.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-09-25 10:43:59'),
 (5849, 1, 'Bánh Trung Thu Lá Dứa Đậu Xanh Savoure 150g (1 Cái)', 'banh-trung-thu-la-dua-dau-xanh-savoure-150g-1-cai', NULL, NULL, NULL, 142000.00, NULL, 'products/8936076272688.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-09-25 10:43:59'),
@@ -1109,7 +1149,7 @@ CREATE TABLE `reviews` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
-
+INSERT INTO `reviews` (`id`, `product_id`, `user_id`, `rating`, `comment`, `created_at`) VALUES ('1', '5888', '10', '5', 'San pham chat luong', current_timestamp());
 --
 -- Cấu trúc bảng cho bảng `subscribers`
 --
@@ -1178,7 +1218,20 @@ INSERT INTO `users` (`id`, `name`, `email`, `address`, `phone`, `password`, `rol
 (8, 'Nguyen Van A', 'nguyenvana@demo.com', '258 Nguyễn Trãi, Thanh Hóa', '0967890123', 'hashed_password_a', 'user', '2025-09-24 23:00:00'),
 (9, 'Tran Thi B', 'tranthib@demo.com', '369 Hai Bà Trưng, Vinh', '0954321098', 'hashed_password_b', 'user', '2025-09-24 23:15:00'),
 (10, 'Le Van C', 'levanc@demo.com', '741 Lê Hồng Phong, Biên Hòa', '0998765432', 'hashed_password_c', 'user', '2025-09-24 23:30:00'),
-(11, 'Pham Van D', 'phamvand@demo.com', '23 Trần Hưng Đạo, Hà Nội', '0911111111', 'hashed_password_d', 'user', '2025-09-24 23:45:00');
+(11, 'Pham Van D', 'phamvand@demo.com', '23 Trần Hưng Đạo, Hà Nội', '0911111111', 'hashed_password_d', 'user', '2025-09-24 23:45:00'),
+(12, 'Nguyen Thi E', 'nguyenthie@demo.com', '56 Nguyễn Văn Linh, Đà Nẵng', '0922222222', 'hashed_password_e', 'user', '2024-10-10 01:00:00'),
+(13, 'Le Van F', 'levanf@demo.com', '12 Lê Lợi, Hải Phòng', '0933333333', 'hashed_password_f', 'user', '2024-09-11 19:30:00'),
+(14, 'Tran Thi G', 'tranthig@demo.com', '78 Nguyễn Huệ, Cần Thơ', '0944444444', 'hashed_password_g', 'user', '2024-10-18 00:45:00'),
+(15, 'Pham Van H', 'phamvanh@demo.com', '34 Hoàng Văn Thụ, Đà Nẵng', '0955555555', 'hashed_password_h', 'user', '2024-09-24 20:20:00'),
+(16, 'Do Thi I', 'dothii@demo.com', '56 Lý Thường Kiệt, Nha Trang', '0966666666', 'hashed_password_i', 'user', '2024-10-12 02:40:00'),
+(17, 'Nguyen Van J', 'nguyenvanj@demo.com', '21 Trần Hưng Đạo, Hà Nội', '0977777777', 'hashed_password_j', 'user', '2024-09-27 18:30:00'),
+(18, 'Le Thi K', 'lethik@demo.com', '98 Pasteur, TP.HCM', '0988888888', 'hashed_password_k', 'user', '2024-10-15 03:10:00'),
+(19, 'Tran Van L', 'tranvanl@demo.com', '45 Điện Biên Phủ, Đà Nẵng', '0999999999', 'hashed_password_l', 'user', '2024-09-29 20:00:00'),
+(20, 'Pham Thi M', 'phamthim@demo.com', '67 Nguyễn Văn Cừ, Hà Nội', '0901111222', 'hashed_password_m', 'user', '2024-10-18 01:45:00'),
+(21, 'Nguyen Van N', 'nguyenvann@demo.com', '123 Nguyễn Trãi, Hà Nội', '0902222333', 'hashed_password_n', 'user', '2024-09-26 19:40:00'),
+(22, 'Tran Thi O', 'tranthio@demo.com', '456 Lạc Long Quân, TP.HCM', '0903333444', 'hashed_password_o', 'user', '2024-10-19 04:25:00'),
+(23, 'Le Van P', 'levanp@demo.com', '12 Hai Bà Trưng, Hà Nội', '012346789', 'hashed_password_p', 'user', '2024-09-22 18:30:00'),
+(24, 'Pham Thi Q', 'phamthiq@demo.com', '56 Nguyễn Văn Linh, Đà Nẵng', '0905555666', 'hashed_password_q', 'user', '2024-10-25 05:10:00');
 
 -- --------------------------------------------------------
 
@@ -1306,25 +1359,25 @@ ALTER TABLE `blogs`
 -- AUTO_INCREMENT cho bảng `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT cho bảng `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6728;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6730;
 
 --
 -- AUTO_INCREMENT cho bảng `product_images`
@@ -1354,7 +1407,7 @@ ALTER TABLE `tags`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
