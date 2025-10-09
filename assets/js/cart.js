@@ -3,39 +3,35 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('🛒 cart.js loaded, BASE_URL =', BASE_URL)
 
   // ========== 1️⃣ SỰ KIỆN THÊM VÀO GIỎ ==========
-  document.body.addEventListener('click', async (e) => {
-    const btn = e.target.closest('.add-to-cart, .btn-buy')
-    if (!btn) return
+  document.querySelectorAll('.add-to-cart, .btn-buy').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const productId = btn.dataset.id
+      console.log('👉 Click add-to-cart:', productId)
 
-    const productId = btn.dataset.id
-    const isBuyNow = btn.classList.contains('btn-buy')
-    console.log('🛒 Click:', isBuyNow ? 'Buy Now' : 'Add to Cart', productId)
+      try {
+        const url = `${BASE_URL}cart/add/${productId}?ajax=1`
+        console.log('🌍 Fetching:', url)
 
-    try {
-      const url = `${BASE_URL}cart/add/${productId}?ajax=1`
-      const response = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
-      if (!response.ok) throw new Error(`HTTP ${response.status}`)
+        const response = await fetch(url, {
+          headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
 
-      const data = await response.json()
-      console.log('✅ Server response:', data)
+        if (!response.ok) throw new Error(`HTTP error ${response.status}`)
 
-      if (data.success) {
-        updateMiniCart(data)
+        const data = await response.json()
+        console.log('✅ Server response:', data)
 
-        // ✅ Nếu là Buy Now thì redirect sau khi thêm giỏ xong
-        if (isBuyNow) {
-          console.log('➡️ Redirecting to checkout...')
-          setTimeout(() => {
-            window.location.href = `${BASE_URL}checkout/index`
-          }, 500) // đợi 0.5s cho UI cập nhật xong
+        if (data.success) {
+          updateMiniCart(data)
+        } else {
+          console.warn('⚠️ Server trả về lỗi:', data)
         }
-      } else {
-        console.warn('⚠️ Server trả về lỗi:', data)
+      } catch (err) {
+        console.error('❌ Fetch add-to-cart error:', err)
       }
-    } catch (err) {
-      console.error('❌ Fetch add-to-cart error:', err)
-    }
+    })
   })
+
   // ========== 2️⃣ CỘNG / TRỪ TRONG MINI CART ==========
   document.body.addEventListener('click', async (e) => {
     if (
