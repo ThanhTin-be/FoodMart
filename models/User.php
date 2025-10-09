@@ -37,4 +37,36 @@ class User extends Database {
         $stmt->bind_param("ssss", $name, $email, $hash, $role);
         return $stmt->execute();
     }
+    // Cập nhật thông tin user
+    public function updateProfile($id, $data) {
+        $fields = [];
+        $params = [];
+        $types = "";
+
+        foreach (['name','email','phone','address'] as $field) {
+            if (!empty($data[$field])) {
+                $fields[] = "$field = ?";
+                $params[] = $data[$field];
+                $types .= "s";
+            }
+        }
+
+        if (empty($fields)) return false;
+
+        $sql = "UPDATE users SET " . implode(", ", $fields) . " WHERE id = ?";
+        $params[] = $id;
+        $types .= "i";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param($types, ...$params);
+        return $stmt->execute();
+    }
+    // Cập nhật mật khẩu user
+    public function updatePassword($id, $newPassword) {
+        $hash = password_hash($newPassword, PASSWORD_DEFAULT);
+        $sql = "UPDATE users SET password = ? WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("si", $hash, $id);
+        return $stmt->execute();
+    }
 }
