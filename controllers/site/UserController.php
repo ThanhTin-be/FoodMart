@@ -6,7 +6,6 @@ class UserController extends Controller {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = trim($_POST['email']);
             $password = trim($_POST['password']);
-
             $userModel = $this->model('User');
             $user = $userModel->getByEmail($email);
 
@@ -22,7 +21,9 @@ class UserController extends Controller {
                         'id'    => $user['id'],
                         'name'  => $user['name'],
                         'email' => $user['email'],
-                        'role'  => $user['role']
+                        'phone' => $user['phone'],
+                        'role'  => $user['role'],
+                        'address' => $user['address'],
                     ];
 
                     if (!empty($_SESSION['return_url'])) {
