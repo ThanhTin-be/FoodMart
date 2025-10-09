@@ -20,25 +20,30 @@
             <i class="fas fa-tags mr-3"></i>
             Danh mục
         </a>
-        <a href="/FoodMartLab/admin_order/index" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200">
+        <a href="/FoodMartLab/admin/admin_order/index" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200">
             <i class="fas fa-shopping-cart mr-3"></i>
             Đơn hàng
         </a>
-        <a href="/FoodMartLab/admin_costumer/index" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200">
+        <a href="/FoodMartLab/admin/admin_customer/index" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200">
             <i class="fas fa-users mr-3"></i>
             Khách hàng
         </a>
-        <a href="/FoodMartLab/admin_review/index" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200">
+        <a href="/FoodMartLab/admin/admin_review/index" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200">
             <i class="fas fa-star mr-3"></i>
             Đánh giá
         </a>
-        <a href="/FoodMartLab/admin_voucher/index" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200">
+        <a href="/FoodMartLab/admin/admin_voucher/index" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200">
             <i class="fas fa-ticket-alt mr-3"></i>
             Voucher
         </a>
-        <a href="/FoodMartLab/admin_blog/index" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200">
+        <a href="/FoodMartLab/admin/admin_blog/index" class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200">
             <i class="fas fa-blog mr-3"></i>
             Bài viết
         </a>
+        <div class="col-6 col-lg-3 text-center text-lg-start">
+            <a href="<?= BASE_URL ?>">
+                <img src="<?= BASE_URL ?>assets/images/logo.png" alt="FoodMart Logo" class="img-fluid" style="max-height:30px; margin-left:15px;">
+            </a>
+        </div>
     </nav>
 </div>

@@ -62,7 +62,7 @@ class Admin_productController extends Controller {
                     'text' => 'Thêm sản phẩm thất bại: ' . $e->getMessage()
                 ];
             }
-            header('Location: ' . BASE_URL . 'admin_product/index');
+            header('Location: ' . BASE_URL . 'admin/admin_product/index');
             exit;
         } else {
             // Xóa thông báo cũ khi hiển thị form
@@ -94,7 +94,7 @@ class Admin_productController extends Controller {
             error_log("Category ID received: " . ($category_id ?? 'null'));
 
             $this->model->updateProduct($id, $name, $category_id, $price, $stock, $description, $status, $image, $removeImage);
-            header('Location: ' . BASE_URL . 'admin_product/index');
+            header('Location: ' . BASE_URL . 'admin/admin_product/index');
         } else {
             $product = $this->model->getProductById($id);
             $categories = $this->categoryModel->getAllCategories();
@@ -109,7 +109,7 @@ class Admin_productController extends Controller {
     public function delete() {
         $id = $_GET['id'];
         $this->model->deleteProduct($id);
-        header('Location: ' . BASE_URL . 'admin_product/index');
+        header('Location: ' . BASE_URL . 'admin/admin_product/index');
     }
 
     public function search() {

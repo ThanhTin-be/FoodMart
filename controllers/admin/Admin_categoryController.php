@@ -22,7 +22,7 @@ class Admin_categoryController extends Controller {
             $name = $_POST['name'];
             $description = $_POST['description'];
             $this->model->addCategory($name, $description);
-            header('Location: ' . BASE_URL . 'admin_category/index');
+            header('Location: ' . BASE_URL . 'admin/admin_category/index');
             exit;  // Thêm để chắc chắn redirect ngay lập tức
         } else {
             require_once ROOT. '/views/admin/category/category_add.php';
@@ -35,7 +35,7 @@ class Admin_categoryController extends Controller {
             $name = $_POST['name'];
             $description = $_POST['description'];
             $this->model->updateCategory($id, $name, $description);
-            header('Location: ' . BASE_URL . 'admin_category/index');
+            header('Location: ' . BASE_URL . 'admin/admin_category/index');
         } else {
             $category = $this->model->getCategoryById($id);
             $data = [
@@ -48,7 +48,7 @@ class Admin_categoryController extends Controller {
     public function delete() {
         $id = $_GET['id'];
         $this->model->deleteCategory($id);
-        header('Location: ' . BASE_URL . 'admin_category/index');
+        header('Location: ' . BASE_URL . 'admin/admin_category/index');
     }
 
 }
