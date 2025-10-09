@@ -91,26 +91,27 @@
                 <em><?= $product['stock'] > 0 ? $product['stock']." in stock" : "Out of stock" ?></em>
               </div>
               <div class="stock-button-wrap">
-                <form method="post" action="<?= BASE_URL ?>/cart/add">
-                  <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
-                  <div class="input-group product-qty" style="max-width: 150px;">
-                    <span class="input-group-btn">
-                      <button type="button" class="quantity-left-minus btn btn-light btn-number">
-                        <svg width="16" height="16"><use xlink:href="#minus"></use></svg>
-                      </button>
-                    </span>
-                    <input type="text" id="quantity" name="quantity" class="form-control input-number text-center" value="1" min="1" max="<?= $product['stock'] ?>">
-                    <span class="input-group-btn">
-                      <button type="button" class="quantity-right-plus btn btn-light btn-number">
-                        <svg width="16" height="16"><use xlink:href="#plus"></use></svg>
-                      </button>
-                    </span>
-                  </div>
-                  <div class="qty-button d-flex flex-wrap pt-3">
-                    <button type="submit" class="btn btn-primary py-3 px-4 text-uppercase me-3 mt-3">Buy now</button>
-                    <button type="submit" name="add-to-cart" class="btn btn-dark py-3 px-4 text-uppercase mt-3">Add to cart</button>                      
-                  </div>
-                </form>
+             <form id="product-form" method="post">
+              <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+              <div class="input-group product-qty" style="max-width: 150px;">
+                <span class="input-group-btn">
+                  <button type="button" class="quantity-left-minus btn btn-light btn-number">
+                    <svg width="16" height="16"><use xlink:href="#minus"></use></svg>
+                  </button>
+                </span>
+                <input type="text" id="quantity" name="quantity" class="form-control input-number text-center" value="1" min="1" max="<?= $product['stock'] ?>">
+                <span class="input-group-btn">
+                  <button type="button" class="quantity-right-plus btn btn-light btn-number">
+                    <svg width="16" height="16"><use xlink:href="#plus"></use></svg>
+                  </button>
+                </span>
+              </div>
+
+              <div class="qty-button d-flex flex-wrap pt-3">
+                <button type="button" class="btn btn-primary py-3 px-4 text-uppercase me-3 mt-3 btn-buy" data-id="<?= $product['id'] ?>">Buy now</button>
+                <button type="button" class="btn btn-dark py-3 px-4 text-uppercase mt-3 add-to-cart" data-id="<?= $product['id'] ?>">Add to cart</button>                  
+              </div>
+            </form>
               </div>
             </div>
           </div>
@@ -289,7 +290,7 @@
                   <!-- Nút mua -->
                   <button class="w-full flex items-center justify-center gap-2 bg-sky-500/75 text-white 
                                 font-medium py-2 px-3 rounded-md hover:bg-gray-500 active:bg-gray-300 
-                                active:text-gray-800 transition mt-3">
+                                active:text-gray-800 transition mt-3" data-id="<?= $item['id']?>">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
                         viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 

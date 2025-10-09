@@ -3,35 +3,39 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('🛒 cart.js loaded, BASE_URL =', BASE_URL)
 
   // ========== 1️⃣ SỰ KIỆN THÊM VÀO GIỎ ==========
-  document.querySelectorAll('.add-to-cart, .btn-buy').forEach((btn) => {
-    btn.addEventListener('click', async () => {
-      const productId = btn.dataset.id
-      console.log('👉 Click add-to-cart:', productId)
+  document.body.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.add-to-cart, .btn-buy')
+    if (!btn) return
 
-      try {
-        const url = `${BASE_URL}cart/add/${productId}?ajax=1`
-        console.log('🌍 Fetching:', url)
+    const productId = btn.dataset.id
+    const isBuyNow = btn.classList.contains('btn-buy')
+    console.log('🛒 Click:', isBuyNow ? 'Buy Now' : 'Add to Cart', productId)
 
-        const response = await fetch(url, {
-          headers: { 'X-Requested-With': 'XMLHttpRequest' }
-        })
+    try {
+      const url = `${BASE_URL}cart/add/${productId}?ajax=1`
+      const response = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+      if (!response.ok) throw new Error(`HTTP ${response.status}`)
 
-        if (!response.ok) throw new Error(`HTTP error ${response.status}`)
+      const data = await response.json()
+      console.log('✅ Server response:', data)
 
-        const data = await response.json()
-        console.log('✅ Server response:', data)
+      if (data.success) {
+        updateMiniCart(data)
 
-        if (data.success) {
-          updateMiniCart(data)
-        } else {
-          console.warn('⚠️ Server trả về lỗi:', data)
+        // ✅ Nếu là Buy Now thì redirect sau khi thêm giỏ xong
+        if (isBuyNow) {
+          console.log('➡️ Redirecting to checkout...')
+          setTimeout(() => {
+            window.location.href = `${BASE_URL}checkout/index`
+          }, 500) // đợi 0.5s cho UI cập nhật xong
         }
-      } catch (err) {
-        console.error('❌ Fetch add-to-cart error:', err)
+      } else {
+        console.warn('⚠️ Server trả về lỗi:', data)
       }
-    })
+    } catch (err) {
+      console.error('❌ Fetch add-to-cart error:', err)
+    }
   })
-
   // ========== 2️⃣ CỘNG / TRỪ TRONG MINI CART ==========
   document.body.addEventListener('click', async (e) => {
     if (
@@ -140,26 +144,22 @@ function updateMiniCart(data) {
           row.dataset.id = item.id
           row.innerHTML = `
             <div class="d-flex align-items-center gap-2">
-              <img src="${BASE_URL}assets/images/${item.image}" alt="${
-            item.name
-          }"
+              <img src="${BASE_URL}assets/images/${item.image}" alt="${item.name
+            }"
                    class="rounded" width="50" height="50" style="object-fit:cover;">
               <div>
                 <h6 class="my-0">${item.name}</h6>
                 <div class="d-flex align-items-center btn-outline-secondary cart-qty-box">
-                  <button class="btn btn-sm btn-outline-secondary cart-minus" data-id="${
-                    item.id
-                  }">−</button>
+                  <button class="btn btn-sm btn-outline-secondary cart-minus" data-id="${item.id
+            }">−</button>
                   <input type="text" class="cart-qty-input form-control form-control-sm text-center"
-                         data-id="${item.id}" value="${
-            item.qty
-          }" style="width:45px;">
-                  <button class="btn btn-sm btn-outline-secondary cart-plus" data-id="${
-                    item.id
-                  }">+</button>
+                         data-id="${item.id}" value="${item.qty
+            }" style="width:45px;">
+                  <button class="btn btn-sm btn-outline-secondary cart-plus" data-id="${item.id
+            }">+</button>
                   <span class="text-muted">× ${new Intl.NumberFormat(
-                    'vi-VN'
-                  ).format(item.price)}đ</span>
+              'vi-VN'
+            ).format(item.price)}đ</span>
                 </div>
               </div>
             </div>

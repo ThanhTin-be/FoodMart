@@ -39,4 +39,3 @@ document.addEventListener('click', async (e) => {
   }
 });
 </script>
-màu trạng thái động
