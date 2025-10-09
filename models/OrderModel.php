@@ -45,6 +45,51 @@ class OrderModel extends Database{
             die("<pre style='color:red'>Lỗi SQL: " . $e->getMessage() . "</pre>");
         }
     }
+    public function getOrderDetail($order_id, $user_id)
+    {
+        $sql = "SELECT * FROM  orders Where id = ? AND user_id = ?" ;
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ii",$order_id,$user_id);
+        $stmt->execute();
+        $order = $stmt->get_result()->fetch_assoc();
+        if (!$order) return null;
+
+        // Lấy chi tiết sản phẩm trong đơn
+        $sql_items = "SELECT oi.*, p.name, p.image 
+                    FROM order_items oi 
+                    JOIN products p ON oi.product_id = p.id
+                    WHERE oi.order_id = ?";
+        $stmt2 = $this->conn->prepare($sql_items);
+        $stmt2->bind_param("i", $order_id);
+        $stmt2->execute();
+        $order['items'] = $stmt2->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        return $order;
+    }
+    public function updateStatus($order_id, $status) {
+    $sql = "UPDATE orders SET status = ? WHERE id = ?";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("si", $status, $order_id);
+    return $stmt->execute();
+}
+
+    public function getOrdersByUserPaginated($user_id, $limit, $offset) {
+        $sql = "SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("iii", $user_id, $limit, $offset);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function countOrdersByUser($user_id) {
+        $sql = "SELECT COUNT(*) as total FROM orders WHERE user_id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $row = $stmt->get_result()->fetch_assoc();
+        return $row['total'] ?? 0;
+    }
+
 
     // Lấy danh sách đơn hàng của user
     public function getOrdersByUser($user_id)
