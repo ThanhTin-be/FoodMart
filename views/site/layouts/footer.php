@@ -151,6 +151,12 @@
 <!-- JS chính -->
 <script src="<?= BASE_URL ?>assets/js/script.js"></script>
 <script src="<?= BASE_URL ?>assets/js/cart.js"></script>
+<!-- Chỉ load khi ở trang checkout -->
+<?php
+$uri = $_SERVER['REQUEST_URI'];
+if (strpos($uri, 'checkout/index') !== false): ?>
+  <script src="<?= BASE_URL ?>assets/js/checkout.js"></script>
+<?php endif; ?>
 
 <!-- ===================== Floating Mini Cart (hiện khi scroll) ===================== -->
 <?php
