@@ -7,9 +7,9 @@ $jsonData = json_encode($dashboardData);
     <div class="lg:ml-64">
         <!-- Đầu trang (Header) -->
         <header class="bg-black bg-opacity-30 shadow-sm border-b border-gray-200 border border-gray-300">
-            <?php include ROOT . '/views/layouts/admin/header.php'; ?>
+            <?php include ROOT . '/views/admin/layouts/header.php'; ?>
         </header>
-         <?php include ROOT . '/views/layouts/admin/sidebar.php'; ?>
+         <?php include ROOT . '/views/admin/layouts/sidebar.php'; ?>
         <!-- Nội dung chính của Dashboard -->
         <main class="p-6">
             <!-- Phần Dashboard -->
@@ -264,5 +264,5 @@ $jsonData = json_encode($dashboardData);
         console.log("Full Dashboard Data:", dashboardData);
     </script>
     <script src="<?= BASE_URL ?>/assets/admin/js/scripts.js?v=<?= time() ?>"></script>
-     <?php include ROOT . '/views/layouts/admin/footer.php'; ?>
+     <?php include ROOT . '/views/admin/layouts/footer.php'; ?>
 </html>

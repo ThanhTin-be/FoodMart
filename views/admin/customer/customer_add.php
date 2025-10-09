@@ -3,10 +3,10 @@
 ?>
 
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
-<?php include ROOT. '/views/layouts/admin/sidebar.php'; ?>
+<?php include ROOT. '/views/admin/layouts/sidebar.php'; ?>
 
     <div class="lg:ml-64">
-    <?php include ROOT. '/views/layouts/admin/header.php'; ?>
+    <?php include ROOT. '/views/admin/layouts/header.php'; ?>
 
         <main class="p-6">
             <h2 class="text-2xl font-bold mb-6">Thêm Khách Hàng</h2>
