@@ -1,7 +1,7 @@
 <?php
 class CheckoutController extends Controller {
 
-    // Trang checkout
+    // Trang checkout chính
     public function index() {
         if (empty($_SESSION['user'])) {
             $_SESSION['return_url'] = 'checkout/index';
