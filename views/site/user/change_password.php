@@ -31,15 +31,15 @@
       <form action="<?= BASE_URL ?>user/updatePassword" method="post" class="space-y-5">
         <div>
           <label class="block mb-1 text-sm text-gray-600">Mật khẩu hiện tại</label>
-          <input type="password" name="current_password" class="w-full border rounded-lg px-3 py-2 focus:outline-blue-500" required>
+          <input type="password" name="current_password" class="w-full  border-1  rounded-lg px-3 py-2 focus:outline-blue-500" required>
         </div>
         <div>
           <label class="block mb-1 text-sm text-gray-600">Mật khẩu mới</label>
-          <input type="password" name="new_password" class="w-full border rounded-lg px-3 py-2 focus:outline-blue-500" required>
+          <input type="password" name="new_password" class="w-full  border-1  rounded-lg px-3 py-2 focus:outline-blue-500" required>
         </div>
         <div>
           <label class="block mb-1 text-sm text-gray-600">Xác nhận mật khẩu mới</label>
-          <input type="password" name="confirm_password" class="w-full border rounded-lg px-3 py-2 focus:outline-blue-500" required>
+          <input type="password" name="confirm_password" class="w-full  border-1  rounded-lg px-3 py-2 focus:outline-blue-500" required>
         </div>
         <div class="flex justify-end">
           <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">

@@ -25,19 +25,19 @@
       <form action="<?= BASE_URL ?>user/updateProfile" method="post" class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label class="block mb-1 text-sm text-gray-600">Họ và tên</label>
-          <input type="text" name="name" value="<?= htmlspecialchars($user['name']) ?>" class="w-full border rounded-lg px-3 py-2 focus:outline-blue-500">
+          <input type="text" name="name" value="<?= htmlspecialchars($user['name']) ?>" class="w-full border-1 rounded-lg px-3 py-2 focus:outline-blue-500">
         </div>
         <div>
           <label class="block mb-1 text-sm text-gray-600">Email</label>
-          <input type="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" class="w-full border rounded-lg px-3 py-2 focus:outline-blue-500">
+          <input type="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" class="w-full border-1 rounded-lg px-3 py-2 focus:outline-blue-500">
         </div>
         <div>
           <label class="block mb-1 text-sm text-gray-600">Số điện thoại</label>
-          <input type="text" name="phone" value="<?= htmlspecialchars($user['phone']) ?>" class="w-full border rounded-lg px-3 py-2 focus:outline-blue-500">
+          <input type="text" name="phone" value="<?= htmlspecialchars($user['phone']) ?>" class="w-full border-1 rounded-lg px-3 py-2 focus:outline-blue-500">
         </div>
         <div>
           <label class="block mb-1 text-sm text-gray-600">Địa chỉ</label>
-          <input type="text" name="address" value="<?= htmlspecialchars($user['address']) ?>" class="w-full border rounded-lg px-3 py-2 focus:outline-blue-500">
+          <input type="text" name="address" value="<?= htmlspecialchars($user['address']) ?>" class="w-full border-1 rounded-lg px-3 py-2 focus:outline-blue-500">
         </div>
         <div class="md:col-span-2 flex justify-end">
           <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
