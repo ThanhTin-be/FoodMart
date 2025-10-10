@@ -41,12 +41,13 @@ class DashboardModel extends Database {
             $monthlyRevenueChange = (($monthlyRevenue - $lastMonthlyRevenue) / $lastMonthlyRevenue) * 100;
         }
 
-        // Đơn hàng hôm nay
-        $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM orders WHERE DATE(created_at) = ?");
-        $stmt->bind_param("s", $currentDate);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $todayOrders = $result->fetch_assoc()['total'];
+        // Đơn hàng theo ngày động (mặc định là hôm nay nếu không có tham số)
+            $date = isset($date) ? date('Y-m-d', strtotime($date)) : date('Y-m-d'); // Mặc định là ngày hiện tại
+            $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM orders WHERE DATE(created_at) = ?");
+            $stmt->bind_param("s", $date);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $todayOrders = $result->fetch_assoc()['total'];
 
         // Doanh thu năm
         $stmt = $this->conn->prepare("SELECT SUM(total_price) as total FROM orders WHERE status = 'thanh_cong' AND DATE_FORMAT(created_at, '%Y') = ?");
@@ -56,7 +57,7 @@ class DashboardModel extends Database {
         $yearlyRevenue = $result->fetch_assoc()['total'] ?? 0;
 
         // Đơn hàng tháng
-        $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM orders WHERE DATE_FORMAT(created_at, '%Y-%m') = ?");
+        $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM orders WHERE DATE_FORMAT(created_at, '%Y-%m') = ? AND status = 'thanh_cong'");
         $stmt->bind_param("s", $currentMonth);
         $stmt->execute();
         $result = $stmt->get_result();

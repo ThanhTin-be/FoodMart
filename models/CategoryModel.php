@@ -12,6 +12,7 @@ class CategoryModel extends Database {
         $result = $this->conn->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    
 
     // Lấy category có banner (dùng homepage)
     public function getAllWithBanner() {

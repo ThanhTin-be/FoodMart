@@ -13,7 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       const url = `${BASE_URL}cart/add/${productId}?ajax=1`
-      const response = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+      const response = await fetch(url, {
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      })
       if (!response.ok) throw new Error(`HTTP ${response.status}`)
 
       const data = await response.json()
@@ -36,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('❌ Fetch add-to-cart error:', err)
     }
   })
-
 
   // ========== 2️⃣ CỘNG / TRỪ TRONG MINI CART ==========
   document.body.addEventListener('click', async (e) => {
@@ -146,22 +147,26 @@ function updateMiniCart(data) {
           row.dataset.id = item.id
           row.innerHTML = `
             <div class="d-flex align-items-center gap-2">
-              <img src="${BASE_URL}assets/images/${item.image}" alt="${item.name
-            }"
+              <img src="${BASE_URL}assets/images/${item.image}" alt="${
+            item.name
+          }"
                    class="rounded" width="50" height="50" style="object-fit:cover;">
               <div>
                 <h6 class="my-0">${item.name}</h6>
                 <div class="d-flex align-items-center btn-outline-secondary cart-qty-box">
-                  <button class="btn btn-sm btn-outline-secondary cart-minus" data-id="${item.id
-            }">−</button>
+                  <button class="btn btn-sm btn-outline-secondary cart-minus" data-id="${
+                    item.id
+                  }">−</button>
                   <input type="text" class="cart-qty-input form-control form-control-sm text-center"
-                         data-id="${item.id}" value="${item.qty
-            }" style="width:45px;">
-                  <button class="btn btn-sm btn-outline-secondary cart-plus" data-id="${item.id
-            }">+</button>
+                         data-id="${item.id}" value="${
+            item.qty
+          }" style="width:45px;">
+                  <button class="btn btn-sm btn-outline-secondary cart-plus" data-id="${
+                    item.id
+                  }">+</button>
                   <span class="text-muted">× ${new Intl.NumberFormat(
-              'vi-VN'
-            ).format(item.price)}đ</span>
+                    'vi-VN'
+                  ).format(item.price)}đ</span>
                 </div>
               </div>
             </div>

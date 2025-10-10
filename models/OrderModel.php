@@ -101,7 +101,7 @@ class OrderModel extends Database{
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
     public function getAllOrders() {
-        $sql = "SELECT * FROM orders ORDER BY id ASC";
+        $sql = "SELECT * FROM orders ORDER BY created_at DESC";
         $result = $this->conn->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
