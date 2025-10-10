@@ -40,6 +40,117 @@ class ProductModel extends Database {
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
+    
+    // Đếm tổng sản phẩm (lọc theo category, giá, keyword)
+   public function countByShopFilter($filters) {
+    $sql = "SELECT COUNT(*) AS total FROM {$this->table} WHERE status = 1";
+    $params = [];
+    $types  = "";
+
+    // Lọc theo keyword
+    if (!empty($filters['keyword'])) {
+        $sql .= " AND name LIKE ?";
+        $params[] = "%" . $filters['keyword'] . "%";
+        $types .= "s";
+    }
+
+    // Lọc theo category
+    if (!empty($filters['category'])) {
+        $sql .= " AND category_id = ?";
+        $params[] = (int)$filters['category'];
+        $types .= "i";
+    }
+
+    // Lọc theo khoảng giá
+    if (!empty($filters['min'])) {
+        $sql .= " AND price >= ?";
+        $params[] = (float)$filters['min'];
+        $types .= "d";
+    }
+    if (!empty($filters['max'])) {
+        $sql .= " AND price <= ?";
+        $params[] = (float)$filters['max'];
+        $types .= "d";
+    }
+
+    $stmt = $this->conn->prepare($sql);
+    if (!empty($params)) {
+        $stmt->bind_param($types, ...$params);
+    }
+    $stmt->execute();
+    $res = $stmt->get_result()->fetch_assoc();
+    return $res['total'] ?? 0;
+}
+
+
+    // Lấy danh sách sản phẩm (lọc + phân trang)
+  public function getShopProducts($filters, $limit, $offset, $sort) {
+    // Bắt đầu query
+    $sql = "SELECT * FROM {$this->table} WHERE status = 1";
+    $params = [];
+    $types  = "";
+
+    // Lọc theo từ khóa
+    if (!empty($filters['keyword'])) {
+        $sql .= " AND name LIKE ?";
+        $params[] = "%" . $filters['keyword'] . "%";
+        $types .= "s";
+    }
+
+    // Lọc theo danh mục
+    if (!empty($filters['category'])) {
+        $sql .= " AND category_id = ?";
+        $params[] = (int)$filters['category'];
+        $types .= "i";
+    }
+
+    // Lọc theo khoảng giá
+    if (!empty($filters['min'])) {
+        $sql .= " AND price >= ?";
+        $params[] = (float)$filters['min'];
+        $types .= "d";
+    }
+    if (!empty($filters['max'])) {
+        $sql .= " AND price <= ?";
+        $params[] = (float)$filters['max'];
+        $types .= "d";
+    }
+
+    // Sắp xếp
+    switch ($sort) {
+        case "price-asc":  $sql .= " ORDER BY price ASC"; break;
+        case "price-desc": $sql .= " ORDER BY price DESC"; break;
+        case "title-desc": $sql .= " ORDER BY name DESC"; break;
+        case "title-asc":  $sql .= " ORDER BY name ASC"; break;
+        default:           $sql .= " ORDER BY id ASC"; break;
+    }
+
+    // Giới hạn phân trang (LIMIT phải là literal trong MySQL → không dùng bind_param)
+    $sql .= " LIMIT " . (int)$limit . " OFFSET " . (int)$offset;
+
+    // Debug
+    error_log("[ShopProducts] SQL: " . $sql);
+    error_log("[ShopProducts] Params: " . json_encode($params));
+
+    // Thực thi query
+    $stmt = $this->conn->prepare($sql);
+    if (!$stmt) {
+        error_log("[ShopProducts] Prepare error: " . $this->conn->error);
+        return [];
+    }
+
+    if (!empty($params)) {
+        $stmt->bind_param($types, ...$params);
+    }
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $rows = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+
+    error_log("[ShopProducts] Found rows: " . count($rows));
+    return $rows;
+}
+
     // Lấy sản phẩm liên quan
     public function getRelated($catId, $excludeId = null, $limit = 20) {
         $sql = "SELECT * FROM {$this->table} WHERE category_id = ? ";
