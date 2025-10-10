@@ -29,7 +29,7 @@ class CheckoutController extends Controller {
     }
 
     // Xử lý đặt hàng
-    public function placeOrder() {
+   public function placeOrder() {
         if (!isset($_SESSION['user'])) {
             header("Location: " . BASE_URL . "user/login");
             exit;
@@ -49,8 +49,17 @@ class CheckoutController extends Controller {
         $order_id = $orderModel->createOrder($user_id, $cart, $total);
 
         if ($order_id) {
-            unset($_SESSION['cart']);
-            header("Location: " . BASE_URL . "checkout/thankyou");
+            // Gọi CartController để xóa giỏ hàng trong database
+            require_once ROOT . 'controllers/site/CartController.php';
+            $cartController = new CartController();
+            $result = $cartController->clearCartAfterPayment();
+
+            if ($result['success']) {
+                unset($_SESSION['cart']); // Làm mới session sau khi xóa database
+                header("Location: " . BASE_URL . "checkout/thankyou");
+            } else {
+                echo "<h3 style='color:red'>❌ Có lỗi xảy ra khi xóa giỏ hàng sau khi đặt hàng. Vui lòng thử lại!</h3>";
+            }
         } else {
             echo "<h3 style='color:red'>❌ Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại!</h3>";
         }
