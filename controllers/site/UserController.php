@@ -1,7 +1,10 @@
 <?php
 class UserController extends Controller {
     public function login() {
-        session_start();
+        // Kiểm tra nếu session chưa được khởi tạo
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = trim($_POST['email']);
@@ -10,21 +13,21 @@ class UserController extends Controller {
             $user = $userModel->getByEmail($email);
 
             if ($user) {
-                // 🐞 Debug
-                // var_dump("Nhập:", $password);
-                // var_dump("Hash trong DB:", $user['password']);
-                // var_dump("Verify:", password_verify($password, $user['password']));
-
                 if (password_verify($password, $user['password'])) {
-                    // ✅ Login thành công
+                    // ✅ Đăng nhập thành công
                     $_SESSION['user'] = [
-                        'id'    => $user['id'],
-                        'name'  => $user['name'],
+                        'id' => $user['id'],
+                        'name' => $user['name'],
                         'email' => $user['email'],
                         'phone' => $user['phone'],
-                        'role'  => $user['role'],
+                        'role' => $user['role'],
                         'address' => $user['address'],
                     ];
+
+                    // Đồng bộ giỏ hàng từ database
+                    require_once ROOT . 'controllers/site/CartController.php';
+                    $cartController = new CartController();
+                    $cartController->syncCartOnLogin($user['id']);
 
                     if (!empty($_SESSION['return_url'])) {
                         $redirectUrl = $_SESSION['return_url'];
@@ -147,7 +150,13 @@ class UserController extends Controller {
     }
 
     public function logout() {
-        session_start();
+        // Kiểm tra nếu session chưa được khởi tạo
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        // Xóa session giỏ hàng và thông tin người dùng
+        unset($_SESSION['cart']);
+        unset($_SESSION['user']);
         session_destroy();
         header("Location: " . BASE_URL . "user/login");
         exit;
@@ -163,3 +172,4 @@ class UserController extends Controller {
         // }
     }
 }
+?>

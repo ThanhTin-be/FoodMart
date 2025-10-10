@@ -136,13 +136,17 @@ class CheckoutController extends Controller {
                     }
                 } catch (\Throwable $e) { /* ignore */ }
             }
-
-            // Clear cart + voucher
-            unset($_SESSION['cart'], $_SESSION['voucher']);
-
-            // Điều hướng
-            header("Location: " . BASE_URL . "checkout/thankyou");
-            exit;
+            // Gọi CartController để xóa giỏ hàng trong database
+            require_once ROOT . 'controllers/site/CartController.php';
+            $cartController = new CartController();
+            $clearResult = $cartController->clearCartAfterPayment();
+            if ($clearResult['success']) {
+                unset($_SESSION['voucher']); // Xóa voucher sau khi thanh toán
+                header("Location: " . BASE_URL . "checkout/thankyou");
+                exit;
+            } else {
+                error_log("Failed to clear cart after order: " . $clearResult['error']);
+            }
         }
         // Lỗi
         echo "<h3 style='color:red'>❌ Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại!</h3>";

@@ -1,5 +1,6 @@
 <section class="shopify-cart checkout-wrap py-5">
   <div class="container-fluid">
+    
     <!-- START FORM -->
     <form action="<?= BASE_URL ?>checkout/placeOrder" method="post" class="form-group">
       <div class="row d-flex flex-wrap">
