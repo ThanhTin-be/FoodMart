@@ -107,128 +107,76 @@ function formatCurrency(n) {
 }
 
 // ====================== CẬP NHẬT MINI CART + CART PAGE ======================
+// ====================== CẬP NHẬT MINI CART DROPDOWN ======================
 function updateMiniCart(data) {
   try {
-    console.log('🔄 updateMiniCart:', data)
+    console.log('🔄 updateMiniCart:', data);
 
-    // 1️⃣ Cập nhật các badge đếm item (nhiều nơi)
-    document
-      .querySelectorAll('.cart-count-badge, .cart-count')
-      .forEach((el) => {
-        if (el) el.textContent = data.count
-      })
+    // 1️⃣ Cập nhật số lượng badge
+    document.querySelectorAll('.cart-count-badge, .cart-count').forEach(el => {
+      el.textContent = data.count || 0;
+    });
 
-    // 2️⃣ Cập nhật tổng tiền (nhiều nơi)
-    document
-      .querySelectorAll('.cart-total, .cart-total-float')
-      .forEach((el) => {
-        if (el) el.textContent = formatCurrency(data.total)
-      })
+    // 2️⃣ Cập nhật tổng tiền (nếu có)
+    document.querySelectorAll('.cart-total, .cart-total-float, #mini-cart-total').forEach(el => {
+      el.textContent = formatCurrency(data.total || 0);
+    });
 
-    // 3️⃣ Patch danh sách sản phẩm trong Offcanvas MiniCart
-    const container = document.querySelector('.cart-items')
-    if (container) {
-      const map = new Map()
-      data.cart.forEach((it) => map.set(String(it.id), it))
-
-      // Xóa sản phẩm không còn trong giỏ
-      container.querySelectorAll('.cart-item').forEach((row) => {
-        if (!map.has(row.dataset.id)) row.remove()
-      })
-
-      // Cập nhật hoặc thêm mới
-      data.cart.forEach((item) => {
-        let row = container.querySelector(`.cart-item[data-id="${item.id}"]`)
-        if (!row) {
-          row = document.createElement('li')
-          row.className =
-            'list-group-item d-flex justify-content-between align-items-center lh-sm cart-item'
-          row.dataset.id = item.id
-          row.innerHTML = `
-            <div class="d-flex align-items-center gap-2">
-              <img src="${BASE_URL}assets/images/${item.image}" alt="${item.name
-            }"
-                   class="rounded" width="50" height="50" style="object-fit:cover;">
-              <div>
-                <h6 class="my-0">${item.name}</h6>
-                <div class="d-flex align-items-center btn-outline-secondary cart-qty-box">
-                  <button class="btn btn-sm btn-outline-secondary cart-minus" data-id="${item.id
-            }">−</button>
-                  <input type="text" class="cart-qty-input form-control form-control-sm text-center"
-                         data-id="${item.id}" value="${item.qty
-            }" style="width:45px;">
-                  <button class="btn btn-sm btn-outline-secondary cart-plus" data-id="${item.id
-            }">+</button>
-                  <span class="text-muted">× ${new Intl.NumberFormat(
-              'vi-VN'
-            ).format(item.price)}đ</span>
-                </div>
-              </div>
-            </div>
-            <span class="text-black fw-bold ms-auto cart-line-total">${formatCurrency(
-              item.price * item.qty
-            )}</span>
-          `
-          container.appendChild(row)
-        } else {
-          const qtyInput = row.querySelector('.cart-qty-input')
-          if (qtyInput) qtyInput.value = item.qty
-
-          const lineTotal = row.querySelector('.cart-line-total')
-          if (lineTotal)
-            lineTotal.textContent = formatCurrency(item.price * item.qty)
-        }
-      })
-
-      if (data.cart.length === 0) {
-        container.innerHTML = `<li class="list-group-item text-center text-muted empty-cart">Giỏ hàng trống</li>`
-      }
+    // 3️⃣ Render sản phẩm vào dropdown header mới
+    const container = document.getElementById('mini-cart-items');
+    if (!container) {
+      console.warn("⚠️ Không tìm thấy #mini-cart-items, bỏ qua render mini cart");
+      return;
     }
 
-    // 4️⃣ Floating MiniCart (badge + total)
-    const floatCart = document.getElementById('floating-cart')
-    if (floatCart) {
-      const badge = floatCart.querySelector('.cart-count-badge')
-      const total = floatCart.querySelector('.cart-total-float')
-      if (badge) badge.textContent = data.count
-      if (total) total.textContent = formatCurrency(data.total)
+    // Xóa nội dung cũ
+    container.innerHTML = "";
+
+    if (!data.cart || data.cart.length === 0) {
+      container.innerHTML = `
+        <div class="px-4 py-8 text-center text-gray-500">
+          <p>Giỏ hàng trống</p>
+        </div>
+      `;
+      // Ẩn footer nếu không có sản phẩm
+      const footer = document.getElementById('mini-cart-footer');
+      if (footer) footer.classList.add('hidden');
+      return;
     }
 
-    // 5️⃣ Cập nhật trang Cart (cart/index.php)
-    const cartPage = document.querySelector('.cart table tbody')
-    if (cartPage) {
-      console.log('🧾 Updating main cart table...')
+    // Có sản phẩm → hiển thị danh sách
+    data.cart.forEach(item => {
+      const row = document.createElement('div');
+      row.className = "flex items-center justify-between p-3 border-b border-gray-100";
+      row.dataset.id = item.id;
+      row.innerHTML = `
+        <div class="flex items-center gap-3">
+          <img src="${BASE_URL}assets/images/${item.image}" 
+               alt="${item.name}" 
+               class="w-12 h-12 rounded object-cover">
+          <div>
+            <p class="text-sm font-medium text-gray-900">${item.name}</p>
+            <p class="text-xs text-gray-500">${formatCurrency(item.price)}</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="text-gray-500 hover:text-gray-700 cart-minus" data-id="${item.id}">−</button>
+          <input type="text" value="${item.qty}" data-id="${item.id}" 
+                 class="cart-qty-input w-10 text-center border rounded">
+          <button class="text-gray-500 hover:text-gray-700 cart-plus" data-id="${item.id}">+</button>
+        </div>
+      `;
+      container.appendChild(row);
+    });
 
-      // a) Cập nhật từng dòng
-      data.cart.forEach((item) => {
-        const row = cartPage.querySelector(`tr[data-id='${item.id}']`)
-        if (row) {
-          // Update số lượng input
-          const qtyInput = row.querySelector('.cart-qty-input')
-          if (qtyInput) qtyInput.value = item.qty
+    // 4️⃣ Hiển thị footer + tổng tiền
+    const footer = document.getElementById('mini-cart-footer');
+    const total = document.getElementById('mini-cart-total');
+    if (footer) footer.classList.remove('hidden');
+    if (total) total.textContent = formatCurrency(data.total);
 
-          // Update subtotal
-          const subtotal = row.querySelector('.money.text-dark')
-          if (subtotal)
-            subtotal.textContent = formatCurrency(item.price * item.qty)
-        }
-      })
-
-      // b) Xóa các dòng không còn trong giỏ
-      cartPage.querySelectorAll('tr[data-id]').forEach((row) => {
-        const id = row.dataset.id
-        const stillExist = data.cart.some((p) => String(p.id) === String(id))
-        if (!stillExist) row.remove()
-      })
-
-      // c) Cập nhật tổng giá bên phải (Cart Total)
-      document.querySelectorAll('.cart-totals .text-dark').forEach((el) => {
-        el.textContent = formatCurrency(data.total)
-      })
-    }
-
-    console.log('✅ MiniCart + FloatingCart + Cart page synced!')
+    console.log('✅ Mini Cart Dropdown updated successfully!');
   } catch (err) {
-    console.error('❌ updateMiniCart lỗi:', err)
+    console.error('❌ updateMiniCart lỗi:', err);
   }
 }
