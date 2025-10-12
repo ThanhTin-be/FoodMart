@@ -8,21 +8,20 @@ class HomeController extends Controller {
 
         // Lấy model product
         $productModel = $this->model("ProductModel");
-
+        
         // Lấy blog
         $blogs = $this->model("BlogModel")->getLatestBlogs();
 
         // Lấy sản phẩm theo category, giới hạn 20 mỗi category
         $categoryProducts = [];
-        foreach ($categories as $cat) {
-            $categoryProducts[$cat['slug']] = $productModel->getFeaturedByCategory($cat['id'], 20);
-        }
+        $featured = $productModel->getFeaturedProducts(8);
 
         // Truyền data xuống view
         $this->view("home/index", [
             "categories"       => $categories,
             "categoryProducts" => $categoryProducts,
-            "blogs"            => $blogs
+            "blogs"            => $blogs,
+            "featured"           => $featured    
         ]);
     }
 }

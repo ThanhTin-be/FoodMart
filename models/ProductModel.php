@@ -429,15 +429,21 @@ class ProductModel extends Database {
         }
     }
 
-    // Lấy sản phẩm nổi bật, muốn hiển thị ở category (dùng homepage)
-    public function getFeaturedByCategory($catId, $limit = 10) {
-        $sql = "SELECT * FROM {$this->table} 
-                WHERE category_id = ? AND is_featured = 1 
-                ORDER BY id ASC LIMIT ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ii", $catId, $limit);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    }
+    // Lấy sản phẩm nổi bật, muốn hiển thị ở homepage
+    public function getFeaturedProducts($limit = 8) {
+    $sql = "SELECT p.*
+            FROM products p
+            JOIN product_tags pt ON p.id = pt.product_id
+            JOIN tags t ON pt.tag_id = t.id
+            WHERE t.name = 'nổi bật'
+            ORDER BY p.id DESC
+            LIMIT ?";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("i", $limit);
+    $stmt->execute();
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+}
+
+
 }
 ?>
