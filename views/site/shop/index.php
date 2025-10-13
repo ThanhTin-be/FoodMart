@@ -1,252 +1,122 @@
+<?php // views/site/shop/index.php 
+?>
+<div class="min-h-screen transition-colors duration-200 bg-gray-50">
 
-<div class="flex min-h-screen bg-gray-50 font-sans">
+  <!-- Breadcrumb -->
+  <nav class="px-5 py-3 mt-0 overflow-x-auto text-gray-700 bg-gray-50 scrollbar-hide" aria-label="Breadcrumb">
+    <div class="px-0 mx-auto max-w-7xl md:px-4">
+      <ol class="inline-flex items-center w-full max-w-screen-xl mx-auto space-x-1 md:space-x-2 rtl:space-x-reverse flex-nowrap min-w-max">
+        <li class="inline-flex items-center flex-shrink-0">
+          <a href="<?= BASE_URL ?>" class="inline-flex items-center text-sm font-medium text-gray-700 transition-colors hover:text-brand-primary">
+            <svg class="w-3 h-3 me-2.5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"></path>
+            </svg>Trang chủ
+          </a>
+        </li>
+        <li aria-current="page" class="flex-shrink-0">
+          <div class="flex items-center whitespace-nowrap">
+            <svg class="w-3 h-3 mx-1 text-gray-400 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"></path>
+            </svg>
+            <span class="text-sm font-medium text-gray-500 ms-1 md:ms-2"><?= $cat['name'] ?? 'Tất cả sản phẩm' ?></span>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </nav>
 
-  <!-- Sidebar trái -->
-  <?php require ROOT . "views/site/layouts/sidebar.php"; ?>
+  <!-- Main Content -->
+  <div class="px-4 py-2 mx-auto max-w-7xl sm:px-0">
+    <div class="flex flex-col gap-0 sm:gap-8 lg:flex-row">
 
-  <!-- Nội dung chính -->
-  <div class="md:ml-64 flex flex-col min-h-screen pr-14">
-      <main class="flex-1 p-4 md:p-8 ">
+      <!-- Sidebar -->
+      <aside class="lg:w-1/4">
+        <div class="sticky hidden bg-white rounded-lg sm:block">
+          <div class="mb-8">
+            <div class="relative overflow-hidden rounded-t-lg">
+              <h3 class="relative z-10 flex items-center p-5 text-xl font-semibold text-white rounded-t-lg bg-gradient-to-r from-green-600 via-green-700 to-green-800">
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 11-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm9 1a1 1 0 010-2h4a1 1 0 011 1v4a1 1 0 01-2 0V6.414l-2.293 2.293a1 1 0 11-1.414-1.414L13.586 5H12zm-9 7a1 1 0 012 0v1.586l2.293-2.293a1 1 0 111.414 1.414L6.414 15H8a1 1 0 010 2H4a1 1 0 01-1-1v-4zm13-1a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 010-2h1.586l-2.293-2.293a1 1 0 111.414-1.414L15 13.586V12a1 1 0 011-1z" clip-rule="evenodd"></path>
+                </svg>
+                Danh mục sản phẩm
+              </h3>
+              <div class="absolute z-20 w-16 h-16 bg-white rounded-full -bottom-5 -left-5 opacity-20"></div>
+              <div class="absolute z-20 w-12 h-12 bg-green-500 rounded-full -top-4 -right-4 opacity-80"></div>
+            </div>
+            <div class="space-y-1">
+              <a href="<?= BASE_URL ?>shop"
+                class="flex items-center justify-between px-4 py-3 text-lg font-medium rounded-lg transition-all duration-200 
+                        <?= empty($cat) ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50' ?>">
+                <span>Xem tất cả sản phẩm</span>
+                <!-- ✅ Dùng tổng toàn bộ sản phẩm -->
+                <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-green-100 text-green-700">
+                  <?= number_format($totalAll) ?>
+                </span>
+              </a>
+              <?php foreach ($categories as $c): ?>
+                <a href="<?= BASE_URL ?>shop?slug=<?= urlencode($c['slug']) ?>"
+                  class="flex items-center justify-between px-4 py-3 text-lg font-medium rounded-lg transition-all duration-200 
+                            <?= (!empty($cat) && $cat['id'] == $c['id']) ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50' ?>">
+                  <span><?= htmlspecialchars($c['name']) ?></span>
+                  <span class="px-2 py-0.5 text-xs font-medium rounded-full bg-green-100 text-green-600">
+                    <?= $c['product_count'] ?? 0 ?>
+                  </span>
+                </a>
+              <?php endforeach; ?>
+            </div>
+          </div>
+        </div>
+      </aside>
 
-          <!-- Banner -->
-            <section class="relative w-full mb-6 rounded-xl overflow-hidden">
-            <?php if (!empty($cat) && !empty($cat['banner'])): ?>
-                <img 
-                    src="<?= asset($cat['banner']) ?>" 
-                    alt="<?= htmlspecialchars($cat['name']) ?>" 
-                    class="w-full h-[220px] md:h-[280px] object-cover brightness-90 transition-transform duration-700 hover:scale-105"
-                    loading="lazy"
-                >
-                <!-- Overlay mờ + tên danh mục -->
-                <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
-                    <h2 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg uppercase tracking-wide">
-                        <?= htmlspecialchars($cat['name']) ?>
-                    </h2>
-                </div>
-            <?php else: ?>
-                <img 
-                    src="<?= BASE_URL ?>assets/images/icon_34.jpg" 
-                    alt="Banner Shop" 
-                    class="w-full h-[220px] md:h-[280px] object-cover brightness-90"
-                >
-                <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
-                    <h2 class="text-2xl md:text-3xl font-bold text-white uppercase tracking-wide">
-                        Tất cả sản phẩm
-                    </h2>
-                </div>
-            <?php endif; ?>
-            </section>
+      <!-- Products -->
+      <div class="lg:w-3/4">
+        <div class="flex items-center justify-between mb-4">
+          <h1 class="text-3xl font-bold text-transparent font-lexend bg-gradient-to-r from-green-500 to-green-800 bg-clip-text">
+            <?= $cat['name'] ?? 'Tất cả sản phẩm' ?>
+          </h1>
+        </div>
 
+        <!-- Sorting -->
+        <div class="p-4 mb-6 bg-gray-100 rounded-lg shadow-sm">
+          <div class="flex flex-row items-center justify-between gap-4">
+            <div id="products-counter" class="text-sm text-gray-600">Hiển thị <?= count($products) ?> / <?= $total ?> sản phẩm</div>
+            <div class="flex items-center gap-4">
+              <label class="hidden text-sm text-gray-600 sm:block">Sắp xếp theo:</label>
+              <select id="product-sort" class="px-3 py-2 text-sm text-gray-900 bg-gray-100 rounded-lg focus:outline-none">
+                <option value="">Mặc định</option>
+                <option value="price-asc" <?= $sort === 'price-asc' ? 'selected' : '' ?>>Giá: Thấp → Cao</option>
+                <option value="price-desc" <?= $sort === 'price-desc' ? 'selected' : '' ?>>Giá: Cao → Thấp</option>
+                <option value="title-asc" <?= $sort === 'title-asc' ? 'selected' : '' ?>>Tên A → Z</option>
+                <option value="title-desc" <?= $sort === 'title-desc' ? 'selected' : '' ?>>Tên Z → A</option>
+              </select>
+            </div>
+          </div>
+        </div>
 
-            <!-- Bộ lọc và sắp xếp -->
-          <section>
-                <div class="p-4 mb-6 bg-gray-100 rounded-lg shadow-sm ">
-                    <div class="flex flex-row items-center justify-between gap-4">
-                        
-                        <!-- Results Count -->
-                        <div id="products-counter" class="text-sm text-gray-600 ">
-                            Hiển thị 2 trong 2 sản phẩm
-                        </div>
-                        
-                        <!-- Sort Options -->
-                        <div class="flex items-center gap-4">
-                            <label class="hidden text-sm text-gray-600 sm:block">Sắp xếp theo:</label>
-                            <select id="product-sort" onchange="sortProducts(this.value)" class="px-3 py-2 text-sm text-gray-900 bg-gray-100 rounded-lg focus:outline-none" fdprocessedid="rykw3v">
-                                <option value="date-desc">Mới nhất</option>
-                                <option value="date-asc">Cũ nhất</option>
-                                <option value="price-asc">Giá: Thấp tới cao</option>
-                                <option value="price-desc">Giá: Cao tới thấp</option>
-                                <option value="title-asc">Tên sản phẩm: A tới Z</option>
-                                <option value="title-desc">Tên sản phẩm: Z tới A</option>
-                            </select>
-                        </div>
-                        
-                    </div>
-                </div>
-          </section>
-          
-          <!-- Danh sách sản phẩm -->
-          <section class="px-2 sm:px-4 md:px-6 lg:px-8">
-              <h2 class="text-xl font-semibold mb-4">Sản phẩm nổi bật</h2>
+        <!-- Products Container -->
+        <div id="products-container">
+          <div id="products-grid" class="grid grid-cols-2 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <?php include ROOT . "views/site/shop/_productGrid.php"; ?>
+          </div>
+        </div>
 
-              <!-- ========== PRODUCT GRID ========== -->
-                <div id="products-grid"
-                    class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 ">
-                    <?php if (!empty($products)): ?>
-                        <?php 
-                            $shown = 0;
-                            
-                            foreach ($products as $p):
-                                $shown++;                            
-
-                                // Tính % giảm giá nếu có giá cũ
-                                $discount = 0;
-                                if (!empty($p['old_price']) && $p['old_price'] > $p['price']) {
-                                    $discount = round((($p['old_price'] - $p['price']) / $p['old_price']) * 100);
-                                }
-                        ?>
-                        <div class="relative bg-white shadow-sm product-card rounded-xl hover:shadow-xl transition overflow-visible ">
-
-                            <!-- Product card -->
-                            <div class="relative overflow-hidden bg-gray-100 aspect-square rounded-t-xl group">
-
-                                <!-- Badge giảm giá -->
-                                <?php if ($discount > 0): ?>
-                                    <div class="absolute z-10 flex flex-col gap-2 top-3 left-3">
-                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-red-500 text-white">
-                                            -<?= $discount ?>%
-                                        </span>
-                                    </div>
-                                <?php endif; ?>
-
-                                <!-- Product Image + Overlay -->
-                                <div class="relative overflow-hidden bg-gray-100 aspect-square rounded-t-xl group">
-                             <img 
-                                src="<?= asset($p['image']) ?>" 
-                                alt="<?= htmlspecialchars($p['name']) ?>"
-                                class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105 z-0 relative pointer-events-none"
-                                loading="lazy">
-"
-                                >
-
-                                    <div 
-                                        class="absolute inset-0 z-50 flex items-center justify-center transition-all duration-300 
-                                            bg-black bg-opacity-0 opacity-0 group-hover:bg-opacity-20 group-hover:opacity-100">
-                                        <!-- các nút Quick View / Add to Cart / Wishlist đặt ở đây -->
-                                        <div class="flex gap-2 transition-transform duration-300 transform translate-y-4 group-hover:translate-y-0">
-
-                                        <!-- Quick View -->
-                                        <button onclick="quickViewProduct(<?= $p['id'] ?>)"
-                                            class="p-3 transition-colors duration-200 bg-white rounded-full shadow-lg hover:bg-gray-100"
-                                            title="Xem nhanh">
-                                            <svg class="w-5 h-5 text-gray-700" fill="currentColor" viewBox="0 0 20 20">
-                                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
-                                                <path fill-rule="evenodd"
-                                                    d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                                                    clip-rule="evenodd"></path>
-                                            </svg>
-                                        </button>
-
-                                        <!-- Add to Cart -->
-                                        <button 
-                                            class="p-3 transition-colors duration-200 bg-red-600 rounded-full shadow-lg hover:bg-red-700 add-to-cart"
-                                            data-id="<?= $item['id'] ?>">
-                                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
-                                            </svg>
-                                        </button>
-                                        <!-- Wishlist -->
-                                        <button onclick="toggleWishlist(<?= $p['id'] ?>)"
-                                            class="p-3 transition-colors duration-200 bg-white rounded-full shadow-lg hover:bg-gray-100"
-                                            title="Yêu thích">
-                                            <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                            </svg>
-                                        </button>
-                                        </div>
-                                    </div>
-                                </div>                             
-                            </div>
-
-                            <!-- Product Info -->
-                            <div class="p-2 pb-3">
-                                <!-- Tên sản phẩm -->
-                                <h3 class="text-sm font-semibold text-gray-900 mt-2 mb-2 line-clamp-2 min-h-[.5rem]">
-                                    <a href="<?= BASE_URL ?>/product/detail?id=<?= $p['id'] ?>"
-                                    class="transition-colors duration-200 hover:text-orange-600">
-                                    <?= htmlspecialchars($p['name']) ?>
-                                    </a>
-                                </h3>
-                                
-                                <!-- Rating + Tình trạng -->
-                                <div class="flex items-center justify-between gap-1 mb-2 mr-2">
-                                    <!-- Rating stars -->
-                                    <div class="flex text-yellow-400">
-                                        <?php 
-                                        // Giả lập điểm trung bình (hoặc load từ DB nếu có)
-                                        $stars = 5;
-                                        for ($i = 0; $i < 5; $i++): ?>
-                                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                            </svg>
-                                        <?php endfor; ?>
-                                        <span class="text-xs text-gray-500 ml-1">(0)</span>
-                                    </div>
-
-                                    <!-- Stock status -->
-                                    <div class="text-xs">
-                                        <?php if (!empty($p['stock']) && $p['stock'] > 0): ?>
-                                            <span class="flex items-center text-green-600">
-                                                <div class="w-1.5 h-1.5 bg-green-500 rounded-full mr-1"></div>
-                                                Còn hàng
-                                            </span>
-                                        <?php else: ?>
-                                            <span class="flex items-center text-gray-500">
-                                                <div class="w-1.5 h-1.5 bg-gray-400 rounded-full mr-1"></div>
-                                                Hết hàng
-                                            </span>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
-
-                                <!-- Giá -->
-                                <div class="mt-2">
-                                    <!-- Giá mới -->
-                                    <div class="text-red-600 font-bold text-base sm:text-lg">
-                                        <?= number_format($p['price'], 0, ',', '.') ?> đ
-                                    </div>
-
-                                    <?php if (!empty($p['old_price']) && $p['old_price'] > $p['price']): ?>
-                                        <?php $saving = $p['old_price'] - $p['price']; ?>
-                                        <div class="flex items-center gap-2 mt-1 whitespace-nowrap">
-                                            <!-- Giá cũ -->
-                                            <span class="text-gray-500 line-through text-xs sm:text-sm">
-                                                <?= number_format($p['old_price'], 0, ',', '.') ?> đ
-                                            </span>
-
-                                            <!-- Tiết kiệm -->
-                                            <span class="text-green-600 text-[10px] sm:text-xs md:text-sm lg:text-xs">
-                                                <span class="sm:hidden">-<?= number_format($saving, 0, ',', '.') ?>đ</span>
-                                                <span class="hidden sm:inline">Tiết kiệm <?= number_format($saving, 0, ',', '.') ?> đ</span>
-                                            </span>
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p class="text-gray-500 text-sm">Chưa có sản phẩm nào.</p>
-                    <?php endif; ?>
-                </div>
-
-
-              <!-- Nút xem thêm -->
-              <?php if (count($products) > 15): ?>
-              <div class="flex justify-center mt-6">
-                  <button id="load-more-btn"
-                          class="px-5 py-2 bg-[#FF7600] text-white rounded-lg hover:bg-orange-500 transition">
-                      Xem thêm
-                  </button>
-              </div>
-              <?php endif; ?>
-          </section>
-      </main>
+        <!-- Load more -->
+        <?php if ($totalPages > 1): ?>
+          <div class="flex justify-center mt-8">
+            <button id="load-more-btn" data-page="2" class="inline-flex items-center px-6 py-3 text-sm font-medium text-white transition-all duration-200 bg-green-600 border border-transparent rounded-full hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+              <span>Xem thêm sản phẩm</span>
+              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+          </div>
+        <?php endif; ?>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- JS xử lý "Xem thêm" -->
 <script>
-let currentPage = 1;
-const loadBtn = document.getElementById('load-more-btn');
-if (loadBtn) {
-    loadBtn.addEventListener('click', async () => {
-        currentPage++;
-        const res = await fetch(`<?= BASE_URL ?>shop/loadmore?page=${currentPage}`);
-        const html = await res.text();
-        document.getElementById('products-grid').insertAdjacentHTML('beforeend', html);
-        if (!html.trim()) loadBtn.style.display = 'none';
-    });
-}
+  const BASE_URL = "<?= BASE_URL ?>";
 </script>
+<script src="<?= BASE_URL ?>assets/js/shop.js"></script>

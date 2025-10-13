@@ -4,31 +4,32 @@ require_once ROOT . "core/database.php";
 
 class OrderModel extends Database{
     // Tạo đơn hàng mới và lưu chi tiết
-    public function createOrder($user_id, $cart, $total)
+   public function createOrder($user_id, $fullname, $phone, $address, $payment_method, $cart, $total)
     {
         $this->conn->begin_transaction();
+
         try {
-            // 1️⃣ Tạo đơn hàng
-            $sql = "INSERT INTO orders (user_id, total_price, status) VALUES (?, ?, 'cho_xac_nhan')";
+            // ✅ Tạo đơn hàng
+            $sql = "INSERT INTO orders (user_id, fullname, phone, address, total_price, payment_method, status)
+                    VALUES (?, ?, ?, ?, ?, ?, 'cho_xac_nhan')";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("id", $user_id, $total);
+            $stmt->bind_param("isssds", $user_id, $fullname, $phone, $address, $total, $payment_method);
             $stmt->execute();
             $order_id = $stmt->insert_id;
 
-            // 2️⃣ Thêm từng sản phẩm vào order_items + trừ stock
+            // ✅ Thêm sản phẩm vào order_items + trừ tồn kho
             foreach ($cart as $item) {
                 $product_id = $item['id'];
                 $qty = $item['qty'];
                 $price = $item['price'];
 
-                // insert order_items
                 $sqlItem = "INSERT INTO order_items (order_id, product_id, quantity, price)
                             VALUES (?, ?, ?, ?)";
                 $stmtItem = $this->conn->prepare($sqlItem);
                 $stmtItem->bind_param("iiid", $order_id, $product_id, $qty, $price);
                 $stmtItem->execute();
 
-                // trừ stock trong products
+                // Trừ tồn kho
                 $sqlStock = "UPDATE products SET stock = stock - ? WHERE id = ?";
                 $stmtStock = $this->conn->prepare($sqlStock);
                 $stmtStock->bind_param("ii", $qty, $product_id);
@@ -38,13 +39,13 @@ class OrderModel extends Database{
             $this->conn->commit();
             return $order_id;
 
-        } catch (Exception $e)
-        {
+        } catch (Exception $e) {
             $this->conn->rollback();
             error_log("Checkout Error: " . $e->getMessage());
             die("<pre style='color:red'>Lỗi SQL: " . $e->getMessage() . "</pre>");
         }
     }
+
     public function getOrderDetail($order_id, $user_id)
     {
         $sql = "SELECT * FROM  orders Where id = ? AND user_id = ?" ;
