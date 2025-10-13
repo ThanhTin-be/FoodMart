@@ -12,6 +12,12 @@
     <div class="row justify-content-center">
       <div class="col-lg-4 p-5 bg-white border shadow-sm">
         <h5 class="text-uppercase mb-4">Login</h5>
+        
+        <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+            <div class="alert alert-success">
+              ✅ Đăng ký thành công! Vui lòng đăng nhập.
+            </div>
+          <?php endif; ?>
 
         <?php if (!empty($data['error'])): ?>
           <div class="alert alert-danger"><?= $data['error'] ?></div>
@@ -32,7 +38,10 @@
           </div>
           <div class="col-12">
             <button type="submit" class="btn btn-primary text-uppercase w-100">Log in</button>
-            <p class="mt-2"><a href="#">Lost your password?</a></p>
+            <div class="d-flex justify-content-between mt-2">
+              <a href="#" class="text-decoration-none">Lost your password?</a>
+              <a href="<?= BASE_URL ?>user/register" class="text-decoration-none">Register</a>
+            </div>
           </div>
         </form>
       </div>

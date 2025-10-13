@@ -69,4 +69,25 @@ class User extends Database {
         $stmt->bind_param("si", $hash, $id);
         return $stmt->execute();
     }
+
+    // add user cho user chưa có tài khoản
+    public function addUser($name, $email, $address, $phone, $password, $role) {
+        // Lấy id lớn nhất hiện tại
+        $result = $this->conn->query("SELECT MAX(id) as max_id FROM users");
+        $maxId = $result->fetch_assoc()['max_id'] ?? 0;
+        $newId = $maxId + 1;
+
+        // Chuẩn bị và thực thi câu lệnh INSERT với id mới
+        $stmt = $this->conn->prepare("
+            INSERT INTO users (id, name, email, address, phone, password, role)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ");
+        if ($stmt === false) {
+            return false; // Trả về false nếu prepare thất bại
+        }
+        $stmt->bind_param("issssss", $newId, $name, $email, $address, $phone, $password, $role);
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result;
+    }
 }

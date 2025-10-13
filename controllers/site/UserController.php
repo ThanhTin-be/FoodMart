@@ -164,12 +164,59 @@ class UserController extends Controller {
 
     // 📝 Register (chưa làm UI, chừa để sau này code)
     public function register() {
-        // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        //     // Xử lý tạo user mới qua User->create()
-        // }
-        // else {
-        //     $this->view('user/register');
-        // }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Lấy dữ liệu từ form
+            $name = trim($_POST['name'] ?? '');
+            $email = trim($_POST['email'] ?? '');
+            $address = trim($_POST['address'] ?? '');
+            $phone = trim($_POST['phone'] ?? '');
+            $password = trim($_POST['password'] ?? '');
+            $confirm_password = trim($_POST['confirm_password'] ?? '');
+            $role = $_POST['role'] ?? 'user';
+
+            // Kiểm tra hợp lệ cơ bản
+            if (empty($name) || empty($email) || empty($password)) {
+                $data['error'] = "Vui lòng nhập đầy đủ thông tin!";
+                return $this->view('user/register', $data, 'default');
+            }
+
+            // Kiểm tra mật khẩu và xác nhận mật khẩu khớp
+            if ($password !== $confirm_password) {
+                $data['error'] = "Mật khẩu và xác nhận mật khẩu không khớp!";
+                return $this->view('user/register', $data, 'default');
+            }
+
+            // Gọi model User
+            $userModel = $this->model('User');
+
+            // Kiểm tra email tồn tại
+            if ($userModel->getByEmail($email)) {
+                $data['error'] = "Email này đã được đăng ký!";
+                return $this->view('user/register', $data, 'default');
+            }
+
+            // Mã hóa mật khẩu
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+            // Thêm thời gian tạo
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+            $createdAt = date('Y-m-d H:i:s');
+
+            // Thêm user
+            $isCreated = $userModel->addUser($name, $email,  $address, $phone, $hashedPassword, $role, $createdAt);
+
+            if ($isCreated) {
+                header('Location: ' . BASE_URL . 'user/login?success=1');
+                exit;
+            } else {
+                $data['error'] = "Đăng ký thất bại, vui lòng thử lại!";
+                $this->view('user/register', $data, 'default');
+            }
+        } else {
+            // Hiển thị form đăng ký
+            $this->view('user/register', [], 'default');
+        }
+        }
     }
-}
+
 ?>
