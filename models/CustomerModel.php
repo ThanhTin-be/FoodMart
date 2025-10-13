@@ -17,16 +17,33 @@ class CustomerModel extends Database {
         $result = $stmt->get_result();
         return $result->fetch_assoc();
     }
+    public function getCustomerByEmail($email) {
+        $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+   }
 
-    public function addCustomer($name, $email, $address, $phone, $role) {
+     public function addCustomer($name, $email, $address, $phone, $password, $role) {
+        // Lấy id lớn nhất hiện tại
+        $result = $this->conn->query("SELECT MAX(id) as max_id FROM users");
+        $maxId = $result->fetch_assoc()['max_id'] ?? 0;
+        $newId = $maxId + 1;
+
+        // Chuẩn bị và thực thi câu lệnh INSERT với id mới
         $stmt = $this->conn->prepare("
-            INSERT INTO users (name, email, address, phone, role)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO users (id, name, email, address, phone, password, role)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
-        $stmt->bind_param("sssss", $name, $email, $address, $phone, $role);
-        return $stmt->execute();
+        if ($stmt === false) {
+            return false; // Trả về false nếu prepare thất bại
+        }
+        $stmt->bind_param("isssss", $newId, $name, $email, $address, $phone, $password, $role);
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result;
     }
-
     public function updateCustomer($id, $name, $email, $address, $phone) {
         $stmt = $this->conn->prepare("
             UPDATE users 
