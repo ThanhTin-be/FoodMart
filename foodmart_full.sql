@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 06, 2025 lúc 04:41 AM
+-- Thời gian đã tạo: Th10 13, 2025 lúc 10:12 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `foodmart_full_v1`
+-- Cơ sở dữ liệu: `foodmart_full`
 --
 
 -- --------------------------------------------------------
@@ -62,6 +62,15 @@ CREATE TABLE `carts` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Giỏ hàng của người dùng';
 
+--
+-- Đang đổ dữ liệu cho bảng `carts`
+--
+
+INSERT INTO `carts` (`id`, `user_id`, `product_id`, `quantity`, `created_at`, `updated_at`) VALUES
+(461, 7, 5843, 3, '2025-10-10 14:31:33', '2025-10-12 05:11:21'),
+(462, 7, 5844, 1, '2025-10-10 14:31:33', '2025-10-10 14:31:33'),
+(473, 7, 5845, 1, '2025-10-13 01:02:51', '2025-10-13 01:02:51');
+
 -- --------------------------------------------------------
 
 --
@@ -72,6 +81,7 @@ CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `thumbnail` varchar(255) DEFAULT NULL,
+  `icon` varchar(255) DEFAULT NULL,
   `banner` varchar(255) DEFAULT NULL,
   `slug` varchar(100) DEFAULT NULL,
   `parent_id` int(11) DEFAULT NULL,
@@ -82,24 +92,24 @@ CREATE TABLE `categories` (
 -- Đang đổ dữ liệu cho bảng `categories`
 --
 
-INSERT INTO `categories` (`id`, `name`, `thumbnail`, `banner`, `slug`, `parent_id`, `description`) VALUES
-(1, 'Bánh Trung Thu', NULL, 'banners/banhtrungthu.webp', 'banh-trung-thu', NULL, ''),
-(2, 'Bánh bao - Bánh mì - Pizza', NULL, NULL, 'banh-bao-banh-mi-pizza', NULL, NULL),
-(3, 'Dầu ăn - Nước chấm - Gia vị', NULL, 'banners/7.DauAn.jpg', 'dau-an-nuoc-cham-gia-vi', NULL, NULL),
-(4, 'Trái cây', NULL, 'banners/traicaythegioi.webp', 'trai-cay', NULL, NULL),
-(5, 'Rau củ quả', NULL, 'banners/2.RCQ.jpg', 'rau-cu-qua', NULL, NULL),
-(6, 'Thịt - Cá - Trứng - Thủy hải sản', NULL, 'banners/3.Thit.jpg', 'thit-ca-trung-thuy-hai-san', NULL, NULL),
-(7, 'Kem - Sữa chua', NULL, 'banners/631332-Kem_sua_chua.jpg', 'kem-sua-chua', NULL, NULL),
-(8, 'Sữa các loại', NULL, 'banners/sua-cac-loai.webp', 'sua-cac-loai', NULL, NULL),
-(9, 'Bánh kẹo - Ngũ cốc - Ăn sáng', NULL, 'banners/banh-keo-ngu-coc-an-sang.jpg', 'banh-keo-ngu-coc-an-sang', NULL, NULL),
-(10, 'Bia - Rượu - Trà - Cà phê - Nước giải khát', NULL, 'banners/bia-ruou-tra-ca-phe-nuoc-giai-khat.jpg', 'bia-ruou-tra-ca-phe-nuoc-giai-khat', NULL, NULL),
-(11, 'Thực phẩm chăm sóc sức khỏe', NULL, 'banners/15.CSSK.jpg', 'thuc-pham-cham-soc-suc-khoe', NULL, NULL),
-(12, 'Vệ sinh nhà cửa', NULL, 'banners/14.VSNC.jpg', 've-sinh-nha-cua', NULL, NULL),
-(13, 'Đồ dùng gia đình', NULL, 'banners/11.DGDD.jpg', 'do-dung-gia-dinh', NULL, NULL),
-(14, 'Bữa ăn sẵn tiện lợi', NULL, 'banners/13.BuaAnSan.jpg', 'bua-an-san-tien-loi', NULL, NULL),
-(15, 'Đồ hộp - Xúc xích - Lạp xưởng', NULL, 'banners/16.DoHop.jpg', 'do-hop-xuc-xich-lap-xuong', NULL, NULL),
-(16, 'Gạo - Đậu - Bột - Đồ khô - Đồ hộp', NULL, 'banners/8.Gao.jpg', 'gao-dau-bot-do-kho-do-hop', NULL, NULL),
-(17, 'Thực phẩm đông - mát', NULL, 'banners/5.TPDM.jpg', 'thuc-pham-dong-mat', NULL, NULL);
+INSERT INTO `categories` (`id`, `name`, `thumbnail`, `icon`, `banner`, `slug`, `parent_id`, `description`) VALUES
+(1, 'Bánh Trung Thu', NULL, NULL, 'banners/banhtrungthu.webp', 'banh-trung-thu', NULL, ''),
+(2, 'Bánh bao - Bánh mì - Pizza', NULL, NULL, NULL, 'banh-bao-banh-mi-pizza', NULL, NULL),
+(3, 'Dầu ăn - Nước chấm - Gia vị', NULL, NULL, 'banners/7.DauAn.jpg', 'dau-an-nuoc-cham-gia-vi', NULL, NULL),
+(4, 'Trái cây', NULL, NULL, 'banners/traicaythegioi.webp', 'trai-cay', NULL, NULL),
+(5, 'Rau củ quả', NULL, NULL, 'banners/2.RCQ.jpg', 'rau-cu-qua', NULL, NULL),
+(6, 'Thịt - Cá - Trứng - Thủy hải sản', NULL, NULL, 'banners/3.Thit.jpg', 'thit-ca-trung-thuy-hai-san', NULL, NULL),
+(7, 'Kem - Sữa chua', NULL, NULL, 'banners/631332-Kem_sua_chua.jpg', 'kem-sua-chua', NULL, NULL),
+(8, 'Sữa các loại', NULL, NULL, 'banners/sua-cac-loai.webp', 'sua-cac-loai', NULL, NULL),
+(9, 'Bánh kẹo - Ngũ cốc - Ăn sáng', NULL, NULL, 'banners/banh-keo-ngu-coc-an-sang.jpg', 'banh-keo-ngu-coc-an-sang', NULL, NULL),
+(10, 'Bia - Rượu - Trà - Cà phê - Nước giải khát', NULL, NULL, 'banners/bia-ruou-tra-ca-phe-nuoc-giai-khat.jpg', 'bia-ruou-tra-ca-phe-nuoc-giai-khat', NULL, NULL),
+(11, 'Thực phẩm chăm sóc sức khỏe', NULL, NULL, 'banners/15.CSSK.jpg', 'thuc-pham-cham-soc-suc-khoe', NULL, NULL),
+(12, 'Vệ sinh nhà cửa', NULL, NULL, 'banners/14.VSNC.jpg', 've-sinh-nha-cua', NULL, NULL),
+(13, 'Đồ dùng gia đình', NULL, NULL, 'banners/11.DGDD.jpg', 'do-dung-gia-dinh', NULL, NULL),
+(14, 'Bữa ăn sẵn tiện lợi', NULL, NULL, 'banners/13.BuaAnSan.jpg', 'bua-an-san-tien-loi', NULL, NULL),
+(15, 'Đồ hộp - Xúc xích - Lạp xưởng', NULL, NULL, 'banners/16.DoHop.jpg', 'do-hop-xuc-xich-lap-xuong', NULL, NULL),
+(16, 'Gạo - Đậu - Bột - Đồ khô - Đồ hộp', NULL, NULL, 'banners/8.Gao.jpg', 'gao-dau-bot-do-kho-do-hop', NULL, NULL),
+(17, 'Thực phẩm đông - mát', NULL, NULL, 'banners/5.TPDM.jpg', 'thuc-pham-dong-mat', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -110,7 +120,11 @@ INSERT INTO `categories` (`id`, `name`, `thumbnail`, `banner`, `slug`, `parent_i
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
+  `fullname` varchar(100) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
   `total_price` decimal(10,2) NOT NULL,
+  `payment_method` enum('cod','bank','paypal') DEFAULT 'cod',
   `status` enum('cho_xac_nhan','da_xac_nhan','dang_giao','da_giao','thanh_cong','huy') DEFAULT 'cho_xac_nhan',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -120,26 +134,39 @@ CREATE TABLE `orders` (
 -- Đang đổ dữ liệu cho bảng `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `total_price`, `status`, `created_at`, `updated_at`) VALUES
-(6, 7, 150000.00, 'cho_xac_nhan', '2025-09-24 20:00:00', '2025-09-30 08:32:05'),
-(7, 8, 250000.00, 'da_xac_nhan', '2025-09-24 21:00:00', '2025-09-24 21:30:00'),
-(8, 9, 300000.00, 'dang_giao', '2025-09-24 22:00:00', '2025-09-24 22:30:00'),
-(9, 10, 200000.00, 'da_giao', '2025-09-24 23:00:00', '2025-09-24 23:45:00'),
-(10, 7, 100000.00, 'huy', '2025-09-25 00:00:00', '2025-09-30 08:32:13'),
-(11, 11, 10802000.00, 'thanh_cong', '2024-09-19 20:30:00', '2024-09-19 20:30:00'),
-(12, 12, 11844000.00, 'thanh_cong', '2024-10-25 03:15:00', '2024-10-25 03:15:00'),
-(13, 13, 15671000.00, 'thanh_cong', '2024-11-21 21:15:00', '2024-11-21 21:15:00'),
-(14, 14, 15947000.00, 'thanh_cong', '2024-12-28 04:20:00', '2024-12-28 04:20:00'),
-(15, 15, 20047000.00, 'thanh_cong', '2025-01-25 23:30:00', '2025-01-25 23:30:00'),
-(16, 16, 20063000.00, 'thanh_cong', '2025-02-20 05:50:00', '2025-02-20 05:50:00'),
-(17, 17, 7101000.00, 'thanh_cong', '2025-03-28 22:15:00', '2025-09-26 03:16:48'),
-(18, 18, 7098000.00, 'thanh_cong', '2025-04-21 06:25:00', '2025-04-21 06:25:00'),
-(19, 19, 8121000.00, 'thanh_cong', '2025-05-30 00:20:00', '2025-05-30 00:20:00'),
-(20, 20, 8164000.00, 'thanh_cong', '2025-06-22 05:10:00', '2025-06-22 05:10:00'),
-(21, 21, 12035000.00, 'thanh_cong', '2025-07-26 21:10:00', '2025-07-26 21:10:00'),
-(22, 22, 12049000.00, 'thanh_cong', '2025-08-19 06:50:00', '2025-08-19 06:50:00'),
-(23, 23, 10035000.00, 'thanh_cong', '2025-09-22 20:45:00', '2025-09-22 20:45:00'),
-(24, 24, 10037000.00, 'thanh_cong', '2025-10-25 06:30:00', '2025-10-25 06:30:00');
+INSERT INTO `orders` (`id`, `user_id`, `fullname`, `phone`, `address`, `total_price`, `payment_method`, `status`, `created_at`, `updated_at`) VALUES
+(6, 7, NULL, NULL, NULL, 150000.00, 'cod', 'cho_xac_nhan', '2025-09-24 20:00:00', '2025-09-30 08:32:05'),
+(7, 8, NULL, NULL, NULL, 250000.00, 'cod', 'da_xac_nhan', '2025-09-24 21:00:00', '2025-09-24 21:30:00'),
+(8, 9, NULL, NULL, NULL, 300000.00, 'cod', 'dang_giao', '2025-09-24 22:00:00', '2025-09-24 22:30:00'),
+(9, 10, NULL, NULL, NULL, 200000.00, 'cod', 'thanh_cong', '2025-09-24 23:00:00', '2025-10-10 03:49:20'),
+(10, 7, NULL, NULL, NULL, 100000.00, 'cod', 'huy', '2025-09-25 00:00:00', '2025-09-30 08:32:13'),
+(11, 11, NULL, NULL, NULL, 10802000.00, 'cod', 'thanh_cong', '2024-09-19 20:30:00', '2024-09-19 20:30:00'),
+(12, 12, NULL, NULL, NULL, 11844000.00, 'cod', 'thanh_cong', '2024-10-25 03:15:00', '2024-10-25 03:15:00'),
+(13, 13, NULL, NULL, NULL, 15671000.00, 'cod', 'thanh_cong', '2024-11-21 21:15:00', '2024-11-21 21:15:00'),
+(14, 14, NULL, NULL, NULL, 15947000.00, 'cod', 'thanh_cong', '2024-12-28 04:20:00', '2024-12-28 04:20:00'),
+(15, 15, NULL, NULL, NULL, 20047000.00, 'cod', 'thanh_cong', '2025-01-25 23:30:00', '2025-01-25 23:30:00'),
+(16, 16, NULL, NULL, NULL, 20063000.00, 'cod', 'thanh_cong', '2025-02-20 05:50:00', '2025-02-20 05:50:00'),
+(17, 17, NULL, NULL, NULL, 7101000.00, 'cod', 'thanh_cong', '2025-03-28 22:15:00', '2025-09-26 03:16:48'),
+(18, 18, NULL, NULL, NULL, 7098000.00, 'cod', 'thanh_cong', '2025-04-21 06:25:00', '2025-04-21 06:25:00'),
+(19, 19, NULL, NULL, NULL, 8121000.00, 'cod', 'thanh_cong', '2025-05-30 00:20:00', '2025-05-30 00:20:00'),
+(20, 20, NULL, NULL, NULL, 8164000.00, 'cod', 'thanh_cong', '2025-06-22 05:10:00', '2025-06-22 05:10:00'),
+(21, 21, NULL, NULL, NULL, 12035000.00, 'cod', 'thanh_cong', '2025-07-26 21:10:00', '2025-07-26 21:10:00'),
+(22, 22, NULL, NULL, NULL, 12049000.00, 'cod', 'thanh_cong', '2025-08-19 06:50:00', '2025-08-19 06:50:00'),
+(23, 23, NULL, NULL, NULL, 10035000.00, 'cod', 'thanh_cong', '2025-09-22 20:45:00', '2025-09-22 20:45:00'),
+(24, 24, NULL, NULL, NULL, 10037000.00, 'cod', 'thanh_cong', '2025-10-25 06:30:00', '2025-10-25 06:30:00'),
+(25, 7, NULL, NULL, NULL, 1494000.00, 'cod', 'thanh_cong', '2025-10-10 02:09:36', '2025-10-10 03:54:43'),
+(26, 7, NULL, NULL, NULL, 2988000.00, 'cod', 'cho_xac_nhan', '2025-10-10 02:26:14', '2025-10-10 02:26:14'),
+(27, 6, NULL, NULL, NULL, 780000.00, 'cod', 'dang_giao', '2025-10-10 03:39:03', '2025-10-10 03:42:01'),
+(28, 7, NULL, NULL, NULL, 285000.00, 'cod', 'cho_xac_nhan', '2025-10-10 05:14:00', '2025-10-10 05:14:00'),
+(29, 7, NULL, NULL, NULL, 300000.00, 'cod', 'cho_xac_nhan', '2025-10-10 05:38:58', '2025-10-10 05:38:58'),
+(30, 7, NULL, NULL, NULL, 1498000.00, 'cod', 'cho_xac_nhan', '2025-10-10 06:23:03', '2025-10-10 06:23:03'),
+(31, 7, NULL, NULL, NULL, 953000.00, 'cod', 'cho_xac_nhan', '2025-10-10 14:05:03', '2025-10-10 14:05:03'),
+(32, 7, NULL, NULL, NULL, 1196000.00, 'cod', 'huy', '2025-10-10 14:19:11', '2025-10-10 14:21:51'),
+(33, 7, NULL, NULL, NULL, 328000.00, 'cod', 'cho_xac_nhan', '2025-10-10 14:21:19', '2025-10-10 14:21:19'),
+(34, 0, NULL, NULL, NULL, 441000.00, 'cod', 'cho_xac_nhan', '2025-10-12 06:47:31', '2025-10-12 06:47:31'),
+(35, 7, 'User', '0967890123', '258 Nguyễn Trãi, Thanh Hóa', 234000.00, 'cod', 'cho_xac_nhan', '2025-10-13 15:25:49', '2025-10-13 15:25:49'),
+(36, 7, 'User', '0967890123', '258 Nguyễn Trãi, Thanh Hóa', 98000.00, 'cod', 'cho_xac_nhan', '2025-10-13 15:27:03', '2025-10-13 15:27:03'),
+(37, 7, 'User', '0967890123', '258 Nguyễn Trãi, Thanh Hóa', 420000.00, 'bank', 'cho_xac_nhan', '2025-10-13 17:15:29', '2025-10-13 17:15:29');
 
 -- --------------------------------------------------------
 
@@ -187,7 +214,45 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`, `price`) 
 (39, 23, 6590, 265, 19000.00),
 (40, 23, 6592, 200, 25000.00),
 (41, 24, 6591, 103, 54000.00),
-(42, 24, 6593, 128, 35000.00);
+(42, 24, 6593, 128, 35000.00),
+(43, 25, 5845, 4, 71000.00),
+(44, 25, 5846, 2, 61000.00),
+(45, 25, 5844, 2, 128000.00),
+(46, 25, 5847, 4, 31000.00),
+(47, 25, 5843, 4, 100000.00),
+(48, 25, 5991, 2, 75000.00),
+(49, 25, 5992, 2, 79000.00),
+(50, 26, 5845, 8, 71000.00),
+(51, 26, 5846, 4, 61000.00),
+(52, 26, 5844, 4, 128000.00),
+(53, 26, 5847, 8, 31000.00),
+(54, 26, 5843, 8, 100000.00),
+(55, 26, 5991, 4, 75000.00),
+(56, 26, 5992, 4, 79000.00),
+(57, 27, 5843, 8, 100000.00),
+(58, 28, 5843, 3, 100000.00),
+(59, 29, 5843, 3, 100000.00),
+(60, 30, 5845, 4, 71000.00),
+(61, 30, 5848, 6, 121000.00),
+(62, 30, 5991, 2, 75000.00),
+(63, 30, 6122, 1, 69000.00),
+(64, 30, 5843, 1, 100000.00),
+(65, 30, 6084, 1, 169000.00),
+(66, 31, 5843, 3, 100000.00),
+(67, 31, 5844, 3, 128000.00),
+(68, 31, 5845, 4, 71000.00),
+(69, 32, 5843, 5, 100000.00),
+(70, 32, 6271, 2, 155000.00),
+(71, 32, 6272, 3, 39000.00),
+(72, 32, 5845, 4, 71000.00),
+(73, 33, 5844, 1, 128000.00),
+(74, 33, 5843, 2, 100000.00),
+(75, 34, 5843, 2, 100000.00),
+(76, 34, 5844, 2, 128000.00),
+(77, 35, 5863, 3, 78000.00),
+(78, 36, 5862, 1, 98000.00),
+(79, 37, 5861, 1, 126000.00),
+(80, 37, 5862, 3, 98000.00);
 
 -- --------------------------------------------------------
 
@@ -219,12 +284,12 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `category_id`, `name`, `slug`, `description`, `short_desc`, `unit`, `price`, `old_price`, `image`, `gallery`, `stock`, `is_featured`, `status`, `created_at`, `updated_at`) VALUES
-(5843, 1, 'Hộp Bánh Trung Thu Hoa Nguyệt 1 Maison 240g (1 Hộp)', 'hop-banh-trung-thu-hoa-nguyet-1-maison-240g-1-hop', 'abc', NULL, NULL, 100000.00, 150000.00, 'products/631555-8938528019131.webp', NULL, 100, 1, 1, '2025-09-24 01:59:45', '2025-10-05 14:17:17'),
-(5844, 1, 'Hộp Bánh Trung Thu Hân Hoan Maison 320g (1 Hộp)', 'hop-banh-trung-thu-han-hoan-maison-320g-1-hop', 'null', NULL, NULL, 128000.00, NULL, 'products/631558-8938528019032.webp', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-10-05 14:06:58'),
-(5845, 1, 'Hộp Bánh Trung Thu Dịu Dàng Maison 480g (1 Hộp)', 'hop-banh-trung-thu-diu-dang-maison-480g-1-hop', '', NULL, NULL, 71000.00, NULL, 'products/631561-8938528019049.webp', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-10-05 14:07:06'),
-(5846, 1, 'Hộp Bánh Trung Thu Hứng Khởi Maison 640g (1 Hộp)', 'hop-banh-trung-thu-hung-khoi-maison-640g-1-hop', '', NULL, NULL, 61000.00, NULL, 'products/631564-8938528019025.webp', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-10-05 14:07:11'),
-(5847, 1, 'Bánh Trung Thu Thập Cẩm Gà Quay Savoure 150g (1 Cái)', 'banh-trung-thu-thap-cam-ga-quay-savoure-150g-1-cai', NULL, NULL, NULL, 31000.00, NULL, 'products/8936076272657.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-09-25 10:43:59'),
-(5848, 1, 'Bánh Trung Thu Matcha Đậu Đỏ Hạt Sen Savoure 185g (1 Cái)', 'banh-trung-thu-matcha-dau-do-hat-sen-savoure-185g-1-cai', NULL, NULL, NULL, 121000.00, NULL, 'products/8936076272367.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-09-25 10:43:59'),
+(5843, 1, 'Hộp Bánh Trung Thu Hoa Nguyệt 1 Maison 240g (1 Hộp)', 'hop-banh-trung-thu-hoa-nguyet-1-maison-240g-1-hop', 'abc', NULL, NULL, 100000.00, 150000.00, 'products/631555-8938528019131.webp', NULL, 61, 1, 1, '2025-09-24 01:59:45', '2025-10-12 06:47:31'),
+(5844, 1, 'Hộp Bánh Trung Thu Hân Hoan Maison 320g (1 Hộp)', 'hop-banh-trung-thu-han-hoan-maison-320g-1-hop', 'null', NULL, NULL, 128000.00, NULL, 'products/631558-8938528019032.webp', NULL, 88, 1, 1, '2025-09-24 08:59:45', '2025-10-12 06:47:31'),
+(5845, 1, 'Hộp Bánh Trung Thu Dịu Dàng Maison 480g (1 Hộp)', 'hop-banh-trung-thu-diu-dang-maison-480g-1-hop', '', NULL, NULL, 71000.00, NULL, 'products/631561-8938528019049.webp', NULL, 76, 1, 1, '2025-09-24 08:59:45', '2025-10-10 14:19:11'),
+(5846, 1, 'Hộp Bánh Trung Thu Hứng Khởi Maison 640g (1 Hộp)', 'hop-banh-trung-thu-hung-khoi-maison-640g-1-hop', '', NULL, NULL, 61000.00, NULL, 'products/631564-8938528019025.webp', NULL, 94, 1, 1, '2025-09-24 08:59:45', '2025-10-10 02:26:14'),
+(5847, 1, 'Bánh Trung Thu Thập Cẩm Gà Quay Savoure 150g (1 Cái)', 'banh-trung-thu-thap-cam-ga-quay-savoure-150g-1-cai', NULL, NULL, NULL, 31000.00, NULL, 'products/8936076272657.jpg', NULL, 88, 1, 1, '2025-09-24 08:59:45', '2025-10-10 02:26:14'),
+(5848, 1, 'Bánh Trung Thu Matcha Đậu Đỏ Hạt Sen Savoure 185g (1 Cái)', 'banh-trung-thu-matcha-dau-do-hat-sen-savoure-185g-1-cai', NULL, NULL, NULL, 121000.00, NULL, 'products/8936076272367.jpg', NULL, 94, 1, 1, '2025-09-24 08:59:45', '2025-10-10 06:23:03'),
 (5849, 1, 'Bánh Trung Thu Lá Dứa Đậu Xanh Savoure 150g (1 Cái)', 'banh-trung-thu-la-dua-dau-xanh-savoure-150g-1-cai', NULL, NULL, NULL, 142000.00, NULL, 'products/8936076272688.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-09-25 10:43:59'),
 (5850, 1, 'Hộp Bánh Trung Thu Rực Rỡ Savoure 2 cái x 185g (1 Hộp)', 'hop-banh-trung-thu-ruc-ro-savoure-2-cai-x-185g-1-hop', NULL, NULL, NULL, 106000.00, NULL, 'products/631553-8936076279083.webp', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-09-25 10:43:59'),
 (5851, 1, 'Hộp Bánh Trung Thu Lễ Hộp Hảo Hạng Đại Phát 444g (1 Hộp)', 'hop-banh-trung-thu-le-hop-hao-hang-dai-phat-444g-1-hop', NULL, NULL, NULL, 35000.00, NULL, 'products/632599-8936001864117.webp', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-09-25 10:43:59'),
@@ -237,9 +302,9 @@ INSERT INTO `products` (`id`, `category_id`, `name`, `slug`, `description`, `sho
 (5858, 1, 'Bánh Trung Thu Matcha Đậu Đỏ Savoure 150g (1 Cái)', 'banh-trung-thu-matcha-dau-do-savoure-150g-1-cai', NULL, NULL, NULL, 59000.00, NULL, 'products/8936076272671.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-09-25 10:43:59'),
 (5859, 1, 'Bánh Trung Thu Cà Phê Lava Savoure 150g (1 Cái)', 'banh-trung-thu-ca-phe-lava-savoure-150g-1-cai', NULL, NULL, NULL, 110000.00, NULL, 'products/8936076272701.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-09-25 10:43:59'),
 (5860, 1, 'Combo 2 bánh trung thu truyền thống - vị ngọt (1 Combo)', 'combo-2-banh-trung-thu-truyen-thong-vi-ngot-1-combo', NULL, NULL, NULL, 55000.00, NULL, 'products/OL1755223147695.png', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-09-25 10:43:59'),
-(5861, 1, 'Bánh Trung Thu Dừa Hạt Dưa Savoure 150g (1 Cái)', 'banh-trung-thu-dua-hat-dua-savoure-150g-1-cai', NULL, NULL, NULL, 126000.00, NULL, 'products/8936076272664.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-09-25 10:43:59'),
-(5862, 1, 'Bánh Trung Thu Sầu Riêng Hạt Sen Savoure 185g (1 Cái)', 'banh-trung-thu-sau-rieng-hat-sen-savoure-185g-1-cai', NULL, NULL, NULL, 98000.00, NULL, 'products/8936076272398.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-09-25 10:43:59'),
-(5863, 1, 'Bánh Trung Thu Thập Cẩm Bò Xốt BBQ Savoure 185g (1 Cái)', 'banh-trung-thu-thap-cam-bo-xot-bbq-savoure-185g-1-cai', NULL, NULL, NULL, 78000.00, NULL, 'products/8936076272466.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-09-25 10:43:59'),
+(5861, 1, 'Bánh Trung Thu Dừa Hạt Dưa Savoure 150g (1 Cái)', 'banh-trung-thu-dua-hat-dua-savoure-150g-1-cai', NULL, NULL, NULL, 126000.00, NULL, 'products/8936076272664.jpg', NULL, 99, 1, 1, '2025-09-24 08:59:45', '2025-10-13 17:15:29'),
+(5862, 1, 'Bánh Trung Thu Sầu Riêng Hạt Sen Savoure 185g (1 Cái)', 'banh-trung-thu-sau-rieng-hat-sen-savoure-185g-1-cai', NULL, NULL, NULL, 98000.00, NULL, 'products/8936076272398.jpg', NULL, 96, 1, 1, '2025-09-24 08:59:45', '2025-10-13 17:15:29'),
+(5863, 1, 'Bánh Trung Thu Thập Cẩm Bò Xốt BBQ Savoure 185g (1 Cái)', 'banh-trung-thu-thap-cam-bo-xot-bbq-savoure-185g-1-cai', NULL, NULL, NULL, 78000.00, NULL, 'products/8936076272466.jpg', NULL, 97, 1, 1, '2025-09-24 08:59:45', '2025-10-13 15:25:49'),
 (5864, 1, 'Combo 2 bánh trung thu truyền thống - vị mặn (1 Combo)', 'combo-2-banh-trung-thu-truyen-thong-vi-man-1-combo', NULL, NULL, NULL, 35000.00, NULL, 'products/631727-OL1755223147698.webp', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-09-25 10:43:59'),
 (5865, 1, 'Hộp Bánh Trung Thu Lễ Hộp Hoàng Gia Đại Phát 744g (1 Hộp)', 'hop-banh-trung-thu-le-hop-hoang-gia-dai-phat-744g-1-hop', NULL, NULL, NULL, 63000.00, NULL, 'products/632592-8936001864810.webp', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-09-25 10:56:27'),
 (5866, 1, 'Hộp Bánh Trung Thu Signature Savoure Combo 4 cái x 185g (1 Hộp)', 'hop-banh-trung-thu-signature-savoure-combo-4-cai-x-185g-1-hop', NULL, NULL, NULL, 57000.00, NULL, 'products/631538-8936076279090.webp', NULL, 100, 1, 1, '2025-09-24 08:59:45', '2025-09-25 10:56:27'),
@@ -366,8 +431,8 @@ INSERT INTO `products` (`id`, `category_id`, `name`, `slug`, `description`, `sho
 (5988, 2, 'Chả ram tôm đất Quy Nhơn Hoa Doanh gói 200g (1 Gói)', 'cha-ram-tom-dat-quy-nhon-hoa-doanh-goi-200g-1-goi', NULL, NULL, NULL, 96000.00, NULL, 'products/19368-376770.jpg', NULL, 100, 0, 1, '2025-09-24 08:59:46', '2025-09-25 10:22:13'),
 (5989, 2, 'Nem cua bể Bamboo gói 270g (1 Gói)', 'nem-cua-be-bamboo-goi-270g-1-goi', NULL, NULL, NULL, 129000.00, NULL, 'products/315938-380342.jpg', NULL, 100, 0, 1, '2025-09-24 08:59:46', '2025-09-25 10:22:13'),
 (5990, 2, 'Tôm chua Trọng Tín 500g (1 hũ)', 'tom-chua-trong-tin-500g-1-hu', NULL, NULL, NULL, 141000.00, NULL, 'products/408369-380790.jpg', NULL, 100, 0, 1, '2025-09-24 08:59:46', '2025-09-25 10:22:13'),
-(5991, 3, 'Dầu gạo lứt Simply chai 1L (1 Chai)', 'dau-gao-lut-simply-chai-1l-1-chai', NULL, NULL, NULL, 75000.00, NULL, 'products/628867-8934988021028.webp', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
-(5992, 3, 'Dầu hạt cải Simply chai 1L', 'dau-hat-cai-simply-chai-1l', NULL, NULL, NULL, 79000.00, NULL, 'products/628869-8934988022025.webp', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
+(5991, 3, 'Dầu gạo lứt Simply chai 1L (1 Chai)', 'dau-gao-lut-simply-chai-1l-1-chai', NULL, NULL, NULL, 75000.00, NULL, 'products/628867-8934988021028.webp', NULL, 92, 1, 1, '2025-09-24 08:59:46', '2025-10-10 06:23:03'),
+(5992, 3, 'Dầu hạt cải Simply chai 1L', 'dau-hat-cai-simply-chai-1l', NULL, NULL, NULL, 79000.00, NULL, 'products/628869-8934988022025.webp', NULL, 94, 1, 1, '2025-09-24 08:59:46', '2025-10-10 02:26:14'),
 (5993, 3, 'Dầu hướng dương Simply chai 1L (1 Chai)', 'dau-huong-duong-simply-chai-1l-1-chai', NULL, NULL, NULL, 84900.00, NULL, 'products/628871-8934988023022.webp', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
 (5994, 3, 'Nước tương thượng hạng Nam Dương chai 500ml (1 Chai)', 'nuoc-tuong-thuong-hang-nam-duong-chai-500ml-1-chai', NULL, NULL, NULL, 41000.00, NULL, 'products/14053-377410.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
 (5995, 3, 'Sốt Teriyaki Ebara chai 235g (1 Chai)', 'sot-teriyaki-ebara-chai-235g-1-chai', NULL, NULL, NULL, 95000.00, NULL, 'products/471720-380974.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
@@ -460,7 +525,7 @@ INSERT INTO `products` (`id`, `category_id`, `name`, `slug`, `description`, `sho
 (6081, 4, 'Nho đen Mỹ không hạt túi 1kg (1 Túi)', 'nho-den-my-khong-hat-tui-1kg-1-tui', NULL, NULL, NULL, 299000.00, NULL, 'products/609449-Group_329.webp', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
 (6082, 4, 'Nho xanh Mỹ không hạt túi 1kg (1 Túi)', 'nho-xanh-my-khong-hat-tui-1kg-1-tui', NULL, NULL, NULL, 299000.00, NULL, 'products/663825-1101310.webp', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
 (6083, 4, 'Nho đỏ Mỹ không hạt hộp 450g (1 Hộp)', 'nho-do-my-khong-hat-hop-450g-1-hop', NULL, NULL, NULL, 159000.00, NULL, 'products/657447-8935360200093.webp', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
-(6084, 4, 'Nho Mỹ không hạt mix xanh đen hộp 450g (1 Hộp)', 'nho-my-khong-hat-mix-xanh-den-hop-450g-1-hop', NULL, NULL, NULL, 169000.00, NULL, 'products/608404-8935360200123.webp', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
+(6084, 4, 'Nho Mỹ không hạt mix xanh đen hộp 450g (1 Hộp)', 'nho-my-khong-hat-mix-xanh-den-hop-450g-1-hop', NULL, NULL, NULL, 169000.00, NULL, 'products/608404-8935360200123.webp', NULL, 99, 1, 1, '2025-09-24 08:59:46', '2025-10-10 06:23:03'),
 (6085, 4, 'Nho xanh Mỹ không hạt hộp 450g (1 Hộp)', 'nho-xanh-my-khong-hat-hop-450g-1-hop', NULL, NULL, NULL, 169000.00, NULL, 'products/657448-8935360200086.webp', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
 (6086, 4, 'Nho đen Mỹ không hạt hộp 450g (1 Hộp)', 'nho-den-my-khong-hat-hop-450g-1-hop', NULL, NULL, NULL, 159000.00, NULL, 'products/657446-8935360200116.webp', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
 (6087, 4, 'Bơ Booth (1KG)', 'bo-booth-1kg', NULL, NULL, NULL, 65000.00, NULL, 'products/631869-515216-bo-booth.webp', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
@@ -498,7 +563,7 @@ INSERT INTO `products` (`id`, `category_id`, `name`, `slug`, `description`, `sho
 (6119, 4, 'Hồng táo hộp 500g (1 Hộp)', 'hong-tao-hop-500g-1-hop', NULL, NULL, NULL, 109000.00, NULL, 'products/657354-10606_1.webp', NULL, 100, 0, 1, '2025-09-24 08:59:46', '2025-09-25 10:22:14'),
 (6120, 4, 'Set trái cây miền tây: dưa hấu + dưa lưới ruột đỏ + mít giống thái', 'set-trai-cay-mien-tay-dua-hau-dua-luoi-ruot-do-mit-giong-thai', NULL, NULL, NULL, 187450.00, NULL, 'products/625849-OL1749694277320.webp', NULL, 100, 0, 1, '2025-09-24 08:59:46', '2025-09-25 10:22:14'),
 (6121, 4, 'Combo blueberry Mỹ + kiwi vàng chín (1 Combo)', 'combo-blueberry-my-kiwi-vang-chin-1-combo', NULL, NULL, NULL, 258000.00, NULL, 'products/627576-OL1748594254743_1.webp', NULL, 100, 0, 1, '2025-09-24 08:59:46', '2025-09-25 10:22:14'),
-(6122, 5, 'Hạt sen tươi gói 200g (1 Gói)', 'hat-sen-tuoi-goi-200g-1-goi', NULL, NULL, NULL, 69000.00, NULL, 'products/609561-8938505512013.webp', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
+(6122, 5, 'Hạt sen tươi gói 200g (1 Gói)', 'hat-sen-tuoi-goi-200g-1-goi', NULL, NULL, NULL, 69000.00, NULL, 'products/609561-8938505512013.webp', NULL, 99, 1, 1, '2025-09-24 08:59:46', '2025-10-10 06:23:03'),
 (6123, 5, 'Lẩu nấm hỗn hợp Nấm Xanh vỉ 300g (1 Vỉ)', 'lau-nam-hon-hop-nam-xanh-vi-300g-1-vi', NULL, NULL, NULL, 35900.00, NULL, 'products/608338-8936210960983.webp', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
 (6124, 5, 'Nấm hỗn hợp Hàn Quốc hộp 300g (1 Hộp)', 'nam-hon-hop-han-quoc-hop-300g-1-hop', NULL, NULL, NULL, 59000.00, NULL, 'products/411491-378985.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
 (6125, 5, 'Rong nho tươi Green Food hộp 100g (1 Hộp)', 'rong-nho-tuoi-green-food-hop-100g-1-hop', NULL, NULL, NULL, 29500.00, NULL, 'products/618592-8938530363031.webp', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
@@ -648,8 +713,8 @@ INSERT INTO `products` (`id`, `category_id`, `name`, `slug`, `description`, `sho
 (6268, 7, 'Sữa chua dẻo phô mai Merino 50ml (1 Bịch)', 'sua-chua-deo-pho-mai-merino-50ml-1-bich', NULL, NULL, NULL, 84000.00, NULL, 'products/618145-Group_430.webp', NULL, 100, 0, 1, '2025-09-24 08:59:46', '2025-09-25 10:22:14'),
 (6269, 7, 'Kem chuối truyền thống Merino 60ml (1 Cây)', 'kem-chuoi-truyen-thong-merino-60ml-1-cay', NULL, NULL, NULL, 91000.00, NULL, 'products/628850-8936011772808.webp', NULL, 100, 0, 1, '2025-09-24 08:59:46', '2025-09-25 10:22:14'),
 (6270, 7, 'Kem cây kitkat Nestle cây 70g (1 Cây)', 'kem-cay-kitkat-nestle-cay-70g-1-cay', NULL, NULL, NULL, 78000.00, NULL, 'products/15465-97015.jpg', NULL, 100, 0, 1, '2025-09-24 08:59:46', '2025-09-25 10:22:14'),
-(6271, 8, 'Sữa thanh trùng huơng dưa lưới Meiji hộp 946ml (1 Hộp)', 'sua-thanh-trung-huong-dua-luoi-meiji-hop-946ml-1-hop', NULL, NULL, NULL, 155000.00, NULL, 'products/560837-381650.webp', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
-(6272, 8, 'Sữa thanh trùng Meiji 946ml (1 Hộp)', 'sua-thanh-trung-meiji-946ml-1-hop', NULL, NULL, NULL, 39000.00, NULL, 'products/1303-96769.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
+(6271, 8, 'Sữa thanh trùng huơng dưa lưới Meiji hộp 946ml (1 Hộp)', 'sua-thanh-trung-huong-dua-luoi-meiji-hop-946ml-1-hop', NULL, NULL, NULL, 155000.00, NULL, 'products/560837-381650.webp', NULL, 98, 1, 1, '2025-09-24 08:59:46', '2025-10-10 14:19:11'),
+(6272, 8, 'Sữa thanh trùng Meiji 946ml (1 Hộp)', 'sua-thanh-trung-meiji-946ml-1-hop', NULL, NULL, NULL, 39000.00, NULL, 'products/1303-96769.jpg', NULL, 97, 1, 1, '2025-09-24 08:59:46', '2025-10-10 14:19:11'),
 (6273, 8, 'Combo thử vị: sữa hạt Oatside + sữa hạt Boring Oat (1 Combo)', 'combo-thu-vi-sua-hat-oatside-sua-hat-boring-oat-1-combo', NULL, NULL, NULL, 153900.00, NULL, 'products/OL1755246989294.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
 (6274, 8, 'Combo thử vị: Sữa thanh trùng Green Farm + Sữa thanh trùng Meiji 4.3%', 'combo-thu-vi-sua-thanh-trung-green-farm-sua-thanh-trung-meiji-4-3', NULL, NULL, NULL, 124800.00, NULL, 'products/OL1755249081605.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
 (6275, 8, 'Sữa tươi tiệt trùng không đường Vinamilk 1L (1 Hộp)', 'sua-tuoi-tiet-trung-khong-duong-vinamilk-1l-1-hop', NULL, NULL, NULL, 43000.00, NULL, 'products/608939-8934673576390.webp', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
@@ -1133,6 +1198,33 @@ CREATE TABLE `product_tags` (
   `tag_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `product_tags`
+--
+
+INSERT INTO `product_tags` (`product_id`, `tag_id`) VALUES
+(5843, 5),
+(5844, 5),
+(5845, 5),
+(5846, 5),
+(5847, 5),
+(5848, 5),
+(5849, 5),
+(5850, 5),
+(5851, 5),
+(5852, 5),
+(5853, 5),
+(5854, 5),
+(5855, 5),
+(5856, 5),
+(5857, 5),
+(5858, 5),
+(5859, 5),
+(5860, 5),
+(5861, 5),
+(5862, 5),
+(5863, 5);
+
 -- --------------------------------------------------------
 
 --
@@ -1148,8 +1240,15 @@ CREATE TABLE `reviews` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `reviews`
+--
+
+INSERT INTO `reviews` (`id`, `product_id`, `user_id`, `rating`, `comment`, `created_at`) VALUES
+(1, 5888, 10, 5, 'San pham chat luong lam', '2025-10-08 04:19:10');
+
 -- --------------------------------------------------------
-INSERT INTO `reviews` (`id`, `product_id`, `user_id`, `rating`, `comment`, `created_at`) VALUES ('1', '5888', '10', '5', 'San pham chat luong', current_timestamp());
+
 --
 -- Cấu trúc bảng cho bảng `subscribers`
 --
@@ -1189,7 +1288,8 @@ INSERT INTO `tags` (`id`, `name`, `slug`, `created_at`) VALUES
 (1, 'Bánh Trung Thu', 'banh-trung-thu', '2025-09-22 16:46:17'),
 (2, 'Sale 9.9', 'sale-9-9', '2025-09-22 16:46:17'),
 (3, 'Giảm giá', 'giam-gia', '2025-09-22 16:46:17'),
-(4, 'Best Seller', 'best-seller', '2025-09-22 16:46:17');
+(4, 'Best Seller', 'best-seller', '2025-09-22 16:46:17'),
+(5, 'Nổi bật', 'noi-bat', '2025-10-13 15:25:10');
 
 -- --------------------------------------------------------
 
@@ -1213,6 +1313,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `address`, `phone`, `password`, `role`, `created_at`) VALUES
+(1, 'ConKu', 'ngongocson39@gmail.com', 'HCM', '0905555666', '$2y$10$ZtQvjM9OQOhNP/mApA0JJ.4jXWrhmeyCP97aHX3XlnWRsM7IcRBhS', 'user', '2025-10-12 06:05:39'),
 (6, 'Admin', 'admin@demo.com', NULL, NULL, '$2y$10$0kWZdX6vQBv3/RV/pYxeiOtAkY0THTZRTXn90Aqv2GPog5HgerPhG', 'admin', '2025-09-15 07:52:37'),
 (7, 'User', 'user@demo.com', NULL, NULL, '$2y$10$SPP1P7XtPECm1XaDMpz/dO.dpx20EEiQTtIevoTDuRT0KoUASE4Zi', 'user', '2025-09-15 07:52:37'),
 (8, 'Nguyen Van A', 'nguyenvana@demo.com', '258 Nguyễn Trãi, Thanh Hóa', '0967890123', 'hashed_password_a', 'user', '2025-09-24 23:00:00'),
@@ -1231,7 +1332,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `address`, `phone`, `password`, `rol
 (21, 'Nguyen Van N', 'nguyenvann@demo.com', '123 Nguyễn Trãi, Hà Nội', '0902222333', 'hashed_password_n', 'user', '2024-09-26 19:40:00'),
 (22, 'Tran Thi O', 'tranthio@demo.com', '456 Lạc Long Quân, TP.HCM', '0903333444', 'hashed_password_o', 'user', '2024-10-19 04:25:00'),
 (23, 'Le Van P', 'levanp@demo.com', '12 Hai Bà Trưng, Hà Nội', '012346789', 'hashed_password_p', 'user', '2024-09-22 18:30:00'),
-(24, 'Pham Thi Q', 'phamthiq@demo.com', '56 Nguyễn Văn Linh, Đà Nẵng', '0905555666', 'hashed_password_q', 'user', '2024-10-25 05:10:00');
+(24, 'Pham Thi Q', 'phamthiq@demo.com', '56 Nguyễn Văn Linh, Đà Nẵng', '0905555666', 'hashed_password_q', 'user', '2024-10-25 05:10:00'),
+(25, 'ABC', 'lev4@demo.com', 'adfddfs', '0905555666', '$2y$10$rMD98O5HyG.6Oqq2SWl5FO4RGH2y/KZpLE16xLBVXmdkQ7LD8kBQu', 'user', '2025-10-12 06:36:59');
 
 -- --------------------------------------------------------
 
@@ -1257,8 +1359,8 @@ CREATE TABLE `vouchers` (
 --
 
 INSERT INTO `vouchers` (`id`, `code`, `discount_amount`, `start_date`, `end_date`, `min_order_value`, `max_usage`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'DISCOUNT20', 20000, '2025-09-25', '2025-10-25', 90000, 105, 0, '2025-09-25 00:00:00', '2025-09-30 22:44:49'),
-(2, 'FREESHIP', 15000, '2025-09-25', '2025-10-30', 50000, 50, 1, '2025-09-25 00:15:00', '2025-09-30 22:43:06');
+(1, 'DISCOUNT20', 20000, '2025-09-25', '2025-10-25', 90000, 104, 1, '2025-09-25 00:00:00', '2025-10-10 03:39:03'),
+(2, 'FREESHIP', 15000, '2025-09-25', '2025-10-30', 50000, 46, 1, '2025-09-25 00:15:00', '2025-10-12 06:47:31');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -1269,6 +1371,14 @@ INSERT INTO `vouchers` (`id`, `code`, `discount_amount`, `start_date`, `end_date
 --
 ALTER TABLE `blogs`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `carts`
+--
+ALTER TABLE `carts`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_cart` (`user_id`,`product_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Chỉ mục cho bảng `categories`
@@ -1353,7 +1463,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `blogs`
 --
 ALTER TABLE `blogs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT cho bảng `carts`
+--
+ALTER TABLE `carts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=485;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`
@@ -1365,13 +1481,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT cho bảng `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
@@ -1386,83 +1502,21 @@ ALTER TABLE `product_images`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `reviews`
---
-ALTER TABLE `reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
-
---
--- AUTO_INCREMENT cho bảng `subscribers`
---
-ALTER TABLE `subscribers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT cho bảng `tags`
---
-ALTER TABLE `tags`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Các ràng buộc cho bảng `categories`
+-- Các ràng buộc cho bảng `carts`
 --
-ALTER TABLE `categories`
-  ADD CONSTRAINT `categories_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL;
-
---
--- Các ràng buộc cho bảng `orders`
---
-ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-
---
--- Các ràng buộc cho bảng `order_items`
---
-ALTER TABLE `order_items`
-  ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
-
---
--- Các ràng buộc cho bảng `products`
---
-ALTER TABLE `products`
-  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL;
-
---
--- Các ràng buộc cho bảng `product_images`
---
-ALTER TABLE `product_images`
-  ADD CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
-
---
--- Các ràng buộc cho bảng `product_tags`
---
-ALTER TABLE `product_tags`
-  ADD CONSTRAINT `product_tags_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `product_tags_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE;
-
---
--- Các ràng buộc cho bảng `reviews`
---
-ALTER TABLE `reviews`
-  ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-
---
--- Các ràng buộc cho bảng `subscribers`
---
-ALTER TABLE `subscribers`
-  ADD CONSTRAINT `subscribers_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+ALTER TABLE `carts`
+  ADD CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `carts_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

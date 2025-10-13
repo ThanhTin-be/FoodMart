@@ -111,24 +111,29 @@ class CheckoutController extends Controller {
             exit;
         }
 
-        $userId   = (int)$_SESSION['user']['id'];
+        $userId = (int)$_SESSION['user']['id'];
         $subtotal = $this->calcCartSubtotal($cart);
         $discount = !empty($_SESSION['voucher']['discount']) ? (float)$_SESSION['voucher']['discount'] : 0;
-        $grand    = max($subtotal - $discount, 0);
+        $grand = max($subtotal - $discount, 0);
 
-        // (tuỳ chọn) lấy payment method từ POST
+        // ✅ Lấy dữ liệu người nhận từ form POST
+        $fullname = trim($_POST['fullname'] ?? '');
+        $phone = trim($_POST['phone'] ?? '');
+        $address = trim($_POST['address'] ?? '');
         $paymentMethod = $_POST['payment_method'] ?? 'cod';
 
-        // Tạo đơn
+        if ($fullname === '' || $phone === '' || $address === '') {
+            die("<h3 style='color:red'>❌ Thiếu thông tin người nhận. Vui lòng kiểm tra lại!</h3>");
+        }
+
+        // ✅ Gọi model lưu đơn hàng
         $orderModel = $this->model('OrderModel');
-        $orderId = $orderModel->createOrder($userId, $cart, $grand); // Hàm createOrder bên bạn đã lo order_items + trừ stock
+        $orderId = $orderModel->createOrder($userId, $fullname, $phone, $address, $paymentMethod, $cart, $grand);
 
         if ($orderId) {
-            // Giảm lượt dùng voucher nếu có
+            // Giảm lượt dùng voucher (nếu có)
             if (!empty($_SESSION['voucher']['voucher_id'])) {
                 $voucherId = (int)$_SESSION['voucher']['voucher_id'];
-                // Thêm hàm này trong VoucherModel:
-                // public function decreaseUsage($id) { $this->conn->query("UPDATE vouchers SET max_usage = CASE WHEN max_usage IS NULL THEN NULL ELSE GREATEST(max_usage-1,0) END WHERE id = $id"); }
                 try {
                     $voucherModel = $this->model('VoucherModel');
                     if (method_exists($voucherModel, 'decreaseUsage')) {
@@ -140,18 +145,38 @@ class CheckoutController extends Controller {
             // Clear cart + voucher
             unset($_SESSION['cart'], $_SESSION['voucher']);
 
-            // Điều hướng
-            header("Location: " . BASE_URL . "checkout/thankyou");
+            // ✅ Lưu session order ID để thankyou sử dụng
+            $_SESSION['last_order_id'] = $orderId;
+
+            // ✅ Điều hướng sang trang cảm ơn
+            header("Location: " . BASE_URL . "checkout/thankyou?order_id=" . $orderId);
             exit;
         }
-        // Lỗi
+
         echo "<h3 style='color:red'>❌ Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại!</h3>";
     }
 
     // Trang cảm ơn
-    public function thankyou() {
-        $this->view("checkout/thankyou");
+   public function thankyou() {
+    $userId = $_SESSION['user']['id'] ?? null;
+    $orderId = $_GET['order_id'] ?? ($_SESSION['last_order_id'] ?? null);
+
+    if (!$orderId || !$userId) {
+        header("Location: " . BASE_URL . "order/myorders");
+        exit;
     }
+
+    $orderModel = $this->model('OrderModel');
+    $order = $orderModel->getOrderDetail($orderId, $userId);
+
+    if (!$order) {
+        header("Location: " . BASE_URL . "order/myorders");
+        exit;
+    }
+
+    $this->view("checkout/thankyou", ["order" => $order]);
+    }
+
 
     // --------- Helpers ----------
     private function calcCartSubtotal(array $cart): float {
