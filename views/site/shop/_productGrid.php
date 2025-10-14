@@ -1,24 +1,24 @@
 <?php if (!empty($products)): ?>
   <?php foreach ($products as $p): ?>
     <?php
-      // ✅ Tính phần trăm giảm giá và tiền tiết kiệm
-      $discount = 0;
-      $saving   = 0;
-      if (!empty($p['old_price']) && $p['old_price'] > $p['price']) {
-          $saving   = $p['old_price'] - $p['price'];
-          $discount = round(($saving / $p['old_price']) * 100);
-      }
+    // ✅ Tính phần trăm giảm giá và tiền tiết kiệm
+    $discount = 0;
+    $saving   = 0;
+    if (!empty($p['old_price']) && $p['old_price'] > $p['price']) {
+      $saving   = $p['old_price'] - $p['price'];
+      $discount = round(($saving / $p['old_price']) * 100);
+    }
 
-      // ✅ Đổi màu badge theo mức giảm
-      if ($discount >= 30) {
-          $badgeColor = 'bg-red-600';
-      } elseif ($discount >= 15) {
-          $badgeColor = 'bg-orange-500';
-      } elseif ($discount >= 5) {
-          $badgeColor = 'bg-yellow-500';
-      } else {
-          $badgeColor = 'bg-green-600';
-      }
+    // ✅ Đổi màu badge theo mức giảm
+    if ($discount >= 30) {
+      $badgeColor = 'bg-red-600';
+    } elseif ($discount >= 15) {
+      $badgeColor = 'bg-orange-500';
+    } elseif ($discount >= 5) {
+      $badgeColor = 'bg-yellow-500';
+    } else {
+      $badgeColor = 'bg-green-600';
+    }
     ?>
 
     <!-- 🧩 Product Card -->
@@ -37,15 +37,15 @@
         <?php endif; ?>
 
         <!-- Product Image -->
-        <img src="<?= BASE_URL ?>assets/images/<?= htmlspecialchars($p['image']) ?>" 
-             alt="<?= htmlspecialchars($p['name']) ?>" 
-             class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105" 
-             loading="lazy">
+        <img src="<?= BASE_URL ?>assets/images/<?= htmlspecialchars($p['image']) ?>"
+          alt="<?= htmlspecialchars($p['name']) ?>"
+          class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+          loading="lazy">
 
         <!-- Hover actions -->
         <div class="absolute inset-0 flex items-center justify-center transition-all duration-300 bg-black bg-opacity-0 opacity-0 group-hover:bg-opacity-20 group-hover:opacity-100">
           <div class="flex gap-2 transition-transform duration-300 transform translate-y-4 group-hover:translate-y-0">
-            
+
             <!-- Quick View -->
             <button onclick="quickViewProduct(<?= $p['id'] ?>)" class="p-3 transition-colors duration-200 bg-white rounded-full shadow-lg hover:bg-gray-100" title="Xem nhanh">
               <svg class="w-5 h-5 text-gray-700" fill="currentColor" viewBox="0 0 20 20">
@@ -55,7 +55,7 @@
             </button>
 
             <!-- Add to Cart -->
-            <button onclick="addToCart(<?= $p['id'] ?>)" class="p-3 transition-colors duration-200 bg-red-600 rounded-full shadow-lg hover:bg-red-700" title="Thêm vào giỏ">
+            <button class="add-to-cart p-3 transition-colors duration-200 bg-red-600 rounded-full shadow-lg hover:bg-red-700" data-id="<?= $p['id'] ?>" title="Thêm vào giỏ">
               <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
               </svg>

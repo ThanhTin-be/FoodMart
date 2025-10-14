@@ -31,7 +31,6 @@ $isLoggedIn = !empty($user);
     <span class="hidden text-sm font-medium md:inline"><?= $name ?> </span>
   <?php else: ?>
     <span class="hidden text-sm font-medium md:inline">Tài khoản </span>
-    <i class="hidden text-xs transition-transform duration-300 fas fa-chevron-down sm:block group-hover:rotate-180"></i>
   <?php endif; ?>
   <i class="hidden text-xs transition-transform duration-300 fas fa-chevron-down sm:block group-hover:rotate-180"></i>
 </button>
@@ -61,7 +60,7 @@ $isLoggedIn = !empty($user);
     <!-- Menu dashboard -->
     <?php if ($isLoggedIn): ?>
 
-      <a href="<?= BASE_URL ?>account/dashboard" class="flex items-center px-4 py-3 text-gray-700 transition-colors hover:bg-gray-50 group/item">
+      <a href="<?= BASE_URL ?>site/dashboard/dashboard" class="flex items-center px-4 py-3 text-gray-700 transition-colors hover:bg-gray-50 group/item">
         <i class="w-4 mr-3 fas fa-tachometer-alt text-primary"></i>
         <span class="flex-1 text-sm">Dashboard</span>
         <i class="text-xs transition-opacity opacity-0 fas fa-arrow-right group-hover/item:opacity-100"></i>

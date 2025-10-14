@@ -46,25 +46,25 @@
                             </a>
                         </li>
                         <li>
-                            <a href="2/gioi-thieu/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="https://pricot.vn/gioi-thieu/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Giới thiệu
                             </a>
                         </li>
                         <li>
-                            <a href="2/category/tin-tuc/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="https://pricot.vn/category/tin-tuc/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Tin tức
                             </a>
                         </li>
                         <li>
-                            <a href="2/product-all/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="https://pricot.vn/product-all/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Sản phẩm
                             </a>
                         </li>
                         <li>
-                            <a href="2/lien-he/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="https://pricot.vn/lien-he/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Liên hệ
                             </a>
@@ -77,31 +77,31 @@
                     <h4 class="mb-6 text-xl font-bold font-league-spartan">Chính Sách</h4>
                     <ul class="space-y-3 policies-menu">
                         <li>
-                            <a href="2/chinh-sach-bao-mat/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="https://pricot.vn/chinh-sach-bao-mat/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Chính sách bảo mật
                             </a>
                         </li>
                         <li>
-                            <a href="2/chinh-sach-doi-tra/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="https://pricot.vn/chinh-sach-doi-tra/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Chính sách đổi trả
                             </a>
                         </li>
                         <li>
-                            <a href="2/chinh-sach-giao-hang/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="https://pricot.vn/chinh-sach-giao-hang/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Chính sách giao hàng
                             </a>
                         </li>
                         <li>
-                            <a href="2/dieu-khoan-su-dung/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="https://pricot.vn/dieu-khoan-su-dung/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Điều khoản sử dụng
                             </a>
                         </li>
                         <li>
-                            <a href="2/phuong-thuc-thanh-toan/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="https://pricot.vn/phuong-thuc-thanh-toan/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Phương thức thanh toán
                             </a>
@@ -208,13 +208,13 @@
 <!-- ===================== JS ===================== -->
 <!-- jQuery luôn load đầu tiên -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
+<script src="<?= BASE_URL ?>assets/js/cart.js"></script>
 <!-- Sau đó load plugin phụ thuộc jQuery -->
 <script src="<?= BASE_URL ?>assets/js/plugins.js"></script>
 
 <!-- Các thư viện JS khác -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
 
 <!-- Cuối cùng mới đến script chính -->
 <script src="<?= BASE_URL ?>assets/js/script.js"></script>
@@ -224,17 +224,6 @@
     const BASE_URL = "<?= BASE_URL ?>";
     console.log("✅ PHP BASE_URL =", BASE_URL);
 </script>
-
-<!-- Chỉ load cart.js nếu KHÔNG phải trang giỏ hàng -->
-<?php
-$uri = $_SERVER['REQUEST_URI'];
-if (strpos($uri, 'cart/index') === false): ?>
-    <script src="<?= BASE_URL ?>assets/js/cart.js"></script>
-<?php else: ?>
-    <script>
-        console.log("🛑 cart.js disabled on cart page");
-    </script>
-<?php endif; ?>
 
 <!-- Chỉ load khi ở trang checkout -->
 <?php if (strpos($uri, 'checkout/index') !== false): ?>
