@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 13, 2025 lúc 05:04 AM
+-- Thời gian đã tạo: Th10 14, 2025 lúc 11:09 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -67,9 +67,7 @@ CREATE TABLE `carts` (
 --
 
 INSERT INTO `carts` (`id`, `user_id`, `product_id`, `quantity`, `created_at`, `updated_at`) VALUES
-(461, 7, 5843, 3, '2025-10-10 14:31:33', '2025-10-12 05:11:21'),
-(462, 7, 5844, 1, '2025-10-10 14:31:33', '2025-10-10 14:31:33'),
-(473, 7, 5845, 1, '2025-10-13 01:02:51', '2025-10-13 01:02:51');
+(500, 7, 5843, 3, '2025-10-13 07:02:41', '2025-10-13 07:02:42');
 
 -- --------------------------------------------------------
 
@@ -121,6 +119,7 @@ CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `total_price` decimal(10,2) NOT NULL,
+  `payment_status` enum('pending','paid','failed','cod') DEFAULT 'pending',
   `status` enum('cho_xac_nhan','da_xac_nhan','dang_giao','da_giao','thanh_cong','huy') DEFAULT 'cho_xac_nhan',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -130,36 +129,67 @@ CREATE TABLE `orders` (
 -- Đang đổ dữ liệu cho bảng `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `total_price`, `status`, `created_at`, `updated_at`) VALUES
-(6, 7, 150000.00, 'cho_xac_nhan', '2025-09-24 20:00:00', '2025-09-30 08:32:05'),
-(7, 8, 250000.00, 'da_xac_nhan', '2025-09-24 21:00:00', '2025-09-24 21:30:00'),
-(8, 9, 300000.00, 'dang_giao', '2025-09-24 22:00:00', '2025-09-24 22:30:00'),
-(9, 10, 200000.00, 'thanh_cong', '2025-09-24 23:00:00', '2025-10-10 03:49:20'),
-(10, 7, 100000.00, 'huy', '2025-09-25 00:00:00', '2025-09-30 08:32:13'),
-(11, 11, 10802000.00, 'thanh_cong', '2024-09-19 20:30:00', '2024-09-19 20:30:00'),
-(12, 12, 11844000.00, 'thanh_cong', '2024-10-25 03:15:00', '2024-10-25 03:15:00'),
-(13, 13, 15671000.00, 'thanh_cong', '2024-11-21 21:15:00', '2024-11-21 21:15:00'),
-(14, 14, 15947000.00, 'thanh_cong', '2024-12-28 04:20:00', '2024-12-28 04:20:00'),
-(15, 15, 20047000.00, 'thanh_cong', '2025-01-25 23:30:00', '2025-01-25 23:30:00'),
-(16, 16, 20063000.00, 'thanh_cong', '2025-02-20 05:50:00', '2025-02-20 05:50:00'),
-(17, 17, 7101000.00, 'thanh_cong', '2025-03-28 22:15:00', '2025-09-26 03:16:48'),
-(18, 18, 7098000.00, 'thanh_cong', '2025-04-21 06:25:00', '2025-04-21 06:25:00'),
-(19, 19, 8121000.00, 'thanh_cong', '2025-05-30 00:20:00', '2025-05-30 00:20:00'),
-(20, 20, 8164000.00, 'thanh_cong', '2025-06-22 05:10:00', '2025-06-22 05:10:00'),
-(21, 21, 12035000.00, 'thanh_cong', '2025-07-26 21:10:00', '2025-07-26 21:10:00'),
-(22, 22, 12049000.00, 'thanh_cong', '2025-08-19 06:50:00', '2025-08-19 06:50:00'),
-(23, 23, 10035000.00, 'thanh_cong', '2025-09-22 20:45:00', '2025-09-22 20:45:00'),
-(24, 24, 10037000.00, 'thanh_cong', '2025-10-25 06:30:00', '2025-10-25 06:30:00'),
-(25, 7, 1494000.00, 'thanh_cong', '2025-10-10 02:09:36', '2025-10-10 03:54:43'),
-(26, 7, 2988000.00, 'cho_xac_nhan', '2025-10-10 02:26:14', '2025-10-10 02:26:14'),
-(27, 6, 780000.00, 'dang_giao', '2025-10-10 03:39:03', '2025-10-10 03:42:01'),
-(28, 7, 285000.00, 'cho_xac_nhan', '2025-10-10 05:14:00', '2025-10-10 05:14:00'),
-(29, 7, 300000.00, 'cho_xac_nhan', '2025-10-10 05:38:58', '2025-10-10 05:38:58'),
-(30, 7, 1498000.00, 'cho_xac_nhan', '2025-10-10 06:23:03', '2025-10-10 06:23:03'),
-(31, 7, 953000.00, 'cho_xac_nhan', '2025-10-10 14:05:03', '2025-10-10 14:05:03'),
-(32, 7, 1196000.00, 'huy', '2025-10-10 14:19:11', '2025-10-10 14:21:51'),
-(33, 7, 328000.00, 'cho_xac_nhan', '2025-10-10 14:21:19', '2025-10-10 14:21:19'),
-(34, 0, 441000.00, 'cho_xac_nhan', '2025-10-12 06:47:31', '2025-10-12 06:47:31');
+INSERT INTO `orders` (`id`, `user_id`, `total_price`, `payment_status`, `status`, `created_at`, `updated_at`) VALUES
+(6, 7, 150000.00, 'pending', 'cho_xac_nhan', '2025-09-24 20:00:00', '2025-09-30 08:32:05'),
+(7, 8, 250000.00, 'pending', 'da_xac_nhan', '2025-09-24 21:00:00', '2025-09-24 21:30:00'),
+(8, 9, 300000.00, 'pending', 'dang_giao', '2025-09-24 22:00:00', '2025-09-24 22:30:00'),
+(9, 10, 200000.00, 'pending', 'thanh_cong', '2025-09-24 23:00:00', '2025-10-10 03:49:20'),
+(10, 7, 100000.00, 'pending', 'huy', '2025-09-25 00:00:00', '2025-09-30 08:32:13'),
+(11, 11, 10802000.00, 'pending', 'thanh_cong', '2024-09-19 20:30:00', '2024-09-19 20:30:00'),
+(12, 12, 11844000.00, 'pending', 'thanh_cong', '2024-10-25 03:15:00', '2024-10-25 03:15:00'),
+(13, 13, 15671000.00, 'pending', 'thanh_cong', '2024-11-21 21:15:00', '2024-11-21 21:15:00'),
+(14, 14, 15947000.00, 'pending', 'thanh_cong', '2024-12-28 04:20:00', '2024-12-28 04:20:00'),
+(15, 15, 20047000.00, 'pending', 'thanh_cong', '2025-01-25 23:30:00', '2025-01-25 23:30:00'),
+(16, 16, 20063000.00, 'pending', 'thanh_cong', '2025-02-20 05:50:00', '2025-02-20 05:50:00'),
+(17, 17, 7101000.00, 'pending', 'thanh_cong', '2025-03-28 22:15:00', '2025-09-26 03:16:48'),
+(18, 18, 7098000.00, 'pending', 'thanh_cong', '2025-04-21 06:25:00', '2025-04-21 06:25:00'),
+(19, 19, 8121000.00, 'pending', 'thanh_cong', '2025-05-30 00:20:00', '2025-05-30 00:20:00'),
+(20, 20, 8164000.00, 'pending', 'thanh_cong', '2025-06-22 05:10:00', '2025-06-22 05:10:00'),
+(21, 21, 12035000.00, 'pending', 'thanh_cong', '2025-07-26 21:10:00', '2025-07-26 21:10:00'),
+(22, 22, 12049000.00, 'pending', 'thanh_cong', '2025-08-19 06:50:00', '2025-08-19 06:50:00'),
+(23, 23, 10035000.00, 'pending', 'thanh_cong', '2025-09-22 20:45:00', '2025-09-22 20:45:00'),
+(24, 24, 10037000.00, 'paid', 'thanh_cong', '2025-10-25 06:30:00', '2025-10-14 08:17:11'),
+(25, 7, 1494000.00, 'pending', 'thanh_cong', '2025-10-10 02:09:36', '2025-10-10 03:54:43'),
+(26, 7, 2988000.00, 'pending', 'cho_xac_nhan', '2025-10-10 02:26:14', '2025-10-10 02:26:14'),
+(27, 6, 780000.00, 'pending', 'dang_giao', '2025-10-10 03:39:03', '2025-10-10 03:42:01'),
+(28, 7, 285000.00, 'pending', 'cho_xac_nhan', '2025-10-10 05:14:00', '2025-10-10 05:14:00'),
+(29, 7, 300000.00, 'pending', 'cho_xac_nhan', '2025-10-10 05:38:58', '2025-10-10 05:38:58'),
+(30, 7, 1498000.00, 'pending', 'cho_xac_nhan', '2025-10-10 06:23:03', '2025-10-10 06:23:03'),
+(31, 7, 953000.00, 'pending', 'cho_xac_nhan', '2025-10-10 14:05:03', '2025-10-10 14:05:03'),
+(32, 7, 1196000.00, 'pending', 'huy', '2025-10-10 14:19:11', '2025-10-10 14:21:51'),
+(33, 7, 328000.00, 'pending', 'cho_xac_nhan', '2025-10-10 14:21:19', '2025-10-10 14:21:19'),
+(34, 0, 441000.00, 'pending', 'cho_xac_nhan', '2025-10-12 06:47:31', '2025-10-12 06:47:31'),
+(35, 7, 100000.00, 'pending', 'cho_xac_nhan', '2025-10-13 06:35:39', '2025-10-13 06:35:39'),
+(36, 7, 499000.00, 'pending', 'cho_xac_nhan', '2025-10-13 06:37:17', '2025-10-13 06:37:17'),
+(37, 7, 200000.00, 'pending', 'cho_xac_nhan', '2025-10-13 06:41:38', '2025-10-13 06:41:38'),
+(38, 7, 200000.00, 'pending', 'cho_xac_nhan', '2025-10-13 06:43:37', '2025-10-13 06:43:37'),
+(39, 7, 200000.00, 'pending', 'cho_xac_nhan', '2025-10-13 06:45:32', '2025-10-13 06:45:32'),
+(40, 7, 200000.00, 'pending', 'cho_xac_nhan', '2025-10-13 06:48:55', '2025-10-13 06:48:55'),
+(41, 7, 256000.00, 'pending', 'cho_xac_nhan', '2025-10-13 06:51:29', '2025-10-13 06:51:29'),
+(42, 7, 200000.00, 'pending', 'cho_xac_nhan', '2025-10-13 06:54:45', '2025-10-13 06:54:45'),
+(43, 6, 200000.00, 'pending', 'cho_xac_nhan', '2025-10-14 06:48:08', '2025-10-14 06:48:08'),
+(44, 6, 200000.00, 'pending', 'cho_xac_nhan', '2025-10-14 06:53:40', '2025-10-14 06:53:40'),
+(45, 6, 100000.00, 'pending', 'cho_xac_nhan', '2025-10-14 07:02:14', '2025-10-14 07:02:14'),
+(46, 6, 100000.00, 'pending', 'cho_xac_nhan', '2025-10-14 07:26:24', '2025-10-14 07:26:24'),
+(47, 6, 200000.00, 'pending', 'cho_xac_nhan', '2025-10-14 07:34:43', '2025-10-14 07:34:43'),
+(48, 6, 100000.00, 'pending', 'cho_xac_nhan', '2025-10-14 07:36:10', '2025-10-14 07:36:10'),
+(49, 6, 200000.00, 'paid', 'thanh_cong', '2025-10-14 07:37:25', '2025-10-14 08:16:50'),
+(50, 6, 200000.00, 'paid', 'thanh_cong', '2025-10-14 07:54:33', '2025-10-14 08:17:08'),
+(51, 6, 1300000.00, 'paid', 'thanh_cong', '2025-10-14 08:32:57', '2025-10-14 08:35:10'),
+(52, 6, 100000.00, 'pending', 'cho_xac_nhan', '2025-10-14 08:58:58', '2025-10-14 08:58:58'),
+(53, 6, 12000.00, 'pending', 'cho_xac_nhan', '2025-10-14 09:01:04', '2025-10-14 09:01:04');
+
+--
+-- Bẫy `orders`
+--
+DELIMITER $$
+CREATE TRIGGER `update_payment_status` BEFORE UPDATE ON `orders` FOR EACH ROW BEGIN
+    IF NEW.status = 'thanh_cong' THEN
+        SET NEW.payment_status = 'paid';
+    END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -241,7 +271,28 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`, `price`) 
 (73, 33, 5844, 1, 128000.00),
 (74, 33, 5843, 2, 100000.00),
 (75, 34, 5843, 2, 100000.00),
-(76, 34, 5844, 2, 128000.00);
+(76, 34, 5844, 2, 128000.00),
+(77, 35, 5843, 1, 100000.00),
+(78, 36, 5843, 3, 100000.00),
+(79, 36, 5844, 1, 128000.00),
+(80, 36, 5845, 1, 71000.00),
+(81, 37, 5843, 2, 100000.00),
+(82, 38, 5843, 2, 100000.00),
+(83, 39, 5843, 2, 100000.00),
+(84, 40, 5843, 2, 100000.00),
+(85, 41, 5844, 2, 128000.00),
+(86, 42, 5843, 2, 100000.00),
+(87, 43, 5843, 2, 100000.00),
+(88, 44, 5843, 2, 100000.00),
+(89, 45, 5843, 1, 100000.00),
+(90, 46, 5843, 1, 100000.00),
+(91, 47, 5843, 2, 100000.00),
+(92, 48, 5843, 1, 100000.00),
+(93, 49, 5843, 2, 100000.00),
+(94, 50, 5843, 2, 100000.00),
+(95, 51, 5843, 13, 100000.00),
+(96, 52, 5843, 1, 100000.00),
+(97, 53, 6221, 1, 12000.00);
 
 -- --------------------------------------------------------
 
@@ -273,9 +324,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `category_id`, `name`, `slug`, `description`, `short_desc`, `unit`, `price`, `old_price`, `image`, `gallery`, `stock`, `is_featured`, `status`, `created_at`, `updated_at`) VALUES
-(5843, 1, 'Hộp Bánh Trung Thu Hoa Nguyệt 1 Maison 240g (1 Hộp)', 'hop-banh-trung-thu-hoa-nguyet-1-maison-240g-1-hop', 'abc', NULL, NULL, 100000.00, 150000.00, 'products/631555-8938528019131.webp', NULL, 61, 1, 1, '2025-09-24 01:59:45', '2025-10-12 06:47:31'),
-(5844, 1, 'Hộp Bánh Trung Thu Hân Hoan Maison 320g (1 Hộp)', 'hop-banh-trung-thu-han-hoan-maison-320g-1-hop', 'null', NULL, NULL, 128000.00, NULL, 'products/631558-8938528019032.webp', NULL, 88, 1, 1, '2025-09-24 08:59:45', '2025-10-12 06:47:31'),
-(5845, 1, 'Hộp Bánh Trung Thu Dịu Dàng Maison 480g (1 Hộp)', 'hop-banh-trung-thu-diu-dang-maison-480g-1-hop', '', NULL, NULL, 71000.00, NULL, 'products/631561-8938528019049.webp', NULL, 76, 1, 1, '2025-09-24 08:59:45', '2025-10-10 14:19:11'),
+(5843, 1, 'Hộp Bánh Trung Thu Hoa Nguyệt 1 Maison 240g (1 Hộp)', 'hop-banh-trung-thu-hoa-nguyet-1-maison-240g-1-hop', 'abc', NULL, NULL, 100000.00, 150000.00, 'products/631555-8938528019131.webp', NULL, 20, 1, 1, '2025-09-24 01:59:45', '2025-10-14 08:58:58'),
+(5844, 1, 'Hộp Bánh Trung Thu Hân Hoan Maison 320g (1 Hộp)', 'hop-banh-trung-thu-han-hoan-maison-320g-1-hop', 'null', NULL, NULL, 128000.00, NULL, 'products/631558-8938528019032.webp', NULL, 85, 1, 1, '2025-09-24 08:59:45', '2025-10-13 06:51:29'),
+(5845, 1, 'Hộp Bánh Trung Thu Dịu Dàng Maison 480g (1 Hộp)', 'hop-banh-trung-thu-diu-dang-maison-480g-1-hop', '', NULL, NULL, 71000.00, NULL, 'products/631561-8938528019049.webp', NULL, 75, 1, 1, '2025-09-24 08:59:45', '2025-10-13 06:37:17'),
 (5846, 1, 'Hộp Bánh Trung Thu Hứng Khởi Maison 640g (1 Hộp)', 'hop-banh-trung-thu-hung-khoi-maison-640g-1-hop', '', NULL, NULL, 61000.00, NULL, 'products/631564-8938528019025.webp', NULL, 94, 1, 1, '2025-09-24 08:59:45', '2025-10-10 02:26:14'),
 (5847, 1, 'Bánh Trung Thu Thập Cẩm Gà Quay Savoure 150g (1 Cái)', 'banh-trung-thu-thap-cam-ga-quay-savoure-150g-1-cai', NULL, NULL, NULL, 31000.00, NULL, 'products/8936076272657.jpg', NULL, 88, 1, 1, '2025-09-24 08:59:45', '2025-10-10 02:26:14'),
 (5848, 1, 'Bánh Trung Thu Matcha Đậu Đỏ Hạt Sen Savoure 185g (1 Cái)', 'banh-trung-thu-matcha-dau-do-hat-sen-savoure-185g-1-cai', NULL, NULL, NULL, 121000.00, NULL, 'products/8936076272367.jpg', NULL, 94, 1, 1, '2025-09-24 08:59:45', '2025-10-10 06:23:03'),
@@ -651,7 +702,7 @@ INSERT INTO `products` (`id`, `category_id`, `name`, `slug`, `description`, `sho
 (6218, 7, 'Kem hộp bánh quy Oreo Nestle 240g (1 hộp)', 'kem-hop-banh-quy-oreo-nestle-240g-1-hop', NULL, NULL, NULL, 56000.00, NULL, 'products/403721-379076.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
 (6219, 7, 'Sữa chua uống Green Farm Vinamilk Hương Vải Hoa Nhài hộp 200ml (1 Hộp)', 'sua-chua-uong-green-farm-vinamilk-huong-vai-hoa-nhai-hop-200ml-1-hop', NULL, NULL, NULL, 185000.00, NULL, 'products/8934673301077.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
 (6220, 7, 'Kem Twin Cows socola Vinamilk 450ml (1 hộp)', 'kem-twin-cows-socola-vinamilk-450ml-1-hop', NULL, NULL, NULL, 115000.00, NULL, 'products/403754-380615.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
-(6221, 7, 'Kem Mochi socola Aice 45ml (1 Cái)', 'kem-mochi-socola-aice-45ml-1-cai', NULL, NULL, NULL, 12000.00, NULL, 'products/8885013130645.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
+(6221, 7, 'Kem Mochi socola Aice 45ml (1 Cái)', 'kem-mochi-socola-aice-45ml-1-cai', NULL, NULL, NULL, 12000.00, NULL, 'products/8885013130645.jpg', NULL, 99, 1, 1, '2025-09-24 08:59:46', '2025-10-14 09:01:04'),
 (6222, 7, 'Lốc sữa chua uống cam Yomost 170ml (4 Hộp)', 'loc-sua-chua-uong-cam-yomost-170ml-4-hop', NULL, NULL, NULL, 176000.00, NULL, 'products/657442-8934841900286.webp', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
 (6223, 7, 'Kem ốc quế socola Aice 100ml (1 Cây)', 'kem-oc-que-socola-aice-100ml-1-cay', NULL, NULL, NULL, 94000.00, NULL, 'products/8885013131543.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
 (6224, 7, 'Kem milo socola lúa mạch Nestle ly 55g (1 Ly)', 'kem-milo-socola-lua-mach-nestle-ly-55g-1-ly', NULL, NULL, NULL, 28000.00, NULL, 'products/18676-94455.jpg', NULL, 100, 1, 1, '2025-09-24 08:59:46', '2025-09-25 10:56:27'),
@@ -1430,7 +1481,7 @@ ALTER TABLE `blogs`
 -- AUTO_INCREMENT cho bảng `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=485;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=532;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`
@@ -1442,13 +1493,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT cho bảng `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT cho bảng `products`

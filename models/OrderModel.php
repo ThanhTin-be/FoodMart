@@ -3,13 +3,15 @@
 require_once ROOT . "core/database.php";
 
 class OrderModel extends Database{
+
+    //******************User******************//
     // Tạo đơn hàng mới và lưu chi tiết
-    public function createOrder($user_id, $cart, $total)
+    public function createOrder($user_id, $cart, $total, $method)
     {
         $this->conn->begin_transaction();
         try {
             // 1️⃣ Tạo đơn hàng
-            $sql = "INSERT INTO orders (user_id, total_price, status) VALUES (?, ?, 'cho_xac_nhan')";
+            $sql = "INSERT INTO orders (user_id, total_price, payment_status, status) VALUES (?, ?,'pending', 'cho_xac_nhan')";
             $stmt = $this->conn->prepare($sql);
             $stmt->bind_param("id", $user_id, $total);
             $stmt->execute();
@@ -45,6 +47,8 @@ class OrderModel extends Database{
             die("<pre style='color:red'>Lỗi SQL: " . $e->getMessage() . "</pre>");
         }
     }
+
+    // Chức năng lấy chi tiết đơn hàng cho user (bao gồm sản phẩm)
     public function getOrderDetail($order_id, $user_id)
     {
         $sql = "SELECT * FROM  orders Where id = ? AND user_id = ?" ;
@@ -66,13 +70,16 @@ class OrderModel extends Database{
 
         return $order;
     }
-    public function updateStatus($order_id, $status) {
-    $sql = "UPDATE orders SET status = ? WHERE id = ?";
-    $stmt = $this->conn->prepare($sql);
-    $stmt->bind_param("si", $status, $order_id);
-    return $stmt->execute();
-}
 
+    // Cập nhật trạng thái đơn hàng
+    public function updateStatus($order_id, $status) {
+        $sql = "UPDATE orders SET status = ? WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("si", $status, $order_id);
+        return $stmt->execute();
+    }
+
+    // Lấy danh sách đơn hàng của user với phân trang
     public function getOrdersByUserPaginated($user_id, $limit, $offset) {
         $sql = "SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?";
         $stmt = $this->conn->prepare($sql);
@@ -81,6 +88,7 @@ class OrderModel extends Database{
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
+    // Đếm tổng số đơn hàng của user
     public function countOrdersByUser($user_id) {
         $sql = "SELECT COUNT(*) as total FROM orders WHERE user_id = ?";
         $stmt = $this->conn->prepare($sql);
@@ -100,12 +108,19 @@ class OrderModel extends Database{
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
+
+
+
+    //****************Admin - Quản lý đơn hàng*******************
+
+    // Lấy tất cả đơn hàng
     public function getAllOrders() {
         $sql = "SELECT * FROM orders ORDER BY created_at DESC";
         $result = $this->conn->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    // Lấy đơn hàng theo ID
     public function getOrderById($id) {
         $stmt = $this->conn->prepare("SELECT * FROM orders WHERE id = ?");
         $stmt->bind_param("i", $id);
@@ -114,12 +129,14 @@ class OrderModel extends Database{
         return $result->fetch_assoc();
     }
 
+    // Cập nhật trạng thái đơn hàng
     public function updateOrderStatus($id, $status) {
         $stmt = $this->conn->prepare("UPDATE orders SET status = ? WHERE id = ?");
         $stmt->bind_param("si", $status, $id);
         return $stmt->execute();
     }
 
+    // Tìm kiếm đơn hàng theo tên khách hàng hoặc ID đơn hàng
     public function searchOrders($keyword) {
         $like = "%{$keyword}%";
         $stmt = $this->conn->prepare("
@@ -133,6 +150,7 @@ class OrderModel extends Database{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    // Lấy chi tiết sản phẩm trong đơn hàng
     public function getOrderDetailsByOrderId($orderId) {
         $stmt = $this->conn->prepare("
             SELECT oi.*, p.name AS product_name, p.price AS product_price
@@ -146,6 +164,7 @@ class OrderModel extends Database{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    // Lọc đơn hàng theo trạng thái
     public function filterOrders($status) {
         $stmt = $this->conn->prepare("SELECT * FROM orders WHERE status = ? ORDER BY id DESC");
         $stmt->bind_param("s", $status);

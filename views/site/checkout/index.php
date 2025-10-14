@@ -1,6 +1,5 @@
 <section class="shopify-cart checkout-wrap py-5">
   <div class="container-fluid">
-    
     <!-- START FORM -->
     <form action="<?= BASE_URL ?>checkout/placeOrder" method="post" class="form-group">
       <div class="row d-flex flex-wrap">
@@ -77,15 +76,10 @@
                     <span><strong>Thanh toán khi nhận hàng (COD)</strong></span>
                   </label>
                   <label class="list-group-item border-0">
-                    <input class="form-check-input" type="radio" name="payment_method" value="bank">
-                    <span><strong>Chuyển khoản ngân hàng</strong></span>
-                  </label>
-                  <label class="list-group-item border-0">
-                    <input class="form-check-input" type="radio" name="payment_method" value="paypal">
-                    <span><strong>Thanh toán qua PayPal</strong></span>
+                    <input class="form-check-input" type="radio" name="payment_method" value="vietqr">
+                    <span><strong>Thanh toán qua mã QR Ngân hàng (VietQR)</strong></span>
                   </label>
                 </div>
-
                 <!-- Nút đặt hàng -->
                 <button type="submit" class="btn btn-dark btn-lg w-100 text-uppercase">
                   Đặt hàng ngay
