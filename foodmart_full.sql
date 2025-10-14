@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 13, 2025 lúc 10:12 PM
+-- Thời gian đã tạo: Th10 14, 2025 lúc 06:35 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -166,7 +166,8 @@ INSERT INTO `orders` (`id`, `user_id`, `fullname`, `phone`, `address`, `total_pr
 (34, 0, NULL, NULL, NULL, 441000.00, 'cod', 'cho_xac_nhan', '2025-10-12 06:47:31', '2025-10-12 06:47:31'),
 (35, 7, 'User', '0967890123', '258 Nguyễn Trãi, Thanh Hóa', 234000.00, 'cod', 'cho_xac_nhan', '2025-10-13 15:25:49', '2025-10-13 15:25:49'),
 (36, 7, 'User', '0967890123', '258 Nguyễn Trãi, Thanh Hóa', 98000.00, 'cod', 'cho_xac_nhan', '2025-10-13 15:27:03', '2025-10-13 15:27:03'),
-(37, 7, 'User', '0967890123', '258 Nguyễn Trãi, Thanh Hóa', 420000.00, 'bank', 'cho_xac_nhan', '2025-10-13 17:15:29', '2025-10-13 17:15:29');
+(37, 7, 'User', '0967890123', '258 Nguyễn Trãi, Thanh Hóa', 420000.00, 'bank', 'cho_xac_nhan', '2025-10-13 17:15:29', '2025-10-13 17:15:29'),
+(38, 7, 'User', '0967890123', 'saa', 2384000.00, 'paypal', 'cho_xac_nhan', '2025-10-13 20:21:33', '2025-10-13 20:21:33');
 
 -- --------------------------------------------------------
 
@@ -252,7 +253,9 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`, `price`) 
 (77, 35, 5863, 3, 78000.00),
 (78, 36, 5862, 1, 98000.00),
 (79, 37, 5861, 1, 126000.00),
-(80, 37, 5862, 3, 98000.00);
+(80, 37, 5862, 3, 98000.00),
+(81, 38, 5843, 20, 100000.00),
+(82, 38, 5844, 3, 128000.00);
 
 -- --------------------------------------------------------
 
@@ -284,8 +287,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `category_id`, `name`, `slug`, `description`, `short_desc`, `unit`, `price`, `old_price`, `image`, `gallery`, `stock`, `is_featured`, `status`, `created_at`, `updated_at`) VALUES
-(5843, 1, 'Hộp Bánh Trung Thu Hoa Nguyệt 1 Maison 240g (1 Hộp)', 'hop-banh-trung-thu-hoa-nguyet-1-maison-240g-1-hop', 'abc', NULL, NULL, 100000.00, 150000.00, 'products/631555-8938528019131.webp', NULL, 61, 1, 1, '2025-09-24 01:59:45', '2025-10-12 06:47:31'),
-(5844, 1, 'Hộp Bánh Trung Thu Hân Hoan Maison 320g (1 Hộp)', 'hop-banh-trung-thu-han-hoan-maison-320g-1-hop', 'null', NULL, NULL, 128000.00, NULL, 'products/631558-8938528019032.webp', NULL, 88, 1, 1, '2025-09-24 08:59:45', '2025-10-12 06:47:31'),
+(5843, 1, 'Hộp Bánh Trung Thu Hoa Nguyệt 1 Maison 240g (1 Hộp)', 'hop-banh-trung-thu-hoa-nguyet-1-maison-240g-1-hop', 'abc', NULL, NULL, 100000.00, 150000.00, 'products/631555-8938528019131.webp', NULL, 41, 1, 1, '2025-09-24 01:59:45', '2025-10-13 20:21:33'),
+(5844, 1, 'Hộp Bánh Trung Thu Hân Hoan Maison 320g (1 Hộp)', 'hop-banh-trung-thu-han-hoan-maison-320g-1-hop', 'null', NULL, NULL, 128000.00, NULL, 'products/631558-8938528019032.webp', NULL, 85, 1, 1, '2025-09-24 08:59:45', '2025-10-13 20:21:33'),
 (5845, 1, 'Hộp Bánh Trung Thu Dịu Dàng Maison 480g (1 Hộp)', 'hop-banh-trung-thu-diu-dang-maison-480g-1-hop', '', NULL, NULL, 71000.00, NULL, 'products/631561-8938528019049.webp', NULL, 76, 1, 1, '2025-09-24 08:59:45', '2025-10-10 14:19:11'),
 (5846, 1, 'Hộp Bánh Trung Thu Hứng Khởi Maison 640g (1 Hộp)', 'hop-banh-trung-thu-hung-khoi-maison-640g-1-hop', '', NULL, NULL, 61000.00, NULL, 'products/631564-8938528019025.webp', NULL, 94, 1, 1, '2025-09-24 08:59:45', '2025-10-10 02:26:14'),
 (5847, 1, 'Bánh Trung Thu Thập Cẩm Gà Quay Savoure 150g (1 Cái)', 'banh-trung-thu-thap-cam-ga-quay-savoure-150g-1-cai', NULL, NULL, NULL, 31000.00, NULL, 'products/8936076272657.jpg', NULL, 88, 1, 1, '2025-09-24 08:59:45', '2025-10-10 02:26:14'),
@@ -1481,13 +1484,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT cho bảng `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT cho bảng `products`

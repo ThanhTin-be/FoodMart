@@ -1,6 +1,8 @@
 <?php
-class UserController extends Controller {
-    public function login() {
+class UserController extends Controller
+{
+    public function login()
+    {
         session_start();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -60,11 +62,12 @@ class UserController extends Controller {
             $this->view('user/login', [], 'default');
         }
     }
-    
-     // Hiển thị trang profile
-      public function profile() {
+
+    // Hiển thị trang profile
+    public function profile()
+    {
         if (!isset($_SESSION['user'])) {
-            header("Location: " . BASE_URL . "user/login");
+            header("Location: " . BASE_URL . "account/login");
             exit;
         }
         $userModel = $this->model('User');
@@ -72,7 +75,8 @@ class UserController extends Controller {
         $this->view("user/profile", ['user' => $user]);
     }
 
-    public function updateProfile() {
+    public function updateProfile()
+    {
         if (!isset($_SESSION['user'])) {
             header("Location: " . BASE_URL . "user/login");
             exit;
@@ -99,7 +103,8 @@ class UserController extends Controller {
     }
 
     // Trang đổi mật khẩu
-    public function changePassword() {
+    public function changePassword()
+    {
         if (!isset($_SESSION['user'])) {
             header("Location: " . BASE_URL . "user/login");
             exit;
@@ -108,7 +113,8 @@ class UserController extends Controller {
     }
 
     // Xử lý đổi mật khẩu
-    public function updatePassword() {
+    public function updatePassword()
+    {
         if (!isset($_SESSION['user'])) {
             header("Location: " . BASE_URL . "user/login");
             exit;
@@ -146,7 +152,8 @@ class UserController extends Controller {
         exit;
     }
 
-    public function logout() {
+    public function logout()
+    {
         session_start();
         session_destroy();
         header("Location: " . BASE_URL . "user/login");
@@ -154,7 +161,8 @@ class UserController extends Controller {
     }
 
     // 📝 Register (chưa làm UI, chừa để sau này code)
-    public function register() {
+    public function register()
+    {
         // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         //     // Xử lý tạo user mới qua User->create()
         // }
