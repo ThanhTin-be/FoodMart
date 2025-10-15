@@ -63,44 +63,6 @@ class UserController extends Controller
         }
     }
 
-    // Hiển thị trang profile
-    public function profile()
-    {
-        if (!isset($_SESSION['user'])) {
-            header("Location: " . BASE_URL . "account/login");
-            exit;
-        }
-        $userModel = $this->model('User');
-        $user = $userModel->getByEmail($_SESSION['user']['email']);
-        $this->view("user/profile", ['user' => $user]);
-    }
-
-    public function updateProfile()
-    {
-        if (!isset($_SESSION['user'])) {
-            header("Location: " . BASE_URL . "user/login");
-            exit;
-        }
-
-        $id = $_SESSION['user']['id'];
-        $data = [
-            'name' => trim($_POST['name'] ?? ''),
-            'email' => trim($_POST['email'] ?? ''),
-            'phone' => trim($_POST['phone'] ?? ''),
-            'address' => trim($_POST['address'] ?? ''),
-        ];
-
-        $userModel = $this->model('User');
-        $result = $userModel->updateProfile($id, $data);
-
-        if ($result) {
-            $_SESSION['user'] = array_merge($_SESSION['user'], $data);
-            header("Location: " . BASE_URL . "user/profile?success=1");
-        } else {
-            header("Location: " . BASE_URL . "user/profile?error=1");
-        }
-        exit;
-    }
 
     // Trang đổi mật khẩu
     public function changePassword()

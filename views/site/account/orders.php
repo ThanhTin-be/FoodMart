@@ -2,8 +2,10 @@
 $pageTitle = 'Orders';
 $title = 'My Orders';
 $subtitle = 'Track and manage your orders';
-$color = 'primary';
-$icon = '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4h12v12H4z"/></svg>';
+$color = 'primarydb';
+$icon = '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
+         </svg>';
 
 ob_start();
 ?>
@@ -11,7 +13,7 @@ ob_start();
 <?php include __DIR__ . '/../partials/page-header.php'; ?>
 
 <div class="space-y-6 mt-6">
-  <p class="text-gray-700 dark:text-gray-300">
+  <p class="text-gray-700 primarydb dark:text-gray-300">
     Danh sách đơn hàng của bạn sẽ được hiển thị tại đây...
   </p>
 </div>

@@ -1,8 +1,10 @@
 <?php
-class CheckoutController extends Controller {
+class CheckoutController extends Controller
+{
 
     // Trang checkout chính
-    public function index() {
+    public function index()
+    {
         if (empty($_SESSION['user'])) {
             $_SESSION['return_url'] = 'checkout/index';
             header("Location: " . BASE_URL . "user/login");
@@ -36,7 +38,8 @@ class CheckoutController extends Controller {
     }
 
     // Áp dụng voucher (AJAX)
-    public function validateVoucher() {
+    public function validateVoucher()
+    {
         header('Content-Type: application/json; charset=utf-8');
 
         if (empty($_SESSION['user'])) {
@@ -99,7 +102,8 @@ class CheckoutController extends Controller {
     }
 
     // Đặt hàng
-    public function placeOrder() {
+    public function placeOrder()
+    {
         if (empty($_SESSION['user'])) {
             header("Location: " . BASE_URL . "user/login");
             exit;
@@ -139,7 +143,8 @@ class CheckoutController extends Controller {
                     if (method_exists($voucherModel, 'decreaseUsage')) {
                         $voucherModel->decreaseUsage($voucherId);
                     }
-                } catch (\Throwable $e) { /* ignore */ }
+                } catch (\Throwable $e) { /* ignore */
+                }
             }
 
             // Clear cart + voucher
@@ -157,29 +162,31 @@ class CheckoutController extends Controller {
     }
 
     // Trang cảm ơn
-   public function thankyou() {
-    $userId = $_SESSION['user']['id'] ?? null;
-    $orderId = $_GET['order_id'] ?? ($_SESSION['last_order_id'] ?? null);
+    public function thankyou()
+    {
+        $userId = $_SESSION['user']['id'] ?? null;
+        $orderId = $_GET['order_id'] ?? ($_SESSION['last_order_id'] ?? null);
 
-    if (!$orderId || !$userId) {
-        header("Location: " . BASE_URL . "order/myorders");
-        exit;
-    }
+        if (!$orderId || !$userId) {
+            header("Location: " . BASE_URL . "order/orders");
+            exit;
+        }
 
-    $orderModel = $this->model('OrderModel');
-    $order = $orderModel->getOrderDetail($orderId, $userId);
+        $orderModel = $this->model('OrderModel');
+        $order = $orderModel->getOrderDetail($orderId, $userId);
 
-    if (!$order) {
-        header("Location: " . BASE_URL . "order/myorders");
-        exit;
-    }
+        if (!$order) {
+            header("Location: " . BASE_URL . "order/orders");
+            exit;
+        }
 
-    $this->view("checkout/thankyou", ["order" => $order]);
+        $this->view("checkout/thankyou", ["order" => $order]);
     }
 
 
     // --------- Helpers ----------
-    private function calcCartSubtotal(array $cart): float {
+    private function calcCartSubtotal(array $cart): float
+    {
         $sum = 0;
         foreach ($cart as $it) {
             $sum += ((float)$it['price']) * ((int)$it['qty']);
