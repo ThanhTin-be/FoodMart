@@ -4,7 +4,7 @@ require_once ROOT . "core/database.php";
 
 class OrderModel extends Database
 {
-    // Tạo đơn hàng mới và lưu chi tiết
+    // ====================== 🧾 TẠO ĐƠN HÀNG ======================
     public function createOrder($user_id, $fullname, $phone, $address, $payment_method, $cart, $total)
     {
         $this->conn->begin_transaction();
@@ -46,20 +46,21 @@ class OrderModel extends Database
         }
     }
 
+    // ====================== 📦 LẤY THÔNG TIN ĐƠN ======================
     public function getOrderDetail($order_id, $user_id)
     {
-        $sql = "SELECT * FROM  orders Where id = ? AND user_id = ?";
+        $sql = "SELECT * FROM orders WHERE id = ? AND user_id = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("ii", $order_id, $user_id);
         $stmt->execute();
         $order = $stmt->get_result()->fetch_assoc();
         if (!$order) return null;
 
-        // Lấy chi tiết sản phẩm trong đơn
+        // Lấy danh sách sản phẩm trong đơn
         $sql_items = "SELECT oi.*, p.name, p.image 
-                    FROM order_items oi 
-                    JOIN products p ON oi.product_id = p.id
-                    WHERE oi.order_id = ?";
+                      FROM order_items oi 
+                      JOIN products p ON oi.product_id = p.id
+                      WHERE oi.order_id = ?";
         $stmt2 = $this->conn->prepare($sql_items);
         $stmt2->bind_param("i", $order_id);
         $stmt2->execute();
@@ -67,6 +68,7 @@ class OrderModel extends Database
 
         return $order;
     }
+
     public function updateStatus($order_id, $status)
     {
         $sql = "UPDATE orders SET status = ? WHERE id = ?";
@@ -75,15 +77,8 @@ class OrderModel extends Database
         return $stmt->execute();
     }
 
-    public function getOrdersByUserPaginated($user_id, $limit, $offset)
-    {
-        $sql = "SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("iii", $user_id, $limit, $offset);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    }
-    // Đếm tổng đơn của user
+    // ====================== 📊 THỐNG KÊ / DASHBOARD ======================
+    // Tổng đơn hàng
     public function countOrdersByUser($user_id)
     {
         $sql = "SELECT COUNT(*) as total FROM orders WHERE user_id = ?";
@@ -93,7 +88,8 @@ class OrderModel extends Database
         $row = $stmt->get_result()->fetch_assoc();
         return $row['total'] ?? 0;
     }
-    // Đếm theo trạng thái cho user 
+
+    // Đếm theo trạng thái cụ thể
     public function countByStatus($user_id, $status)
     {
         $sql = "SELECT COUNT(*) as total FROM orders WHERE user_id = ? AND status = ?";
@@ -103,18 +99,21 @@ class OrderModel extends Database
         $row = $stmt->get_result()->fetch_assoc();
         return $row['total'] ?? 0;
     }
-    // Tổng chi tiêu của user (chỉ tính các trạng thái completed)
+
+    // Tổng chi tiêu của user (chỉ tính đơn thành công)
     public function getTotalSpentByUser($user_id)
     {
-        // Hỗ trợ cả mã trạng thái tiếng Anh và tiếng Việt nếu có
-        $sql = "SELECT SUM(total_price) as total FROM orders WHERE user_id = ? AND (status = 'thanh_cong' OR status = 'completed')";
+        $sql = "SELECT SUM(total_price) as total 
+                FROM orders 
+                WHERE user_id = ? AND (status = 'thanh_cong' OR status = 'completed')";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $user_id);
         $stmt->execute();
         $row = $stmt->get_result()->fetch_assoc();
         return (float)($row['total'] ?? 0.0);
     }
-    // Lấy danh sách recent orders của user, limit mặc định 5
+
+    // Các đơn hàng gần nhất
     public function getRecentOrdersByUser($user_id, $limit = 5)
     {
         $sql = "SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC LIMIT ?";
@@ -125,7 +124,20 @@ class OrderModel extends Database
         return $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
     }
 
-    // Lấy chi tiết order (items) nếu cần (ví dụ view order detail)
+    // ====================== ⚙️ ALIAS CHO DASHBOARDCONTROLLER ======================
+    public function getOrderCountByUser($user_id)
+    {
+        // 👉 Gọi lại hàm countOrdersByUser để tương thích controller
+        return $this->countOrdersByUser($user_id);
+    }
+
+    public function getPendingCountByUser($user_id)
+    {
+        // 👉 “Pending” tương đương “cho_xac_nhan” trong hệ thống
+        return $this->countByStatus($user_id, 'cho_xac_nhan');
+    }
+
+    // ====================== 🔍 CÁC HÀM HỖ TRỢ KHÁC ======================
     public function getOrderItems($order_id)
     {
         $sql = "SELECT oi.*, p.name AS product_name, p.image 
@@ -138,7 +150,7 @@ class OrderModel extends Database
         $res = $stmt->get_result();
         return $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
     }
-    // Lấy danh sách đơn hàng của user
+
     public function getOrdersByUser($user_id)
     {
         $sql = "SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC";
@@ -147,6 +159,16 @@ class OrderModel extends Database
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function getOrdersByUserPaginated($user_id, $limit, $offset)
+    {
+        $sql = "SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("iii", $user_id, $limit, $offset);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function getAllOrders()
     {
         $sql = "SELECT * FROM orders ORDER BY id ASC";
@@ -175,7 +197,7 @@ class OrderModel extends Database
         $like = "%{$keyword}%";
         $stmt = $this->conn->prepare("
             SELECT * FROM orders 
-            WHERE customer_name LIKE ? OR CAST(id AS CHAR) LIKE ?
+            WHERE fullname LIKE ? OR CAST(id AS CHAR) LIKE ?
             ORDER BY id DESC
         ");
         $stmt->bind_param("ss", $like, $like);

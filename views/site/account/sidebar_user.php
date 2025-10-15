@@ -72,7 +72,7 @@ $isLoggedIn = !empty($user);
         <i class="text-xs transition-opacity opacity-0 fas fa-arrow-right group-hover/item:opacity-100"></i>
       </a>
 
-      <a href="<?= BASE_URL ?>order/myorders" class="flex items-center px-4 py-3 text-gray-700 transition-colors hover:bg-gray-50 group/item">
+      <a href="<?= BASE_URL ?>order/orders" class="flex items-center px-4 py-3 text-gray-700 transition-colors hover:bg-gray-50 group/item">
         <i class="w-4 mr-3 fas fa-history text-primary"></i>
         <span class="flex-1 text-sm">Lịch sử đơn hàng</span>
         <i class="text-xs transition-opacity opacity-0 fas fa-arrow-right group-hover/item:opacity-100"></i>

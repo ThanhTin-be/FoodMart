@@ -18,7 +18,7 @@
                 </div>
                 <?= htmlspecialchars($title) ?>
             </h1>
-            <p class="text-lg text-white/90"><?= htmlspecialchars($subtitle) ?></p>
+            <p class="mb-2 text-2xl font-bold"><?= htmlspecialchars($subtitle) ?></p>
         </div>
     </div>
 </div>
