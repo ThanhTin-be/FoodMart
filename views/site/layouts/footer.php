@@ -46,25 +46,25 @@
                             </a>
                         </li>
                         <li>
-                            <a href="https://pricot.vn/gioi-thieu/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="1/gioi-thieu/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Giới thiệu
                             </a>
                         </li>
                         <li>
-                            <a href="https://pricot.vn/category/tin-tuc/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="1/category/tin-tuc/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Tin tức
                             </a>
                         </li>
                         <li>
-                            <a href="https://pricot.vn/product-all/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="1/product-all/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Sản phẩm
                             </a>
                         </li>
                         <li>
-                            <a href="https://pricot.vn/lien-he/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="1/lien-he/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Liên hệ
                             </a>
@@ -77,31 +77,31 @@
                     <h4 class="mb-6 text-xl font-bold font-league-spartan">Chính Sách</h4>
                     <ul class="space-y-3 policies-menu">
                         <li>
-                            <a href="https://pricot.vn/chinh-sach-bao-mat/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="1/chinh-sach-baos-mat/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Chính sách bảo mật
                             </a>
                         </li>
                         <li>
-                            <a href="https://pricot.vn/chinh-sach-doi-tra/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="1/chinh-sach-dosi-tra/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Chính sách đổi trả
                             </a>
                         </li>
                         <li>
-                            <a href="https://pricot.vn/chinh-sach-giao-hang/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="1/chinh-sach-giaso-hang/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Chính sách giao hàng
                             </a>
                         </li>
                         <li>
-                            <a href="https://pricot.vn/dieu-khoan-su-dung/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="1/dieu-khoan-sus-dung/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Điều khoản sử dụng
                             </a>
                         </li>
                         <li>
-                            <a href="https://pricot.vn/phuong-thuc-thanh-toan/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="1/phuong-thucs-thanh-toan/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Phương thức thanh toán
                             </a>

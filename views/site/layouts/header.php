@@ -273,7 +273,7 @@ $categories = $categories ?? [];
                         <i class="text-sm transition-transform fas fa-home group-hover:scale-110"></i>
                         <span>Home</span>
                     </a>
-                    <a href="https://pricot.vn/gioi-thieu/" class="flex items-center px-4 py-3 space-x-2 font-medium transition-all duration-300 rounded-full group text-gray-700 hover:text-brand-primary hover:bg-brand-light">
+                    <a href="https://2/gioi-thieu/" class="flex items-center px-4 py-3 space-x-2 font-medium transition-all duration-300 rounded-full group text-gray-700 hover:text-brand-primary hover:bg-brand-light">
                         <span>Giới thiệu</span>
                     </a>
                     <div class="relative group">
@@ -284,25 +284,25 @@ $categories = $categories ?? [];
 
                         <div class="absolute left-0 invisible w-56 mt-2 transition-all duration-300 transform translate-y-2 bg-white border shadow-xl opacity-0 top-full rounded-2xl border-brand-light/50 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
                             <div class="p-2">
-                                <a href="https://pricot.vn/product/sau-ngam-duong/" class="flex items-center px-4 py-3 space-x-3 transition-all duration-200 rounded-xl text-gray-700 hover:text-brand-primary hover:bg-brand-light/50">
+                                <a href="https://2/product/sau-ngam-duong/" class="flex items-center px-4 py-3 space-x-3 transition-all duration-200 rounded-xl text-gray-700 hover:text-brand-primary hover:bg-brand-light/50">
                                     <span>Sấu Ngâm Đường</span>
                                 </a>
-                                <a href="https://pricot.vn/product/mo-ngam-duong/" class="flex items-center px-4 py-3 space-x-3 transition-all duration-200 rounded-xl text-gray-700 hover:text-brand-primary hover:bg-brand-light/50">
+                                <a href="https://2/product/mo-ngam-duong/" class="flex items-center px-4 py-3 space-x-3 transition-all duration-200 rounded-xl text-gray-700 hover:text-brand-primary hover:bg-brand-light/50">
                                     <span>Mơ ngâm đường</span>
                                 </a>
-                                <a href="https://pricot.vn/product/dau-tam-ngam-duong/" class="flex items-center px-4 py-3 space-x-3 transition-all duration-200 rounded-xl text-gray-700 hover:text-brand-primary hover:bg-brand-light/50">
+                                <a href="https://2/product/dau-tam-ngam-duong/" class="flex items-center px-4 py-3 space-x-3 transition-all duration-200 rounded-xl text-gray-700 hover:text-brand-primary hover:bg-brand-light/50">
                                     <span>Dâu Tằm Ngâm Đường</span>
                                 </a>
-                                <a href="https://pricot.vn/product/hoa-atiso-do-ngam-duong/" class="flex items-center px-4 py-3 space-x-3 transition-all duration-200 rounded-xl text-gray-700 hover:text-brand-primary hover:bg-brand-light/50">
+                                <a href="https://2/product/hoa-atiso-do-ngam-duong/" class="flex items-center px-4 py-3 space-x-3 transition-all duration-200 rounded-xl text-gray-700 hover:text-brand-primary hover:bg-brand-light/50">
                                     <span>Hoa Atiso Đỏ Ngâm Đường</span>
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <a href="https://pricot.vn/category/tin-tuc/" class="flex items-center px-4 py-3 space-x-2 font-medium transition-all duration-300 rounded-full group text-gray-700 hover:text-brand-primary hover:bg-brand-light">
+                    <a href="https://2/category/tin-tuc/" class="flex items-center px-4 py-3 space-x-2 font-medium transition-all duration-300 rounded-full group text-gray-700 hover:text-brand-primary hover:bg-brand-light">
                         <span>Tin tức</span>
                     </a>
-                    <a href="https://pricot.vn/lien-he/" class="flex items-center px-4 py-3 space-x-2 font-medium transition-all duration-300 rounded-full group text-gray-700 hover:text-brand-primary hover:bg-brand-light">
+                    <a href="https://2/lien-he/" class="flex items-center px-4 py-3 space-x-2 font-medium transition-all duration-300 rounded-full group text-gray-700 hover:text-brand-primary hover:bg-brand-light">
                         <span>Liên hệ</span>
                     </a>
                 </nav>
