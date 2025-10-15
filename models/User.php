@@ -49,4 +49,22 @@ class User extends Database
         $stmt->bind_param("ssss", $name, $email, $hash, $role);
         return $stmt->execute();
     }
+    //  Cập nhật thông tin user
+    public function updateUserProfile($id, $data)
+    {
+        $stmt = $this->conn->prepare("UPDATE users SET name = ?, email = ?, phone = ?, address = ? WHERE id = ?");
+        return $stmt->execute([
+            $data['name'],
+            $data['email'],
+            $data['phone'],
+            $data['address'],
+            $id
+        ]);
+    }
+    //  Cập nhật mật khẩu user
+    public function updateUserPassword($id, $hashedPassword)
+    {
+        $stmt = $this->conn->prepare("UPDATE users SET password = ? WHERE id = ?");
+        return $stmt->execute([$hashedPassword, $id]);
+    }
 }

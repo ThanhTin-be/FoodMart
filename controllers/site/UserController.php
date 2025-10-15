@@ -63,57 +63,7 @@ class UserController extends Controller
         }
     }
 
-
-    // Trang đổi mật khẩu
-    public function changePassword()
-    {
-        if (!isset($_SESSION['user'])) {
-            header("Location: " . BASE_URL . "user/login");
-            exit;
-        }
-        $this->view("user/change_password");
-    }
-
-    // Xử lý đổi mật khẩu
-    public function updatePassword()
-    {
-        if (!isset($_SESSION['user'])) {
-            header("Location: " . BASE_URL . "user/login");
-            exit;
-        }
-
-        $id = $_SESSION['user']['id'];
-        $currentPassword = $_POST['current_password'] ?? '';
-        $newPassword = $_POST['new_password'] ?? '';
-        $confirmPassword = $_POST['confirm_password'] ?? '';
-
-        if (empty($currentPassword) || empty($newPassword) || empty($confirmPassword)) {
-            header("Location: " . BASE_URL . "user/changePassword?error=empty");
-            exit;
-        }
-
-        if ($newPassword !== $confirmPassword) {
-            header("Location: " . BASE_URL . "user/changePassword?error=notmatch");
-            exit;
-        }
-
-        $userModel = $this->model('User');
-        $user = $userModel->getByEmail($_SESSION['user']['email']);
-
-        if (!password_verify($currentPassword, $user['password'])) {
-            header("Location: " . BASE_URL . "user/changePassword?error=wrongpass");
-            exit;
-        }
-
-        $result = $userModel->updatePassword($id, $newPassword);
-        if ($result) {
-            header("Location: " . BASE_URL . "user/changePassword?success=1");
-        } else {
-            header("Location: " . BASE_URL . "user/changePassword?error=updatefail");
-        }
-        exit;
-    }
-
+    // ✅ Logout
     public function logout()
     {
         session_start();

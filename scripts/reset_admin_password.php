@@ -6,7 +6,7 @@ try {
     $db = new Database();
     $conn = $db->conn;
 
-    $email = "admin@gmail.com";   // sửa nếu khác
+    $email = "user@gmail.com";   // sửa nếu khác
     $newPlain = "123";            // mật khẩu mong muốn
     $newHash  = password_hash($newPlain, PASSWORD_BCRYPT);
 

@@ -140,16 +140,20 @@ class OrderModel extends Database
     // ====================== 🔍 CÁC HÀM HỖ TRỢ KHÁC ======================
     public function getOrderItems($order_id)
     {
-        $sql = "SELECT oi.*, p.name AS product_name, p.image 
-                FROM order_items oi 
-                LEFT JOIN products p ON oi.product_id = p.id
-                WHERE oi.order_id = ?";
+        $sql = "SELECT 
+                oi.*, 
+                p.name AS name,     -- đổi alias cho khớp view
+                p.image AS image
+            FROM order_items oi
+            LEFT JOIN products p ON oi.product_id = p.id
+            WHERE oi.order_id = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $order_id);
         $stmt->execute();
         $res = $stmt->get_result();
         return $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
     }
+
 
     public function getOrdersByUser($user_id)
     {
@@ -159,7 +163,15 @@ class OrderModel extends Database
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
-
+    // ✅ Lấy đơn hàng theo trạng thái cụ thể
+    public function getOrdersByUserAndStatus($user_id, $status)
+    {
+        $sql = "SELECT * FROM orders WHERE user_id = ? AND status = ? ORDER BY created_at DESC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("is", $user_id, $status);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
     public function getOrdersByUserPaginated($user_id, $limit, $offset)
     {
         $sql = "SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?";
