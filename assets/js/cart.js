@@ -217,3 +217,4 @@ function updateCartPage(data) {
   document.querySelector('#cart-total').textContent = formatCurrency(data.total);
 }
 
+
