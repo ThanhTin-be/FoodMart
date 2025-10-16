@@ -1,284 +1,495 @@
+<?php
+
+/**
+ * views/layouts/header.php
+ * Tailwind-only header + Font Awesome icons (no Bootstrap).
+ * - Keep Swiper/Chocolat/Preloader vendors as you requested.
+ * - Mini dropdowns for Account & Cart (pure JS), hover/transition like the sample.
+ * - Categories from $categories (controller must pass). Falls back gracefully.
+ * - Cart total & item count from $_SESSION['cart'].
+ */
+
+$user = $_SESSION['user'] ?? null;
+$cart = $_SESSION['cart'] ?? [];
+
+// totals
+$total = 0;
+$totalQty = 0;
+foreach ($cart as $item) {
+    $price = isset($item['price']) ? (float)$item['price'] : 0;
+    $qty   = isset($item['qty'])   ? (int)$item['qty']   : 0;
+    $total += $price * $qty;
+    $totalQty += $qty; // tổng số item
+}
+
+// categories (expected from controller)
+$categories = $categories ?? [];
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <title>FoodMart - eCommerce Grocery Store</title>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>FoodMart - eCommerce Grocery Store</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
 
-  <!-- CSS / Fonts -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-  <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/vendor.css">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
+    <!-- Keep vendor CSS (Swiper) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <!-- TailwindCSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome (icons like file mẫu) -->
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Your existing CSS bundles -->
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/vendor.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.min.css">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Giữ fix overlay khi hover product-card (nếu bạn đang dùng ở nơi khác) */
+        .product-card .group:hover .absolute {
+            opacity: 1 !important;
+            background-color: rgba(0, 0, 0, 0.2) !important;
+            z-index: 50 !important;
+            pointer-events: auto !important;
+        }
+
+        .product-card img {
+            pointer-events: none;
+        }
+
+        /* Ẩn scrollbar cho dropdown dài */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        /* 🌿 Brand colors - Green theme for Pricot */
+                        'brand-primary': '#16a34a', // Green 600
+                        'brand-secondary': '#22c55e', // Green 500
+                        'brand-accent': '#4ade80', // Green 400
+                        'brand-light': '#dcfce7', // Green 100
+                        'brand-dark': '#15803d', // Green 700
+                        'brand-darker': '#166534', // Green 800
+
+                        /* 💙 Dashboard primary (xanh dương riêng cho dashboard) */
+                        primary_db: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6', // xanh dương sáng
+                            600: '#2563eb', // xanh dương đậm
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        },
+                    },
+
+                    fontFamily: {
+                        alata: ["Alata", "sans-serif"],
+                        "cal-sans": ["Cal Sans", "sans-serif"],
+                        "league-spartan": ["League Spartan", "sans-serif"],
+                        lexend: ["Lexend", "sans-serif"],
+                        questrial: ["Questrial", "sans-serif"],
+                    },
+                },
+            },
+        };
+    </script>
+
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+        window.googleClientId = '892127432562-io675ljvjp8tpo4cv76hu4j1g003d4bn.apps.googleusercontent.com';
+    </script>
+    <title>wppricot &#8211; WordPress site created automatically</title>
+    <meta name='robots' content='noindex, nofollow' />
+    <style>
+        img:is([sizes="auto" i], [sizes^="auto," i]) {
+            contain-intrinsic-size: 3000px 1500px
+        }
+    </style>
+    <link rel="alternate" type="application/rss+xml" title="wppricot &raquo; Feed" href="https://dev.wptheme.store/s/wppricot/feed/" />
+    <link rel="alternate" type="application/rss+xml" title="wppricot &raquo; Comments Feed" href="https://dev.wptheme.store/s/wppricot/comments/feed/" />
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        window._wpemojiSettings = {
+            "baseUrl": "https:\/\/s.w.org\/images\/core\/emoji\/16.0.1\/72x72\/",
+            "ext": ".png",
+            "svgUrl": "https:\/\/s.w.org\/images\/core\/emoji\/16.0.1\/svg\/",
+            "svgExt": ".svg",
+            "source": {
+                "concatemoji": "https:\/\/dev.wptheme.store\/s\/wppricot\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.8.3"
+            }
+        };
+        /*! This file is auto-generated */
+        ! function(s, n) {
+            var o, i, e;
+
+            function c(e) {
+                try {
+                    var t = {
+                        supportTests: e,
+                        timestamp: (new Date).valueOf()
+                    };
+                    sessionStorage.setItem(o, JSON.stringify(t))
+                } catch (e) {}
+            }
+
+            function p(e, t, n) {
+                e.clearRect(0, 0, e.canvas.width, e.canvas.height), e.fillText(t, 0, 0);
+                var t = new Uint32Array(e.getImageData(0, 0, e.canvas.width, e.canvas.height).data),
+                    a = (e.clearRect(0, 0, e.canvas.width, e.canvas.height), e.fillText(n, 0, 0), new Uint32Array(e.getImageData(0, 0, e.canvas.width, e.canvas.height).data));
+                return t.every(function(e, t) {
+                    return e === a[t]
+                })
+            }
+
+            function u(e, t) {
+                e.clearRect(0, 0, e.canvas.width, e.canvas.height), e.fillText(t, 0, 0);
+                for (var n = e.getImageData(16, 16, 1, 1), a = 0; a < n.data.length; a++)
+                    if (0 !== n.data[a]) return !1;
+                return !0
+            }
+
+            function f(e, t, n, a) {
+                switch (t) {
+                    case "flag":
+                        return n(e, "\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f", "\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f") ? !1 : !n(e, "\ud83c\udde8\ud83c\uddf6", "\ud83c\udde8\u200b\ud83c\uddf6") && !n(e, "\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f", "\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");
+                    case "emoji":
+                        return !a(e, "\ud83e\udedf")
+                }
+                return !1
+            }
+
+            function g(e, t, n, a) {
+                var r = "undefined" != typeof WorkerGlobalScope && self instanceof WorkerGlobalScope ? new OffscreenCanvas(300, 150) : s.createElement("canvas"),
+                    o = r.getContext("2d", {
+                        willReadFrequently: !0
+                    }),
+                    i = (o.textBaseline = "top", o.font = "600 32px Arial", {});
+                return e.forEach(function(e) {
+                    i[e] = t(o, e, n, a)
+                }), i
+            }
+
+            function t(e) {
+                var t = s.createElement("script");
+                t.src = e, t.defer = !0, s.head.appendChild(t)
+            }
+            "undefined" != typeof Promise && (o = "wpEmojiSettingsSupports", i = ["flag", "emoji"], n.supports = {
+                everything: !0,
+                everythingExceptFlag: !0
+            }, e = new Promise(function(e) {
+                s.addEventListener("DOMContentLoaded", e, {
+                    once: !0
+                })
+            }), new Promise(function(t) {
+                var n = function() {
+                    try {
+                        var e = JSON.parse(sessionStorage.getItem(o));
+                        if ("object" == typeof e && "number" == typeof e.timestamp && (new Date).valueOf() < e.timestamp + 604800 && "object" == typeof e.supportTests) return e.supportTests
+                    } catch (e) {}
+                    return null
+                }();
+                if (!n) {
+                    if ("undefined" != typeof Worker && "undefined" != typeof OffscreenCanvas && "undefined" != typeof URL && URL.createObjectURL && "undefined" != typeof Blob) try {
+                        var e = "postMessage(" + g.toString() + "(" + [JSON.stringify(i), f.toString(), p.toString(), u.toString()].join(",") + "));",
+                            a = new Blob([e], {
+                                type: "text/javascript"
+                            }),
+                            r = new Worker(URL.createObjectURL(a), {
+                                name: "wpTestEmojiSupports"
+                            });
+                        return void(r.onmessage = function(e) {
+                            c(n = e.data), r.terminate(), t(n)
+                        })
+                    } catch (e) {}
+                    c(n = g(i, f, p, u))
+                }
+                t(n)
+            }).then(function(e) {
+                for (var t in e) n.supports[t] = e[t], n.supports.everything = n.supports.everything && n.supports[t], "flag" !== t && (n.supports.everythingExceptFlag = n.supports.everythingExceptFlag && n.supports[t]);
+                n.supports.everythingExceptFlag = n.supports.everythingExceptFlag && !n.supports.flag, n.DOMReady = !1, n.readyCallback = function() {
+                    n.DOMReady = !0
+                }
+            }).then(function() {
+                return e
+            }).then(function() {
+                var e;
+                n.supports.everything || (n.readyCallback(), (e = n.source || {}).concatemoji ? t(e.concatemoji) : e.wpemoji && e.twemoji && (t(e.twemoji), t(e.wpemoji)))
+            }))
+        }((window, document), window._wpemojiSettings);
+        /* ]]> */
+    </script>
+    <style id='wp-emoji-styles-inline-css' type='text/css'>
+        img.wp-smiley,
+        img.emoji {
+            display: inline !important;
+            border: none !important;
+            box-shadow: none !important;
+            height: 1em !important;
+            width: 1em !important;
+            margin: 0 0.07em !important;
+            vertical-align: -0.1em !important;
+            background: none !important;
+            padding: 0 !important;
+        }
+    </style>
+
+
 </head>
-<body>
 
-<!-- ================= ICONS SVG ================= -->
-<svg xmlns="http://www.w3.org/2000/svg" style="display: none;"> <defs> <symbol xmlns="http://www.w3.org/2000/svg" id="link" viewBox="0 0 24 24"> <path fill="currentColor" d="M12 19a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm5 0a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm0-4a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm-5 0a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm7-12h-1V2a1 1 0 0 0-2 0v1H8V2a1 1 0 0 0-2 0v1H5a3 3 0 0 0-3 3v14a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3Zm1 17a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9h16Zm0-11H4V6a1 1 0 0 1 1-1h1v1a1 1 0 0 0 2 0V5h8v1a1 1 0 0 0 2 0V5h1a1 1 0 0 1 1 1ZM7 15a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm0 4a1 1 0 1 0-1-1a1 1 0 0 0 1 1Z"/> </symbol> <symbol xmlns="http://www.w3.org/2000/svg" id="arrow-right" viewBox="0 0 24 24"> <path fill="currentColor" d="M17.92 11.62a1 1 0 0 0-.21-.33l-5-5a1 1 0 0 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1 1 0 0 0 0 1.42a1 1 0 0 0 1.42 0l5-5a1 1 0 0 0 .21-.33a1 1 0 0 0 0-.76Z"/> </symbol> <symbol xmlns="http://www.w3.org/2000/svg" id="category" viewBox="0 0 24 24"> <path fill="currentColor" d="M19 5.5h-6.28l-.32-1a3 3 0 0 0-2.84-2H5a3 3 0 0 0-3 3v13a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-10a3 3 0 0 0-3-3Zm1 13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-13a1 1 0 0 1 1-1h4.56a1 1 0 0 1 .95.68l.54 1.64a1 1 0 0 0 .95.68h7a1 1 0 0 1 1 1Z"/> </symbol> <symbol xmlns="http://www.w3.org/2000/svg" id="calendar" viewBox="0 0 24 24"> <path fill="currentColor" d="M19 4h-2V3a1 1 0 0 0-2 0v1H9V3a1 1 0 0 0-2 0v1H5a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Zm1 15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-7h16Zm0-9H4V7a1 1 0 0 1 1-1h2v1a1 1 0 0 0 2 0V6h6v1a1 1 0 0 0 2 0V6h2a1 1 0 0 1 1 1Z"/> </symbol> <symbol xmlns="http://www.w3.org/2000/svg" id="heart" viewBox="0 0 24 24"> <path fill="currentColor" d="M20.16 4.61A6.27 6.27 0 0 0 12 4a6.27 6.27 0 0 0-8.16 9.48l7.45 7.45a1 1 0 0 0 1.42 0l7.45-7.45a6.27 6.27 0 0 0 0-8.87Zm-1.41 7.46L12 18.81l-6.75-6.74a4.28 4.28 0 0 1 3-7.3a4.25 4.25 0 0 1 3 1.25a1 1 0 0 0 1.42 0a4.27 4.27 0 0 1 6 6.05Z"/> </symbol> <symbol xmlns="http://www.w3.org/2000/svg" id="plus" viewBox="0 0 24 24"> <path fill="currentColor" d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2Z"/> </symbol> <symbol xmlns="http://www.w3.org/2000/svg" id="minus" viewBox="0 0 24 24"> <path fill="currentColor" d="M19 11H5a1 1 0 0 0 0 2h14a1 1 0 0 0 0-2Z"/> </symbol> <symbol xmlns="http://www.w3.org/2000/svg" id="cart" viewBox="0 0 24 24"> <path fill="currentColor" d="M8.5 19a1.5 1.5 0 1 0 1.5 1.5A1.5 1.5 0 0 0 8.5 19ZM19 16H7a1 1 0 0 1 0-2h8.491a3.013 3.013 0 0 0 2.885-2.176l1.585-5.55A1 1 0 0 0 19 5H6.74a3.007 3.007 0 0 0-2.82-2H3a1 1 0 0 0 0 2h.921a1.005 1.005 0 0 1 .962.725l.155.545v.005l1.641 5.742A3 3 0 0 0 7 18h12a1 1 0 0 0 0-2Zm-1.326-9l-1.22 4.274a1.005 1.005 0 0 1-.963.726H8.754l-.255-.892L7.326 7ZM16.5 19a1.5 1.5 0 1 0 1.5 1.5a1.5 1.5 0 0 0-1.5-1.5Z"/> </symbol> <symbol xmlns="http://www.w3.org/2000/svg" id="check" viewBox="0 0 24 24"> <path fill="currentColor" d="M18.71 7.21a1 1 0 0 0-1.42 0l-7.45 7.46l-3.13-3.14A1 1 0 1 0 5.29 13l3.84 3.84a1 1 0 0 0 1.42 0l8.16-8.16a1 1 0 0 0 0-1.47Z"/> </symbol> <symbol xmlns="http://www.w3.org/2000/svg" id="trash" viewBox="0 0 24 24"> <path fill="currentColor" d="M10 18a1 1 0 0 0 1-1v-6a1 1 0 0 0-2 0v6a1 1 0 0 0 1 1ZM20 6h-4V5a3 3 0 0 0-3-3h-2a3 3 0 0 0-3 3v1H4a1 1 0 0 0 0 2h1v11a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8h1a1 1 0 0 0 0-2ZM10 5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1h-4Zm7 14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V8h10Zm-3-1a1 1 0 0 0 1-1v-6a1 1 0 0 0-2 0v6a1 1 0 0 0 1 1Z"/> </symbol> <symbol xmlns="http://www.w3.org/2000/svg" id="star-outline" viewBox="0 0 15 15"> <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M7.5 9.804L5.337 11l.413-2.533L4 6.674l2.418-.37L7.5 4l1.082 2.304l2.418.37l-1.75 1.793L9.663 11L7.5 9.804Z"/> </symbol> <symbol xmlns="http://www.w3.org/2000/svg" id="star-solid" viewBox="0 0 15 15"> <path fill="currentColor" d="M7.953 3.788a.5.5 0 0 0-.906 0L6.08 5.85l-2.154.33a.5.5 0 0 0-.283.843l1.574 1.613l-.373 2.284a.5.5 0 0 0 .736.518l1.92-1.063l1.921 1.063a.5.5 0 0 0 .736-.519l-.373-2.283l1.574-1.613a.5.5 0 0 0-.283-.844L8.921 5.85l-.968-2.062Z"/> </symbol> <symbol xmlns="http://www.w3.org/2000/svg" id="search" viewBox="0 0 24 24"> <path fill="currentColor" d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"/> </symbol> <symbol xmlns="http://www.w3.org/2000/svg" id="user" viewBox="0 0 24 24"> <path fill="currentColor" d="M15.71 12.71a6 6 0 1 0-7.42 0a10 10 0 0 0-6.22 8.18a1 1 0 0 0 2 .22a8 8 0 0 1 15.9 0a1 1 0 0 0 1 .89h.11a1 1 0 0 0 .88-1.1a10 10 0 0 0-6.25-8.19ZM12 12a4 4 0 1 1 4-4a4 4 0 0 1-4 4Z"/> </symbol> <symbol xmlns="http://www.w3.org/2000/svg" id="close" viewBox="0 0 15 15"> <path fill="currentColor" d="M7.953 3.788a.5.5 0 0 0-.906 0L6.08 5.85l-2.154.33a.5.5 0 0 0-.283.843l1.574 1.613l-.373 2.284a.5.5 0 0 0 .736.518l1.92-1.063l1.921 1.063a.5.5 0 0 0 .736-.519l-.373-2.283l1.574-1.613a.5.5 0 0 0-.283-.844L8.921 5.85l-.968-2.062Z"/> </symbol> </defs> </svg>
+<body class="font-lexend bg-gray-50">
 
-<!-- ================= HEADER ================= -->
-<header class="border-bottom py-3 bg-white shadow-sm">
-  <div class="container-fluid">
-    <div class="row align-items-center">
+    <!-- ================= HEADER (Tailwind + Font Awesome) ================= -->
+    <header class="sticky top-0 z-50 shadow-lg bg-white/95 backdrop-blur-md">
+        <div class="container px-4 py-2 mx-auto">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="<?= BASE_URL ?>" class="inline-block"><img src="<?= BASE_URL ?>assets/images/logo.png" style="max-height:60px;" alt="" class="h-20"></a> <!-- Navigation Menu - Desktop -->
+                <nav class="items-center hidden space-x-1 lg:flex">
+                    <a href="<?= BASE_URL ?>" class="flex items-center px-4 py-3 space-x-2 font-medium transition-all duration-300 rounded-full group text-brand-primary bg-brand-light hover:text-brand-dark">
+                        <i class="text-sm transition-transform fas fa-home group-hover:scale-110"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="https://2/gioi-thieu/" class="flex items-center px-4 py-3 space-x-2 font-medium transition-all duration-300 rounded-full group text-gray-700 hover:text-brand-primary hover:bg-brand-light">
+                        <span>Giới thiệu</span>
+                    </a>
+                    <div class="relative group">
+                        <button class="flex items-center px-4 py-3 space-x-2 font-medium transition-all duration-300 rounded-full group text-gray-700 hover:text-brand-primary hover:bg-brand-light" fdprocessedid="3dn75n">
+                            <span>Sản phẩm</span>
+                            <i class="text-xs transition-transform fas fa-chevron-down group-hover:rotate-180"></i>
+                        </button>
 
-      <!-- LOGO -->
-      <div class="col-6 col-lg-3 text-center text-lg-start">
-        <a href="<?= BASE_URL ?>">
-          <img src="<?= BASE_URL ?>assets/images/logo.png" alt="FoodMart Logo" class="img-fluid" style="max-height:60px;">
-        </a>
-      </div>
+                        <div class="absolute left-0 invisible w-56 mt-2 transition-all duration-300 transform translate-y-2 bg-white border shadow-xl opacity-0 top-full rounded-2xl border-brand-light/50 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
+                            <div class="p-2">
+                                <a href="https://2/product/sau-ngam-duong/" class="flex items-center px-4 py-3 space-x-3 transition-all duration-200 rounded-xl text-gray-700 hover:text-brand-primary hover:bg-brand-light/50">
+                                    <span>Sấu Ngâm Đường</span>
+                                </a>
+                                <a href="https://2/product/mo-ngam-duong/" class="flex items-center px-4 py-3 space-x-3 transition-all duration-200 rounded-xl text-gray-700 hover:text-brand-primary hover:bg-brand-light/50">
+                                    <span>Mơ ngâm đường</span>
+                                </a>
+                                <a href="https://2/product/dau-tam-ngam-duong/" class="flex items-center px-4 py-3 space-x-3 transition-all duration-200 rounded-xl text-gray-700 hover:text-brand-primary hover:bg-brand-light/50">
+                                    <span>Dâu Tằm Ngâm Đường</span>
+                                </a>
+                                <a href="https://2/product/hoa-atiso-do-ngam-duong/" class="flex items-center px-4 py-3 space-x-3 transition-all duration-200 rounded-xl text-gray-700 hover:text-brand-primary hover:bg-brand-light/50">
+                                    <span>Hoa Atiso Đỏ Ngâm Đường</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="https://2/category/tin-tuc/" class="flex items-center px-4 py-3 space-x-2 font-medium transition-all duration-300 rounded-full group text-gray-700 hover:text-brand-primary hover:bg-brand-light">
+                        <span>Tin tức</span>
+                    </a>
+                    <a href="https://2/lien-he/" class="flex items-center px-4 py-3 space-x-2 font-medium transition-all duration-300 rounded-full group text-gray-700 hover:text-brand-primary hover:bg-brand-light">
+                        <span>Liên hệ</span>
+                    </a>
+                </nav>
 
-      <!-- SEARCH BAR -->
-      <div class="col-lg-5 d-none d-lg-block">
-        <div class="search-bar row bg-light p-2 my-2 rounded-4">
-          <div class="col-md-4 d-none d-md-block">
-            <select class="form-select border-0 bg-transparent">
-              <option>All Categories</option>
-              <option>Groceries</option>
-              <option>Drinks</option>
-              <option>Chocolates</option>
-            </select>
-          </div>
-          <div class="col-11 col-md-7">
-            <form action="<?= BASE_URL ?>" method="get">
-              <input type="text" class="form-control border-0 bg-transparent" placeholder="Search for 20,000+ products">
-            </form>
-          </div>
-          <div class="col-1 d-flex align-items-center justify-content-center">
-            <svg width="22" height="22" viewBox="0 0 24 24"><path fill="currentColor" d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"/></svg>
-          </div>
-        </div>
-      </div>
+                <!-- Search & Cart Section -->
+                <div class="flex items-center space-x-4">
+                    <!-- Search Bar -->
+                    <div class="flex-1 max-w-lg mx-3 md:mx-6">
+                        <div class="relative">
+                            <!-- Mobile: Chỉ hiện icon search -->
+                            <div class="block md:hidden">
+                                <button class="flex items-center justify-center w-10 h-10 transition-all duration-300 rounded-full text-brand-primary bg-brand-light/30 hover:bg-brand-light/50" id="mobile-search-toggle" fdprocessedid="biszeb">
+                                    <i class="text-sm fas fa-search"></i>
+                                </button>
+                            </div>
 
-      <!-- RIGHT SIDE -->
-      <div class="col-6 col-lg-4 d-flex justify-content-end align-items-center gap-4">
+                            <!-- Desktop: Hiện full search box -->
+                            <div class="hidden md:block">
+                                <input type="text" id="autocomplete-search" placeholder="Tìm kiếm..." class="w-full px-5 py-2 pr-12 text-gray-700 placeholder-gray-500 transition-all duration-300 rounded-full outline-none bg-brand-light/30 hover:bg-brand-light/50 focus:bg-brand-light/50 font-questrial" data-limit="10" autocomplete="off" fdprocessedid="mkdxps">
+                                <button class="absolute flex items-center justify-center w-6 h-6 transition-colors transform -translate-y-1/2 rounded-full right-3 top-1/2 text-brand-primary hover:text-brand-primary/80" fdprocessedid="xzqz2">
+                                    <i class="text-sm fas fa-search"></i>
+                                </button>
 
-        <!-- SUPPORT -->
-        <div class="support-box text-end d-none d-xl-block">
-          <span class="fs-6 text-muted">For Support?</span>
-          <h5 class="mb-0">+980-34984089</h5>
-        </div>
+                                <!-- Results Container -->
+                                <div class="absolute left-0 right-0 z-50 hidden w-full mt-1 overflow-y-auto bg-white shadow-lg rounded-xl max-h-96" id="autocomplete-results"></div>
 
-        <!-- USER + HEART -->
-     <ul class="d-flex list-unstyled m-0 align-items-center ">
-      <?php if (isset($_SESSION['user'])): ?>
-        <!-- Nếu đã đăng nhập -->
-        <li class="nav-item dropdown">
-          <a href="#" class="rounded-circle bg-light p-2 mx-1 d-flex align-items-center justify-content-center"
-            id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration:none;">
-            <svg width="22" height="22"><use xlink:href="#user"></use></svg>
-          </a>
+                                <!-- Loading Indicator -->
+                                <div class="absolute left-0 right-0 z-50 hidden w-full mt-1 bg-white rounded-full shadow-lg" id="autocomplete-loading">
+                                    <div class="flex items-center justify-center p-4">
+                                        <svg class="w-5 h-5 mr-3 -ml-1 animate-spin text-brand-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        <span class="text-gray-500">Đang tìm kiếm...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-          <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2" aria-labelledby="userDropdown">
-            <li class="px-3 py-2 text-center border-bottom">
-              <strong><?= htmlspecialchars($_SESSION['user']['name']) ?></strong><br>
-              <small class="text-muted"><?= htmlspecialchars($_SESSION['user']['email']) ?></small>
-            </li>
-            <li><a class="dropdown-item" href="<?= BASE_URL ?>user/profile"><i class="bi bi-person me-2"></i> Tài khoản của tôi</a></li>
-            <li><a class="dropdown-item" href="<?= BASE_URL ?>order/myorders"><i class="bi bi-receipt me-2"></i> Đơn hàng của tôi</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item text-danger" href="<?= BASE_URL ?>user/logout"><i class="bi bi-box-arrow-right me-2"></i> Đăng xuất</a></li>
-          </ul>
-        </li>
 
-      <?php else: ?>
-        <!-- Nếu chưa đăng nhập -->
-        <li>
-          <a href="<?= BASE_URL ?>user/login" 
-            class="rounded-circle bg-light p-2 mx-1 d-flex align-items-center justify-content-center">
-            <svg width="22" height="22"><use xlink:href="#user"></use></svg>
-          </a>
-        </li>
-      <?php endif; ?>
+                    <!-- Cart Icon -->
+                    <!-- Account Dropdown -->
+                    <div class="relative group">
+                        <?php include view_path('site/account/sidebar_user.php'); ?>
+                    </div>
 
-      <!-- Icon yêu thích -->
-      <li>
-        <a href="#" class="rounded-circle bg-light p-2 mx-1 d-flex align-items-center justify-content-center">
-          <svg width="22" height="22"><use xlink:href="#heart"></use></svg>
-        </a>
-      </li>
-    </ul>
+                    <!-- Mini Cart -->
+                    <div class="relative">
+                        <!-- Cart Button -->
+                        <button onclick="toggleMiniCart()" class="relative flex items-center justify-center font-semibold text-green-800 transition-all duration-300 bg-green-100 rounded-full shadow-lg w-9 h-9 md:px-4 hover:bg-brand-primary hover:text-white hover:shadow-xl" fdprocessedid="ngx4w6">
+                            <i class="text-xs fas fa-shopping-cart"></i>
 
-      <!-- MINI CART BUTTON -->
-      <?php
-      $cart = $_SESSION['cart'] ?? [];
-      $total = 0;
-      $totalQty = 0;
-      foreach ($cart as $item) {
-          $total += $item['price'] * $item['qty'];
-          $totalQty += $item['qty']; // 👈 Tính tổng số món (kể cả trùng)
-      }
-      ?>
-        <div class="cart text-end">
-          <button class="border-0 bg-transparent d-flex flex-column gap-2 lh-1"
-                  type="button"
-                  data-bs-toggle="offcanvas"
-                  data-bs-target="#offcanvasCart"
-                  aria-controls="offcanvasCart">
-            <span class="fs-6 text-muted dropdown-toggle">Your Cart</span>
-            <span class="cart-total fs-5 fw-bold ">
-              <?= number_format($total, 0, ',', '.') ?> đ
-            </span>
-          </button>
-        </div>
-      <!-- END MINI CART BUTTON -->
-      </div>
-       <!-- /RIGHT SIDE -->
-    </div>
-  </div>
-  <div class="container-fluid">
-        <div class="row py-3">
-          <div class="d-flex  justify-content-center justify-content-sm-between align-items-center">
-            <nav class="main-menu d-flex navbar navbar-expand-lg">
+                            <!-- Cart Count Badge -->
+                            <span id="cart-count-badge" class="absolute flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-600 rounded-full shadow-md cart-count -top-1 -right-1"><?= $totalQty ?: 0 ?></span>
+                        </button>
 
-              <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-                <span class="navbar-toggler-icon"></span>
-              </button>
+                        <!-- Mini Cart Dropdown -->
+                        <div id="mini-cart" class="absolute right-0 z-50 hidden mt-2 bg-white rounded-lg shadow-lg top-full w-80">
 
-              <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                            <!-- Cart Header -->
+                            <div class="px-4 py-3 bg-gray-100 rounded-t-lg">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-lg font-semibold text-gray-900">Giỏ hàng</h3>
+                                    <button onclick="closeMiniCart()" class="text-gray-400 hover:text-gray-600">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
 
-                <div class="offcanvas-header justify-content-center">
-                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            <!-- Cart Items -->
+                            <div id="mini-cart-items" class="overflow-y-auto max-h-64">
+                                <?php if (!empty($cart)): ?>
+                                    <?php foreach ($cart as $item): ?>
+                                        <div class="flex items-center justify-between p-3 border-b border-gray-100">
+                                            <div class="flex items-center gap-3">
+                                                <img src="<?= BASE_URL ?>assets/images/<?= htmlspecialchars($item['image']) ?>"
+                                                    alt="<?= htmlspecialchars($item['name']) ?>"
+                                                    class="w-12 h-12 rounded object-cover">
+                                                <div>
+                                                    <p class="text-sm font-medium text-gray-900"><?= htmlspecialchars($item['name']) ?></p>
+                                                    <p class="text-xs text-gray-500"><?= number_format($item['price'], 0, ',', '.') ?> đ</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <button class="text-gray-500 hover:text-gray-700 cart-minus" data-id="<?= $item['id'] ?>">−</button>
+                                                <input type="text" value="<?= $item['qty'] ?>" data-id="<?= $item['id'] ?>"
+                                                    class="cart-qty-input w-10 text-center border rounded">
+                                                <button class="text-gray-500 hover:text-gray-700 cart-plus" data-id="<?= $item['id'] ?>">+</button>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <div class="px-4 py-8 text-center">
+                                        <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l-1 12H6L5 9z"></path>
+                                        </svg>
+                                        <p class="text-gray-500">Your cart is empty</p>
+                                        <a href="<?= BASE_URL ?>shop" class="inline-block mt-4 bg-green-600 text-white rounded-full px-3 py-2 hover:bg-green-700 text-sm font-medium">
+                                            Start Shopping
+                                        </a>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <!-- Cart Footer -->
+                            <div id="mini-cart-footer" class="<?= !empty($cart) ? 'px-4 py-3 bg-gray-100 rounded-b-lg' : 'hidden px-4 py-3 bg-gray-100 rounded-b-lg' ?>">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-sm font-medium text-gray-600">Tổng cộng:</span>
+                                    <span id="mini-cart-total" class="text-lg font-bold text-primary"><?= number_format($total, 0, ',', '.') ?> ₫</span>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <a href="<?= BASE_URL ?>cart/index" class="flex-1 px-4 py-2 text-sm font-medium text-center text-white transition-colors duration-200 rounded-md bg-brand-secondary hover:bg-orange-600">
+                                        Xem giỏ hàng </a>
+                                    <a href="<?= BASE_URL ?>checkout/index" class="flex-1 px-4 py-2 text-sm font-medium text-center text-white transition-colors duration-200 rounded-md bg-brand-secondary hover:bg-brand-primary">
+                                        Thanh toán </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button class="flex items-center justify-center w-10 h-10 text-gray-700 transition-colors rounded-full lg:hidden hover:text-brand-primary hover:bg-brand-light" id="mobile-menu-btn" fdprocessedid="basvh">
+                        <i class="text-xl fas fa-bars"></i>
+                    </button>
                 </div>
+            </div>
 
-                <div class="offcanvas-body">
-              
-                  <select class="filter-categories border-0 mb-0 me-5" fdprocessedid="wrrx05">
-                    <option>Shop by Departments</option>
-                    <option>Groceries</option>
-                    <option>Drinks</option>
-                    <option>Chocolates</option>
-                  </select>
-              
-                  <ul class="navbar-nav justify-content-end menu-list list-unstyled d-flex gap-md-3 mb-0">
-                    <li class="nav-item active">
-                      <a href="#women" class="nav-link">Women</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                      <a href="#men" class="nav-link">Men</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#kids" class="nav-link">Kids</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#accessories" class="nav-link">Accessories</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" role="button" id="pages" data-bs-toggle="dropdown" aria-expanded="false">Pages</a>
-                      <ul class="dropdown-menu" aria-labelledby="pages">
-                        <li><a href="/FoodMartLab/pages/about" class="dropdown-item">About Us </a></li>
-                        <li><a href="/FoodMartLab/shop/index" class="dropdown-item">Shop </a></li>
-                        <li><a href="/FoodMartLab/product/detail" class="dropdown-item">Single Product </a></li>
-                        <li><a href="/FoodMartLab/cart/index" class="dropdown-item">Cart </a></li>
-                        <li><a href="/FoodMartLab/checkout/index" class="dropdown-item">Checkout </a></li>
-                        <li><a href="/FoodMartLab/blog/index" class="dropdown-item">Blog </a></li>
-                        <li><a href="/FoodMartLab/blog/detail" class="dropdown-item">Single Post </a></li>
-                        <li><a href="/FoodMartLab/demo/style" class="dropdown-item">Styles </a></li>
-                        <li><a href="/FoodMartLab/pages/contact" class="dropdown-item">Contact </a></li>
-                        <li><a href="/FoodMartLab/checkout/thankyou" class="dropdown-item">Thank You </a></li>
-                        <li><a href="/FoodMartLab/site/user/login" class="dropdown-item">My Account </a></li>
-                        <li><a href="/FoodMartLab/errors/404" class="dropdown-item">404 Error </a></li>
-                      </ul>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#brand" class="nav-link">Brand</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#sale" class="nav-link">Sale</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#blog" class="nav-link">Blog</a>
-                    </li>
-                  </ul>
-                
-                </div>
-
-              </div>
-          </nav></div>
         </div>
-      </div>
-</header>
+    </header>
 
-<!-- ===================== OFFCANVAS MINI CART ===================== -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCart" aria-labelledby="MyCartLabel">
-  <div class="offcanvas-header justify-content-between">
-    <h5 class="offcanvas-title text-primary" id="MyCartLabel">
-      <svg width="22" height="22" style="display: inline";><use xlink:href="#cart"></use></svg> Your Cart
-    </h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
+    <script>
+        /**
+         * Mini Cart Toggle Logic (Tailwind + Vanilla JS)
+         * ----------------------------------------------
+         * - Show/hide mini cart dropdown when clicking the cart button
+         * - Close when clicking outside or pressing the close button
+         * - Works even if header is re-rendered dynamically
+         */
 
-  <div class="offcanvas-body">
-    <div class="order-md-last">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <span class="text-secondary-black">Total items:
-          <strong class="cart-count-badge"><?= $totalQty ?></strong>
-        </span>
-        <span class="cart-total text-black fw-bold fs-5">
-          <?= number_format($total, 0, ',', '.') ?> đ
-        </span>
-      </div>
+        // Toggle mini cart visibility
+        function toggleMiniCart() {
+            const miniCart = document.getElementById('mini-cart');
+            if (!miniCart) return;
 
-      <ul class="list-group mb-3 cart-items">
-        <?php if ($totalQty  === 0): ?>
-          <li class="list-group-item text-center text-muted empty-cart">
-            Giỏ hàng trống
-          </li>
-        <?php else: ?>
-          <?php foreach ($cart as $item): ?>
-            <li class="list-group-item d-flex justify-content-between align-items-center lh-sm cart-item"
-                data-id="<?= $item['id'] ?>">
-              <div class="d-flex align-items-center gap-2">
-                <img src="<?= asset($item['image']) ?>" alt="<?= htmlspecialchars($item['name']) ?>"
-                     class="rounded" width="50" height="50" style="object-fit:cover;">
-                <div>
-                  <h6 class="my-0"><?= htmlspecialchars($item['name']) ?></h6>
-                  <div class="d-flex align-items-center btn-outline-secondary">
-                    <!-- Nút trừ -->
-                    <button class="btn btn-sm btn-outline-secondary cart-minus" data-id="<?= $item['id'] ?>">−</button>
+            miniCart.classList.toggle('hidden'); // show/hide dropdown
 
-                    <!-- Số lượng -->
-                    <input type="text" class="cart-qty-input form-control form-control-sm text-center" 
-                          data-id="<?= $item['id'] ?>" 
-                          value="<?= $item['qty'] ?>" 
-                          style="width:45px;">
+            // Optional: smooth opening animation
+            if (!miniCart.classList.contains('hidden')) {
+                miniCart.classList.add('animate-fadeIn');
+            } else {
+                miniCart.classList.remove('animate-fadeIn');
+            }
+        }
 
-                    <!-- Nút cộng -->
-                    <button class="btn btn-sm btn-outline-secondary cart-plus" data-id="<?= $item['id'] ?>">+</button>
+        // Explicit close mini cart
+        function closeMiniCart() {
+            const miniCart = document.getElementById('mini-cart');
+            if (!miniCart) return;
+            miniCart.classList.add('hidden');
+        }
 
-                    <span class="text-muted">× <?= number_format($item['price'], 0, ',', '.') ?>đ</span>
-                  </div>
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const miniCart = document.getElementById('mini-cart');
+            const cartBtn = event.target.closest('[onclick="toggleMiniCart()"]');
+            if (!miniCart) return;
 
-                </div>
-              </div>
-              <span class="text-black fw-bold ms-auto">
-                <?= number_format($item['price'] * $item['qty'], 0, ',', '.') ?>đ
-              </span>
-            </li>
-          <?php endforeach; ?>
-        <?php endif; ?>
-      </ul>
+            // Nếu click ngoài dropdown & không phải nút toggle → đóng
+            if (!miniCart.contains(event.target) && !cartBtn) {
+                miniCart.classList.add('hidden');
+            }
+        });
 
-      <hr class="my-3">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <strong>Total:</strong>
-        <strong class="cart-total fs-5 text-black">
-          <?= number_format($total, 0, ',', '.') ?> đ
-        </strong>
-      </div>
-
-      <a href="<?= BASE_URL ?>cart/index" class="w-100 btn btn-primary btn-lg">
-        Continue to checkout
-      </a>
-    </div>
-  </div>
-</div>
-<!-- ===================== END OFFCANVAS MINI CART ===================== -->
-
+        // Optional: thêm animation CSS vào Tailwind
+        document.addEventListener('DOMContentLoaded', function() {
+            const style = document.createElement('style');
+            style.innerHTML = `
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.25s ease-out;
+    }
+  `;
+            document.head.appendChild(style);
+        });
+    </script>

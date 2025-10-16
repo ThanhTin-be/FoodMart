@@ -1,515 +1,849 @@
-  
- <section class="py-3"
-    style="background-image: url('<?= asset('background-pattern.jpg') ?>');background-repeat: no-repeat;background-size: cover;">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-
-          <div class="banner-blocks">
-
-            <div class="banner-ad large bg-info block-1">
-
-              <div class="swiper main-swiper">
-                <div class="swiper-wrapper">
-
-                  <div class="swiper-slide">
-                    <div class="row banner-content p-5">
-                      <div class="content-wrapper col-md-7">
-                        <div class="categories my-3">100% natural</div>
-                        <h3 class="display-4">Fresh Smoothie & Summer Juice</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum.</p>
-                        <a href="#"
-                          class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1 px-4 py-3 mt-3">Shop Now</a>
-                      </div>
-                      <div class="img-wrapper col-md-5">
-                        <img src="<?= asset('product-thumb-1.png') ?>" class="img-fluid">
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="swiper-slide">
-                    <div class="row banner-content p-5">
-                      <div class="content-wrapper col-md-7">
-                        <div class="categories mb-3 pb-3">100% natural</div>
-                        <h3 class="banner-title">Fresh Smoothie & Summer Juice</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum.</p>
-                        <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Shop
-                          Collection</a>
-                      </div>
-                      <div class="img-wrapper col-md-5">
-                        <img src="<?= asset('product-thumb-1.png') ?>" class="img-fluid">
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="swiper-slide">
-                    <div class="row banner-content p-5">
-                      <div class="content-wrapper col-md-7">
-                        <div class="categories mb-3 pb-3">100% natural</div>
-                        <h3 class="banner-title">Heinz Tomato Ketchup</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum.</p>
-                        <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Shop
-                          Collection</a>
-                      </div>
-                      <div class="img-wrapper col-md-5">
-                        <img src="<?= asset('product-thumb-2.png') ?>" class="img-fluid">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="swiper-pagination"></div>
-
-              </div>
-            </div>
-
-            <div class="banner-ad bg-success-subtle block-2"
-              style="background:url('<?= asset('ad-image-1.png') ?>') no-repeat;background-position: right bottom">
-              <div class="row banner-content p-5">
-
-                <div class="content-wrapper col-md-7">
-                  <div class="categories sale mb-3 pb-3">20% off</div>
-                  <h3 class="banner-title">Fruits & Vegetables</h3>
-                  <a href="#" class="d-flex align-items-center nav-link">Shop Collection <svg width="24" height="24">
-                      <use xlink:href="#arrow-right"></use>
-                    </svg></a>
-                </div>
-
-              </div>
-            </div>
-
-            <div class="banner-ad bg-danger block-3"
-              style="background:url('<?= asset('ad-image-2.png') ?>') no-repeat;background-position: right bottom">
-              <div class="row banner-content p-5">
-
-                <div class="content-wrapper col-md-7">
-                  <div class="categories sale mb-3 pb-3">15% off</div>
-                  <h3 class="item-title">Baked Products</h3>
-                  <a href="#" class="d-flex align-items-center nav-link">Shop Collection <svg width="24" height="24">
-                      <use xlink:href="#arrow-right"></use>
-                    </svg></a>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-          <!-- / Banner Blocks -->
-
-        </div>
+  <section class="relative flex items-center m-0 min-h-screen overflow-hidden bg-gradient-to-br from-brand-light to-white">
+      <!-- Background Pattern -->
+      <div class="absolute inset-0 opacity-10">
+          <div class="absolute w-32 h-32 rounded-full top-10 left-10 bg-brand-accent"></div>
+          <div class="absolute w-24 h-24 rounded-full top-40 right-20 bg-brand-secondary"></div>
+          <div class="absolute w-16 h-16 rounded-full bottom-20 left-1/4 bg-brand-primary"></div>
+          <div class="absolute w-20 h-20 rounded-full bottom-40 right-1/3 bg-brand-accent"></div>
       </div>
-    </div>
+
+      <div class="container relative z-10 px-4 mx-auto">
+          <div class="grid items-center gap-12 lg:grid-cols-2">
+              <!-- Content Side -->
+              <div class="text-center lg:text-left">
+                  <h2 class="pt-16 mb-6 text-5xl font-bold leading-tight sm:pt-0 lg:text-6xl text-brand-darker font-cal-sans">
+                      TƯƠI NGON MỖI NGÀY </h2>
+
+                  <p class="mb-8 text-xl leading-relaxed text-gray-600 font-questrial">
+                      Khám phá thế giới thực phẩm đa dạng – từ rau củ, thịt cá, đến gia vị và đồ khô.
+                      Tất cả đều được chọn lọc kỹ lưỡng, mang đến bữa ăn tươi ngon, an toàn cho mọi gia đình Việt.</p>
+
+                  <!-- CTA Buttons -->
+                  <div class="flex flex-col justify-center gap-4 mb-12 sm:flex-row lg:justify-start">
+                      <a href="#" class="px-8 py-4 text-lg font-semibold text-white transition-all duration-300 transform rounded-full shadow-lg bg-gradient-to-r from-brand-primary to-brand-secondary hover:from-brand-dark hover:to-brand-primary rounded-2xl hover:scale-105 hover:shadow-xl font-lexend">
+                          <i class="mr-2 fas fa-shopping-bag"></i>
+                          Mua Ngay </a>
+                      <a href="#" class="px-8 py-4 text-lg font-semibold text-orange-400 transition-all duration-300 transform border-2 border-orange-400 rounded-full hover:bg-orange-400 hover:text-white rounded-2xl hover:scale-105 font-lexend">
+                          <i class="mr-2 fas fa-play"></i>
+                          Xem Video </a>
+                  </div>
+
+                  <!-- Stats - Redesigned -->
+                  <div class="p-6 shadow-lg bg-white/60 backdrop-blur-sm rounded-3xl">
+                      <div class="grid grid-cols-3 divide-x divide-brand-light/50">
+                          <div class="px-4 text-center">
+                              <div class="flex items-center justify-center w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-brand-primary to-brand-secondary rounded-2xl">
+                                  <i class="text-lg text-white fas fa-box"></i>
+                              </div>
+                              <div class="mb-1 text-3xl font-bold text-brand-primary font-league-spartan">500+</div>
+                              <div class="text-sm text-gray-600 font-questrial">Sản phẩm</div>
+                          </div>
+
+                          <div class="px-4 text-center">
+                              <div class="flex items-center justify-center w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-brand-secondary to-brand-accent rounded-2xl">
+                                  <i class="text-lg text-white fas fa-users"></i>
+                              </div>
+                              <div class="mb-1 text-3xl font-bold text-brand-primary font-league-spartan">1000+</div>
+                              <div class="text-sm text-gray-600 font-questrial">Khách hàng</div>
+                          </div>
+
+                          <div class="px-4 text-center">
+                              <div class="flex items-center justify-center w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-2xl">
+                                  <i class="text-lg text-white fas fa-star"></i>
+                              </div>
+                              <div class="mb-1 text-3xl font-bold text-brand-primary font-league-spartan">5.0</div>
+                              <div class="text-sm text-gray-600 font-questrial">Đánh giá</div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Image Side -->
+              <div class="relative">
+                  <!-- Main Hero Image -->
+                  <div class="relative z-20">
+                      <div class="p-8 transition-transform duration-500 transform bg-white shadow-2xl rounded-3xl rotate-3 hover:rotate-0">
+                          <img src="https://dev.wptheme.store/s/wppricot/wp-content/uploads/2025/09/hero-4-scaled.jpg" alt="Trái Cây Tươi Ngon Mỗi Ngày" class="object-cover w-full h-96 rounded-2xl">
+                      </div>
+                  </div>
+
+                  <!-- Floating Elements -->
+                  <div class="absolute z-10 -top-6 -left-6">
+                      <div class="p-4 transition-transform duration-300 transform shadow-lg bg-brand-accent rounded-2xl -rotate-12 hover:rotate-0">
+                          <i class="text-2xl text-white fas fa-leaf"></i>
+                      </div>
+                  </div>
+
+                  <div class="absolute z-10 -bottom-6 -right-6">
+                      <div class="p-4 transition-transform duration-300 transform shadow-lg bg-brand-secondary rounded-2xl rotate-12 hover:rotate-0">
+                          <i class="text-2xl text-white fas fa-heart"></i>
+                      </div>
+                  </div>
+
+                  <!-- Decorative Fruits -->
+                  <div class="absolute z-30 top-1/4 -right-8">
+                      <div class="flex items-center justify-center w-16 h-16 text-2xl bg-orange-400 rounded-full shadow-lg animate-bounce">
+                          <img draggable="false" role="img" class="emoji" alt="🍊" src="https://s.w.org/images/core/emoji/16.0.1/svg/1f34a.svg">
+                      </div>
+                  </div>
+
+                  <div class="absolute z-30 bottom-1/4 -left-8">
+                      <div class="flex items-center justify-center text-xl delay-300 bg-red-400 rounded-full shadow-lg w-14 h-14 animate-bounce">
+                          <img draggable="false" role="img" class="emoji" alt="🍎" src="https://s.w.org/images/core/emoji/16.0.1/svg/1f34e.svg">
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- Scroll Down Indicator -->
+      <a href="#section-features">
+          <div class="absolute transform -translate-x-1/2 cursor-pointer bottom-8 left-1/2 animate-bounce" id="scroll-indicator">
+              <div class="flex flex-col items-center transition-colors text-brand-primary hover:text-brand-dark">
+                  <span class="mb-2 text-sm font-medium font-questrial">Cuộn xuống</span>
+                  <div class="flex items-center justify-center w-8 h-8 border-2 border-current rounded-full">
+                      <i class="text-sm fas fa-chevron-down"></i>
+                  </div>
+              </div>
+          </div>
+      </a>
   </section>
 
-  
+  <!-- Features Section -->
+  <section id="section-features" class="relative m-0 py-20 overflow-hidden bg-white">
+      <!-- Background Decorations -->
+      <div class="absolute inset-0 opacity-5">
+          <div class="absolute w-40 h-40 rounded-full top-20 left-10 bg-brand-primary"></div>
+          <div class="absolute w-32 h-32 rounded-full bottom-20 right-10 bg-brand-secondary"></div>
+          <div class="absolute w-24 h-24 rounded-full top-1/2 left-1/3 bg-brand-accent"></div>
+      </div>
 
-  <!-- Section danh sách category -->
-  <section class="py-5 overflow-hidden">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-
-          <div class="section-header d-flex flex-wrap justify-content-between mb-5">
-            <h2 class="section-title text-2xl md:text-3xl lg:text-4xl font-bold">Danh Mục</h2>
-
-            <div class="d-flex align-items-center">
-              <a href="#" class="btn-link text-decoration-none">View All Categories →</a>
-              <div class="swiper-buttons">
-                <button class="swiper-prev category-carousel-prev btn btn-yellow">❮</button>
-                <button class="swiper-next category-carousel-next btn btn-yellow">❯</button>
-              </div>
-            </div>
+      <div class="container relative z-10 px-4 mx-auto">
+          <!-- Section Header -->
+          <div class="mb-16 text-center">
+              <h2 class="mb-6 text-4xl font-bold lg:text-5xl text-brand-darker font-cal-sans">
+                  Tại Sao Chọn FoodMart </h2>
+              <p class="max-w-3xl mx-auto text-xl leading-relaxed text-gray-600 font-questrial">
+                  Chúng tôi hợp tác cùng các nhà cung cấp uy tín trên toàn quốc,
+                  đảm bảo mỗi sản phẩm đến tay bạn đều <b>tươi – sạch – chất lượng – đúng giá trị.</b> </p>
           </div>
 
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="categories-carousel swiper !h-auto items-center">
-            <div class="category-carousel swiper">
-              <div class="swiper-wrapper items-center !h-auto">
-                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                  <img src="<?= asset('icon-vegetables-broccoli.png') ?>" alt="Category Thumbnail">
-                  <h3 class="category-title">Fruits & Veges</h3>
-                </a>
-                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                  <img src="<?= asset('icon-bread-baguette.png') ?>" alt="Category Thumbnail">
-                  <h3 class="category-title">Breads & Sweets</h3>
-                </a>
-                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                  <img src="<?= asset('icon-soft-drinks-bottle.png') ?>" alt="Category Thumbnail">
-                  <h3 class="category-title">Fruits & Veges</h3>
-                </a>
-                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                  <img src="<?= asset('icon-wine-glass-bottle.png') ?>" alt="Category Thumbnail">
-                  <h3 class="category-title">Fruits & Veges</h3>
-                </a>
-                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                  <img src="<?= asset('icon-animal-products-drumsticks.png') ?>" alt="Category Thumbnail">
-                  <h3 class="category-title">Fruits & Veges</h3>
-                </a>
-                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                  <img src="<?= asset('icon-bread-herb-flour.png') ?>" alt="Category Thumbnail">
-                  <h3 class="category-title">Fruits & Veges</h3>
-                </a>
-                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                  <img src="<?= asset('icon-vegetables-broccoli.png') ?>" alt="Category Thumbnail">
-                  <h3 class="category-title">Fruits & Veges</h3>
-                </a>
-                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                  <img src="<?= asset('icon-vegetables-broccoli.png') ?>" alt="Category Thumbnail">
-                  <h3 class="category-title">Fruits & Veges</h3>
-                </a>
-                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                  <img src="<?= asset('icon-vegetables-broccoli.png') ?>" alt="Category Thumbnail">
-                  <h3 class="category-title">Fruits & Veges</h3>
-                </a>
-                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                  <img src="<?= asset('icon-vegetables-broccoli.png') ?>" alt="Category Thumbnail">
-                  <h3 class="category-title">Fruits & Veges</h3>
-                </a>
-                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                  <img src="<?= asset('icon-vegetables-broccoli.png') ?>" alt="Category Thumbnail">
-                  <h3 class="category-title">Fruits & Veges</h3>
-                </a>
-                <a href="index.html" class="nav-link category-item swiper-slide flex flex-col items-center justify-center ">
-                  <img src="<?= asset('icon-vegetables-broccoli.png') ?>" alt="Category Thumbnail">
-                  <h3 class="category-title">Fruits & Veges</h3>
-                </a>
+          <!-- Features Grid -->
+          <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+              <div class="text-center group ">
+                  <!-- Icon Container -->
+                  <div class="relative mb-8">
+                      <div class="flex items-center justify-center w-24 h-24 mx-auto transition-all duration-500 transform shadow-lg bg-gradient-to-br from-brand-primary to-brand-accent rounded-3xl group-hover:shadow-2xl group-hover:scale-110">
+                          <i class="text-3xl text-white transition-transform duration-300 fas fa-medal group-hover:rotate-12"></i>
+                      </div>
+                      <!-- Floating Decoration -->
+                      <div class="absolute flex items-center justify-center w-8 h-8 transition-all duration-300 transform scale-0 bg-yellow-400 rounded-full opacity-0 -top-2 -right-2 group-hover:opacity-100 group-hover:scale-100">
+                          <i class="text-sm text-white fas fa-star"></i>
+                      </div>
+                  </div>
 
+                  <!-- Content -->
+                  <div class="space-y-4">
+                      <h3 class="text-2xl font-bold transition-colors duration-300 text-brand-darker font-cal-sans group-hover:text-brand-primary">
+                          CHUẨN VỊ MỖI BỮA ĂN </h3>
+                      <p class="text-lg leading-relaxed text-gray-600 font-questrial">
+                          Từng nguyên liệu là sự kết hợp hoàn hảo giữa <b>vị ngon tự nhiên, độ tươi chuẩn bếp và sự tinh tế trong từng món ăn.</b>
+                          Giúp bạn dễ dàng tạo nên những bữa cơm ấm cúng và đủ đầy.</p>
+                  </div>
+
+                  <!-- Hover Effect Background -->
+                  <div class="absolute inset-0 transition-all duration-500 opacity-0 bg-gradient-to-br from-brand-light/20 to-transparent rounded-3xl group-hover:opacity-100 -z-10"></div>
               </div>
-            </div>
+              <div class="text-center group ">
+                  <!-- Icon Container -->
+                  <div class="relative mb-8">
+                      <div class="flex items-center justify-center w-24 h-24 mx-auto transition-all duration-500 transform shadow-lg bg-gradient-to-br from-brand-primary to-brand-secondary rounded-3xl group-hover:shadow-2xl group-hover:scale-110">
+                          <i class="text-3xl text-white transition-transform duration-300 fas fa-shield-alt group-hover:rotate-12"></i>
+                      </div>
+                      <!-- Floating Decoration -->
+                      <div class="absolute flex items-center justify-center w-8 h-8 transition-all duration-300 transform scale-0 bg-green-400 rounded-full opacity-0 -top-2 -right-2 group-hover:opacity-100 group-hover:scale-100">
+                          <i class="text-sm text-white fas fa-check"></i>
+                      </div>
+                  </div>
+
+                  <!-- Content -->
+                  <div class="space-y-4">
+                      <h3 class="text-2xl font-bold transition-colors duration-300 text-brand-darker font-cal-sans group-hover:text-brand-primary">
+                          AN TOÀN VÀ CHẤT LƯỢNG </h3>
+                      <p class="text-lg leading-relaxed text-gray-600 font-questrial">
+                          Từ khâu bảo quản, vận chuyển đến kiểm định chất lượng,
+                          FoodMart luôn đảm bảo <b>thực phẩm đạt chuẩn an toàn vệ sinh, giữ trọn dinh dưỡng và hương vị tự nhiên.</b></p>
+                  </div>
+
+                  <!-- Hover Effect Background -->
+                  <div class="absolute inset-0 transition-all duration-500 opacity-0 bg-gradient-to-br from-brand-light/20 to-transparent rounded-3xl group-hover:opacity-100 -z-10"></div>
+              </div>
+              <div class="text-center group md:col-span-2 lg:col-span-1">
+                  <!-- Icon Container -->
+                  <div class="relative mb-8">
+                      <div class="flex items-center justify-center w-24 h-24 mx-auto transition-all duration-500 transform shadow-lg bg-gradient-to-br from-brand-primary to-brand-secondary rounded-3xl group-hover:shadow-2xl group-hover:scale-110">
+                          <i class="text-3xl text-white transition-transform duration-300 fas fa-leaf group-hover:rotate-12"></i>
+                      </div>
+                      <!-- Floating Decoration -->
+                      <div class="absolute flex items-center justify-center w-8 h-8 transition-all duration-300 transform scale-0 bg-emerald-400 rounded-full opacity-0 -top-2 -right-2 group-hover:opacity-100 group-hover:scale-100">
+                          <i class="text-sm text-white fas fa-seedling"></i>
+                      </div>
+                  </div>
+
+                  <!-- Content -->
+                  <div class="space-y-4">
+                      <h3 class="text-2xl font-bold transition-colors duration-300 text-brand-darker font-cal-sans group-hover:text-brand-primary">
+                          THUẦN KHIẾT TỪ TỰ NHIÊN </h3>
+                      <p class="text-lg leading-relaxed text-gray-600 font-questrial">
+                          Chúng tôi tin rằng thực phẩm ngon bắt đầu từ nguồn nguyên liệu sạch.
+                          Mỗi sản phẩm tại FoodMart là <b>sự giao hòa giữa thiên nhiên, dinh dưỡng và tâm huyết của người nông dân.</b></p>
+                  </div>
+
+                  <!-- Hover Effect Background -->
+                  <div class="absolute inset-0 transition-all duration-500 opacity-0 bg-gradient-to-br from-brand-light/20 to-transparent rounded-3xl group-hover:opacity-100 -z-10"></div>
+              </div>
           </div>
-        </div>
+
+          <!-- Bottom CTA -->
+          <div class="mt-16 text-center">
+              <div class="inline-flex items-center px-8 py-4 space-x-4 shadow-lg bg-gradient-to-r from-brand-light to-white rounded-2xl">
+                  <div class="flex -space-x-2">
+                      <div class="flex items-center justify-center w-10 h-10 rounded-full bg-brand-primary">
+                          <i class="text-sm text-white fas fa-apple-alt"></i>
+                      </div>
+                      <div class="flex items-center justify-center w-10 h-10 rounded-full bg-brand-secondary">
+                          <i class="text-sm text-white fas fa-heart"></i>
+                      </div>
+                      <div class="flex items-center justify-center w-10 h-10 rounded-full bg-brand-accent">
+                          <i class="text-sm text-white fas fa-star"></i>
+                      </div>
+                  </div>
+                  <div class="text-left">
+                      <p class="font-semibold text-brand-darker font-lexend">Hơn 500+ khách hàng tin tưởng</p>
+                      <p class="text-sm text-gray-600 font-questrial">Chất lượng được kiểm chứng</p>
+                  </div>
+              </div>
+          </div>
       </div>
-    </div>
+
+      <!-- Floating Elements -->
+      <div class="absolute top-1/4 left-8 opacity-20 animate-pulse">
+          <img src="https://pricot.vn/wp-content/themes/wppricot/assets/images//icon.png" alt="Icon" width="100">
+      </div>
+      <div class="absolute delay-300 bottom-1/4 right-8 opacity-20 animate-pulse">
+          <img src="https://pricot.vn/wp-content/themes/wppricot/assets/images//icon.png" alt="Icon" width="100">
+      </div>
+      <div class="absolute delay-700 top-3/4 left-1/4 opacity-20 animate-pulse">
+          <img src="https://pricot.vn/wp-content/themes/wppricot/assets/images//icon.png" alt="Icon" width="100">
+      </div>
   </section>
-  
-  
-  <?php foreach ($categories as $cat): ?>
-<section class="category-section my-5">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
 
-        <!-- header -->
-        <div class="gap-2 lg:grid lg:grid-cols-12 lg:rounded-lg bg-surface-tertiary">
-          <!-- Banner desktop (5 cột) -->
-          <div class="hidden rounded-lg lg:col-span-5 lg:block">
-            <a class="object-cover lg:rounded-lg" href="<?= BASE_URL ?>category/<?= $cat['slug'] ?>" style="text-decoration: none;">
-              <img src="<?= asset($cat['banner']) ?>"
-                  alt="<?= htmlspecialchars($cat['name']) ?>"
-                  class="max-h-[96px] w-full object-cover lg:rounded-lg">
-            </a>
+  <!-- Featured Products Section -->
+  <section class="relative m-0 py-5 overflow-hidden bg-white lg:py-5">
+      <!-- Background Decorations -->
+      <div class="absolute inset-0 opacity-5">
+          <div class="absolute w-64 h-64 rounded-full top-20 right-10 bg-brand-primary"></div>
+          <div class="absolute w-48 h-48 rounded-full bottom-20 left-10 bg-brand-secondary"></div>
+      </div>
+
+      <div class="container relative z-10 px-4 mx-auto">
+          <!-- Section Header -->
+          <div class="mb-12 text-center lg:mb-16">
+              <h2 class="mb-4 text-3xl font-bold text-orange-400 lg:text-5xl lg:mb-6 font-cal-sans">
+                  Sản Phẩm <span class="text-brand-primary">Nổi Bật</span>
+              </h2>
+              <p class="max-w-3xl mx-auto mb-8 text-lg leading-relaxed text-gray-600 lg:text-xl font-questrial">
+                  Tại FoodMart chuyên cung cấp các sản phẩm chất lượng cao, giá tốt mỗi ngày.
+              </p>
           </div>
 
-          <!-- Tiêu đề mobile (ẩn desktop) -->
-          <div class="text-[16px] leading-[24px] font-semibold bg-white pt-2 pl-2 text-black lg:hidden">
-            <?= htmlspecialchars($cat['name']) ?>
-          </div>
+          <!-- Products Grid -->
+          <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:gap-8" id="products-grid">
+              <?php if (!empty($featured)): ?>
+                  <?php foreach ($featured as $p): ?>
+                      <div class="overflow-hidden transition-all duration-500 transform bg-white shadow-lg product-card group rounded-3xl hover:shadow-2xl hover:-translate-y-2">
+                          <div class="relative overflow-hidden">
+                              <!-- Badge -->
+                              <div class="absolute z-10 flex flex-wrap gap-2 top-4 left-4">
+                                  <span class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-yellow-500 rounded-full">
+                                      Nổi bật
+                                  </span>
+                              </div>
 
-          <!-- Khu slider/trống (7 cột) -->
-          <div class="lg:col-span-7 hidden lg:flex items-center bg-gray-50 rounded-md p-2">
-            <!-- View All + Arrow (desktop only) -->
-            <div class="hidden lg:flex items-center gap-3 justify-end w-full">
-              <a href="<?= BASE_URL ?>/category/<?= $cat['slug'] ?>" class="btn-link text-decoration-none">
-                View All →
+                              <!-- Product Image -->
+                              <a href="<?= BASE_URL ?>product/detail/<?= $p['id'] ?>">
+                                  <img src="<?= BASE_URL ?>assets/images/<?= $p['image'] ?>" alt="<?= htmlspecialchars($p['name']) ?>"
+                                      class="object-contain w-full h-48 transition-transform duration-500 lg:h-56 group-hover:scale-110" loading="lazy">
+                              </a>
+
+                              <!-- Wishlist Button -->
+                              <div class="absolute top-4 right-4">
+                                  <button class="flex items-center justify-center w-10 h-10 text-gray-600 transition-all duration-300 rounded-full bg-white/90 backdrop-blur-sm hover:text-red-500 hover:bg-white wishlist-btn">
+                                      <i class="fa-regular fa-heart"></i>
+                                  </button>
+                              </div>
+                          </div>
+
+                          <!-- Product Info -->
+                          <div class="p-6">
+                              <h3 class="mb-2 text-xl font-bold transition-colors text-brand-darker font-league-spartan group-hover:text-brand-primary">
+                                  <a href="<?= BASE_URL ?>product/detail/<?= $p['id'] ?>" class="hover:text-brand-primary">
+                                      <?= htmlspecialchars($p['name']) ?>
+                                  </a>
+                              </h3>
+                              <p class="mb-4 text-sm text-gray-600 font-questrial line-clamp-2">
+                                  <?= htmlspecialchars($p['description'] ?? 'Sản phẩm chất lượng cao, được nhiều khách hàng yêu thích.') ?>
+                              </p>
+                              <div class="flex items-center justify-between">
+                                  <div class="flex items-center space-x-2">
+                                      <span class="text-2xl font-bold text-brand-primary font-league-spartan">
+                                          <?= number_format($p['price'], 0, ',', '.') ?> đ
+                                      </span>
+                                  </div>
+                                  <button class="add-to-cart flex items-center justify-center w-10 h-10 text-white transition-all duration-300 rounded-full bg-brand-primary hover:bg-brand-dark"
+                                      data-id="<?= $p['id'] ?>" title="Thêm vào giỏ hàng">
+                                      <i class="fas fa-shopping-cart"></i>
+                                  </button>
+                              </div>
+                          </div>
+                      </div>
+                  <?php endforeach; ?>
+              <?php else: ?>
+                  <p class="text-center text-gray-500 col-span-full">Chưa có sản phẩm nổi bật nào.</p>
+              <?php endif; ?>
+          </div>
+          <!-- Load more button -->
+          <div class="mt-12 text-center lg:mt-16">
+              <a href="<?= BASE_URL ?>shop" class="inline-flex items-center px-8 py-4 text-lg font-semibold text-white transition-all duration-300 transform rounded-full shadow-lg bg-gradient-to-r from-brand-primary to-brand-secondary hover:from-brand-dark hover:to-brand-primary rounded-2xl hover:scale-105 hover:shadow-xl font-lexend">
+                  <i class="mr-2 fas fa-plus"></i>
+                  Xem thêm sản phẩm
               </a>
-              <div class="swiper-buttons flex gap-2">
-                <button class="swiper-prev category-carousel-prev btn btn-yellow" id="prev-<?= $cat['slug'] ?>">❮</button>
-                <button class="swiper-next category-carousel-next btn btn-yellow" id="next-<?= $cat['slug'] ?>">❯</button>
-              </div>
-            </div>
           </div>
-        </div>
-        <!-- /header -->
+      </div>
+  </section>
 
-        <!-- slider -->
-        <div class="products-carousel swiper" id="swiper-<?= $cat['slug'] ?>">
-          <div class="swiper-wrapper !h-auto items-stretch">
-            <?php if (!empty($categoryProducts[$cat['slug']])): ?>
-              <?php foreach ($categoryProducts[$cat['slug']] as $item): 
-                $price     = (float)$item['price'];
-                $old_price = (float)$item['old_price'];
-                $discount  = ($old_price > $price) ? round((($old_price - $price) / $old_price) * 100) : 0;
-              ?>
-                <div class="product-item swiper-slide bg-gray rounded-2xl p-4 
-                            shadow-md hover:shadow-xl hover:-translate-y-1 
-                            transition transform relative">
 
-                  <!-- Badge giảm giá -->
-                  <?php if ($discount > 0): ?>
-                    <span class="absolute top-2 right-2 bg-yellow-300 text-black font-semibold text-sm px-2 py-1 rounded">
-                      -<?= $discount ?>%
-                    </span>
-                  <?php endif; ?>
+  <!-- Why Choose Us Section - Based on Pricot Design -->
+  <section class="relative py-16 overflow-hidden lg:py-20 bg-gradient-to-br from-orange-50 to-yellow-50">
+      <!-- Background Decorations -->
+      <div class="absolute inset-0 opacity-10">
+          <div class="absolute w-32 h-32 bg-orange-400 rounded-full top-10 left-10"></div>
+          <div class="absolute w-40 h-40 bg-yellow-400 rounded-full bottom-20 right-10"></div>
+          <div class="absolute w-24 h-24 bg-orange-300 rounded-full top-1/2 left-1/4"></div>
+      </div>
 
-                  <figure>
-                    <a href="<?= BASE_URL ?>site/product/<?= $item['slug'] ?>" 
-                      title="<?= htmlspecialchars($item['name']) ?>">
-                      <img src="<?= asset($item['image']) ?>" 
-                          alt="<?= htmlspecialchars($item['name']) ?>" 
-                          class="h-full w-full object-contain object-center mix-blend-multiply transition-transform duration-300 ease-in-out hover:scale-105">
-                    </a>
-                  </figure>
+      <!-- Palm Leaves Decoration -->
+      <div class="absolute top-0 left-0 w-64 h-64 opacity-20">
+          <svg viewBox="0 0 200 200" class="w-full h-full text-green-500">
+              <path d="M20 100 Q50 50, 100 80 Q150 50, 180 100 Q150 150, 100 120 Q50 150, 20 100" fill="currentColor"></path>
+          </svg>
+      </div>
+      <div class="absolute bottom-0 right-0 w-48 h-48 transform rotate-180 opacity-20">
+          <svg viewBox="0 0 200 200" class="w-full h-full text-green-500">
+              <path d="M20 100 Q50 50, 100 80 Q150 50, 180 100 Q150 150, 100 120 Q50 150, 20 100" fill="currentColor"></path>
+          </svg>
+      </div>
 
-                  <h4 class="text-truncate text-lg mt-3"><?= htmlspecialchars($item['name']) ?></h4>
+      <div class="container relative z-10 px-4 mx-auto">
+          <!-- Section Header -->
+          <div class="mb-12 text-center lg:mb-16">
+              <h2 class="mb-4 text-3xl font-bold lg:text-5xl lg:mb-6 font-cal-sans">
+                  <span class="text-orange-500">Vì Sao</span>
+                  <span class="text-red-500">FoodMart</span>
+                  <br>
+                  <span class="text-green-600">Được Hàng Triệu Gia Đình Tin Dùng?</span>
+              </h2>
+              <p class="max-w-3xl mx-auto text-lg leading-relaxed text-gray-700 lg:text-xl font-questrial">
+              </p>
+          </div>
 
-                  <!-- Giá -->
-                  <div class="mt-2">
-                    <!-- Giá mới -->
-                    <div class="text-red-600 font-bold text-base sm:text-lg">
-                      <?= number_format($price, 0, ',', '.') ?> đ
-                    </div>
+          <!-- Main Content Layout -->
+          <div class="relative">
+              <!-- Main Container with Hexagonal/Circular Layout -->
+              <div class="flex flex-col items-center justify-center space-y-12 lg:flex-row lg:space-y-0 lg:space-x-16">
 
-                    <?php if ($discount > 0): ?>
-                      <div class="flex items-center gap-2 mt-1 whitespace-nowrap">
-                        <!-- Giá cũ -->
-                        <span class="text-gray-500 line-through text-xs sm:text-sm">
-                          <?= number_format($old_price, 0, ',', '.') ?> đ
-                        </span>
-
-                        <!-- Tiết kiệm -->
-                        <span class="text-green-600 text-[10px] sm:text-xs md:text-sm lg:text-xs">
-                          <span class="sm:hidden">-<?= number_format($old_price - $price, 0, ',', '.') ?>đ</span>
-                          <span class="hidden sm:inline">Tiết kiệm <?= number_format($old_price - $price, 0, ',', '.') ?> đ</span>
-                        </span>
+                  <!-- Left Side Features -->
+                  <div class="flex flex-col space-y-4 lg:w-80">
+                      <div class="p-4 transition-all duration-300 transform shadow-lg bg-gradient-to-r from-orange-100 to-yellow-100 rounded-2xl hover:shadow-xl hover:-translate-y-1">
+                          <div class="flex items-center mb-2 space-x-3">
+                              <div class="flex items-center justify-center w-10 h-10 shadow-md bg-gradient-to-br from-orange-400 to-red-500 rounded-xl">
+                                  <i class="flex items-center justify-center w-10 h-10 text-sm text-white fas fa-apple-alt"></i>
+                              </div>
+                              <h4 class="text-sm font-bold text-orange-800 font-league-spartan">NGUỒN HÀNG CHỌN LỌC – TƯƠI NGON CHUẨN GỐC</h4>
+                          </div>
+                          <p class="text-xs leading-relaxed text-gray-700 font-questrial">Từ nông trại, biển khơi đến bàn ăn – mọi sản phẩm đều được kiểm định và chọn lọc kỹ càng, đảm bảo <b>độ tươi, độ sạch và hương vị tự nhiên.</b></p>
                       </div>
-                    <?php endif; ?>
+                      <div class="p-4 transition-all duration-300 transform shadow-lg bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl hover:shadow-xl hover:-translate-y-1">
+                          <div class="flex items-center mb-2 space-x-3">
+                              <div class="flex items-center justify-center w-10 h-10 shadow-md bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl">
+                                  <i class="flex items-center justify-center w-10 h-10 text-sm text-white fas fa-heart"></i>
+                              </div>
+                              <h4 class="text-sm font-bold text-orange-800 font-league-spartan">CHUẨN VỊ GIA ĐÌNH – GIỮ TRỌN DINH DƯỠNG</h4>
+                          </div>
+                          <p class="text-xs leading-relaxed text-gray-700 font-questrial">Thực phẩm tại FoodMart được <b>bảo quản theo quy trình lạnh hiện đại,
+                                  giúp giữ nguyên dinh dưỡng và vị ngon thuần khiết</b> trong từng bữa ăn.</p>
+                      </div>
+                      <div class="p-4 transition-all duration-300 transform shadow-lg bg-gradient-to-r from-blue-100 to-green-100 rounded-2xl hover:shadow-xl hover:-translate-y-1">
+                          <div class="flex items-center mb-2 space-x-3">
+                              <div class="flex items-center justify-center w-10 h-10 shadow-md bg-gradient-to-br from-blue-400 to-green-500 rounded-xl">
+                                  <i class="flex items-center justify-center w-10 h-10 text-sm text-white fas fa-chart-line"></i>
+                              </div>
+                              <h4 class="text-sm font-bold text-green-800 font-league-spartan">ĐA DẠNG NGÀNH HÀNG – ĐỦ ĐẦY GIAN BẾP VIỆT</h4>
+                          </div>
+                          <p class="text-xs leading-relaxed text-gray-700 font-questrial">Từ <b>rau củ, thịt cá, dầu ăn, gạo, gia vị đến đồ hộp, đồ đông lạnh,
+                                  FoodMart mang đến trải nghiệm mua sắm trọn vẹn – mọi thứ bạn cần, chỉ trong một nơi.</b></p>
+                      </div>
                   </div>
 
+                  <!-- Center Product Image -->
+                  <div class="relative z-10 flex-shrink-0">
+                      <!-- Main Product Circle -->
+                      <div class="relative flex items-center justify-center overflow-hidden rounded-full shadow-2xl w-80 h-80 bg-gradient-to-br from-yellow-200 via-orange-200 to-red-200">
+                          <!-- Inner Circle -->
+                          <div class="relative flex items-center justify-center w-64 h-64 rounded-full bg-gradient-to-br from-yellow-100 to-orange-100">
+                              <!-- Product Jars -->
+                              <div class="relative">
+                                  <!-- Main Jar -->
+                                  <div class="relative w-32 h-40">
+                                      <!-- Jar Body -->
+                                      <div class="relative w-full h-32 shadow-xl bg-gradient-to-b from-amber-300 to-amber-500 rounded-2xl">
+                                          <!-- Jar Lid -->
+                                          <div class="absolute w-20 h-6 transform -translate-x-1/2 rounded-full shadow-lg -top-2 left-1/2 bg-gradient-to-b from-yellow-600 to-yellow-700"></div>
+                                          <!-- Jar Contents -->
+                                          <div class="absolute inset-2 top-4 bg-gradient-to-b from-orange-300 to-red-400 rounded-xl opacity-90">
+                                              <!-- Fruit Pieces -->
+                                              <div class="absolute w-3 h-3 bg-red-500 rounded-full shadow-sm top-2 left-2"></div>
+                                              <div class="absolute w-2 h-2 bg-yellow-500 rounded-full shadow-sm top-4 right-3"></div>
+                                              <div class="absolute w-3 h-3 bg-orange-600 rounded-full shadow-sm top-6 left-4"></div>
+                                              <div class="absolute w-2 h-2 bg-red-400 rounded-full shadow-sm top-8 right-2"></div>
+                                              <div class="absolute w-3 h-3 bg-yellow-600 rounded-full shadow-sm top-10 left-3"></div>
+                                              <div class="absolute w-2 h-2 bg-orange-500 rounded-full shadow-sm top-12 right-4"></div>
+                                          </div>
+                                      </div>
+                                  </div>
 
-                 <!-- nút MUA -->
-                  <button 
-                    class="w-full flex items-center justify-center gap-2 bg-sky-500/75 text-white 
-                          font-medium py-2 px-3 rounded-md hover:bg-sky-600 active:bg-sky-700 
-                          transition mt-3 add-to-cart"
-                    data-id="<?= $item['id'] ?>">
-                    <svg xmlns="http://www.w3.org/2000/svg" 
-                        class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9h14l-2-9M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z" />
-                    </svg>
-                    Mua
-                  </button>
+                                  <!-- Secondary Jar -->
+                                  <div class="absolute w-20 -right-8 -top-4 h-28">
+                                      <div class="relative w-full h-24 shadow-lg bg-gradient-to-b from-amber-300 to-amber-500 rounded-xl">
+                                          <div class="absolute h-4 transform -translate-x-1/2 rounded-full shadow-md -top-1 left-1/2 w-14 bg-gradient-to-b from-yellow-600 to-yellow-700"></div>
+                                          <div class="absolute rounded-lg inset-1 top-3 bg-gradient-to-b from-orange-300 to-red-400 opacity-90">
+                                              <div class="absolute w-2 h-2 bg-red-500 rounded-full top-1 left-1"></div>
+                                              <div class="absolute top-3 right-2 w-1.5 h-1.5 bg-yellow-500 rounded-full"></div>
+                                              <div class="absolute w-2 h-2 bg-orange-600 rounded-full top-5 left-2"></div>
+                                              <div class="absolute top-7 right-1 w-1.5 h-1.5 bg-red-400 rounded-full"></div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
 
-                </div>
-              <?php endforeach; ?>
-            <?php else: ?>
-              <p>No products in this category.</p>
-            <?php endif; ?>
-          </div>
-        </div>
-        <!-- /slider -->
-
-      </div>
-    </div>
-  </div>
-</section>
-<?php endforeach; ?>
-
-
-
-
-
-
-<!-- BLOG -->
- <section id="latest-blog" class="py-5">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="section-header d-flex align-items-center justify-content-between my-5">
-        <h2 class="section-title text-2xl md:text-3xl lg:text-4xl font-bold">Our Recent Blog</h2>
-        <div class="btn-wrap align-right">
-          <a href="<?= BASE_URL ?>blog" class="d-flex align-items-center nav-link">
-            Read All Articles <svg width="24" height="24"><use xlink:href="#arrow-right"></use></svg>
-          </a>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <?php if (!empty($blogs)): ?>
-        <?php foreach ($blogs as $post): ?>
-          <div class="col-md-4">
-            <article class="post-item card border-0 shadow-sm p-3">
-              <div class="image-holder zoom-effect">
-                <a href="<?= BASE_URL ?>blog/detail/<?= $post['id'] ?>">
-                  <img src="<?= asset('' . $post['thumbnail']) ?>" alt="post" class="card-img-top">
-                </a>
-              </div>
-              <div class="card-body">
-                <div class="post-meta d-flex text-uppercase gap-3 my-2 align-items-center">
-                  <div class="meta-date">
-                    <svg width="16" height="16"><use xlink:href="#calendar"></use></svg>
-                    <?= date("d M Y", strtotime($post['created_at'])) ?>
+                          <!-- Decorative Dots -->
+                          <div class="absolute w-4 h-4 bg-yellow-400 rounded-full top-8 left-8 opacity-60"></div>
+                          <div class="absolute w-3 h-3 bg-orange-400 rounded-full top-16 right-12 opacity-60"></div>
+                          <div class="absolute w-5 h-5 bg-red-400 rounded-full bottom-12 left-16 opacity-60"></div>
+                          <div class="absolute w-3 h-3 bg-yellow-500 rounded-full bottom-8 right-8 opacity-60"></div>
+                      </div>
                   </div>
-                  <div class="meta-categories">
-                    <svg width="16" height="16"><use xlink:href="#category"></use></svg>
-                    <?= htmlspecialchars($post['category']) ?>
+
+                  <!-- Right Side Features -->
+                  <div class="flex flex-col space-y-4 lg:w-80">
+                      <div class="p-4 transition-all duration-300 transform shadow-lg bg-gradient-to-l from-red-100 to-pink-100 rounded-2xl hover:shadow-xl hover:-translate-y-1">
+                          <div class="flex items-center justify-end mb-2 space-x-3">
+                              <h4 class="text-sm font-bold text-right text-red-800 font-league-spartan">CAM KẾT CHẤT LƯỢNG – AN TÂM MỌI GIA ĐÌNH</h4>
+                              <div class="flex items-center justify-center w-10 h-10 shadow-md bg-gradient-to-br from-red-500 to-pink-500 rounded-xl">
+                                  <i class="flex items-center justify-center w-10 h-10 text-sm text-white fas fa-tags"></i>
+                              </div>
+                          </div>
+                          <p class="text-xs leading-relaxed text-right text-gray-700 font-questrial">Chúng tôi hợp tác cùng <b>nhà cung cấp uy tín và chuỗi cung ứng đạt
+                                  chuẩn an toàn vệ sinh thực phẩm,</b> đảm bảo <b>“Sạch – Chuẩn – Tốt Giá”.</b></p>
+                      </div>
+                      <div class="p-4 transition-all duration-300 transform shadow-lg bg-gradient-to-l from-green-100 to-teal-100 rounded-2xl hover:shadow-xl hover:-translate-y-1">
+                          <div class="flex items-center justify-end mb-2 space-x-3">
+                              <h4 class="text-sm font-bold text-right text-green-800 font-league-spartan">GIAO NHANH MỖI NGÀY – TIỆN LỢI MỌI LÚC</h4>
+                              <div class="flex items-center justify-center w-10 h-10 shadow-md bg-gradient-to-br from-green-500 to-teal-500 rounded-xl">
+                                  <i class="flex items-center justify-center w-10 h-10 text-sm text-white fas fa-clock"></i>
+                              </div>
+                          </div>
+                          <p class="text-xs leading-relaxed text-right text-gray-700 font-questrial">Hệ thống <b>FoodMart Delivery</b> giúp bạn nhận hàng trong ngày,
+                              <b>giao tận bếp, tươi tận tay</b> – dù bạn ở bất cứ đâu.
+                          </p>
+                      </div>
+                      <div class="p-4 transition-all duration-300 transform shadow-lg bg-gradient-to-l from-purple-100 to-indigo-100 rounded-2xl hover:shadow-xl hover:-translate-y-1">
+                          <div class="flex items-center justify-end mb-2 space-x-3">
+                              <h4 class="text-sm font-bold text-right text-purple-800 font-league-spartan">ƯU ĐÃI THÀNH VIÊN – MUA NHIỀU, TIẾT KIỆM HƠN</h4>
+                              <div class="flex items-center justify-center w-10 h-10 shadow-md bg-gradient-to-br from-purple-500 to-indigo-500 rounded-xl">
+                                  <i class="flex items-center justify-center w-10 h-10 text-sm text-white fas fa-cocktail"></i>
+                              </div>
+                          </div>
+                          <p class="text-xs leading-relaxed text-right text-gray-700 font-questrial">Tận hưởng <b>chính sách tích điểm, giảm giá và combo siêu tiết kiệm,</b>
+                              giúp bạn <b>chi tiêu thông minh và mua sắm dễ dàng hơn bao giờ hết.</b></p>
+                      </div>
                   </div>
-                </div>
-                <div class="post-header">
-                  <h1 class="post-title">
-                    <a href="<?= BASE_URL ?>blog/detail/<?= $post['id'] ?>" class="text-decoration-none">
-                      <?= htmlspecialchars($post['title']) ?>
-                    </a>
-                  </h1>
-                  <p><?= htmlspecialchars($post['excerpt']) ?></p>
-                </div>
               </div>
-            </article>
+
+              <!-- Floating Decorative Elements -->
+              <div class="absolute w-12 h-12 bg-yellow-400 rounded-full top-4 left-4 opacity-30 animate-bounce"></div>
+              <div class="absolute w-8 h-8 delay-300 bg-orange-400 rounded-full top-12 right-8 opacity-40 animate-bounce"></div>
+              <div class="absolute w-10 h-10 delay-700 bg-red-400 rounded-full bottom-8 left-12 opacity-30 animate-bounce"></div>
+              <div class="absolute w-6 h-6 delay-1000 bg-pink-400 rounded-full bottom-4 right-4 opacity-40 animate-bounce"></div>
           </div>
-        <?php endforeach; ?>
-      <?php else: ?>
-        <p>No blog posts found.</p>
-      <?php endif; ?>
-    </div>
-  </div>
-</section>
 
-<section class="py-5 my-5">
-    <div class="container-fluid">
+          <!-- Bottom CTA Section -->
+          <div class="mt-16 lg:mt-20">
+              <div class="p-8 text-center shadow-2xl bg-gradient-to-r from-orange-500 to-red-500 rounded-3xl lg:p-12">
+                  <h3 class="mb-4 text-2xl font-bold text-white lg:text-3xl font-cal-sans">
+                      SẴN SÀNG CHO BỮA ĂN NGON MỖI NGÀY? </h3>
+                  <p class="max-w-2xl mx-auto mb-8 text-lg text-white/90 font-questrial">
+                      FoodMart – đồng hành cùng bạn tạo nên những bữa cơm trọn vẹn, tiện lợi và đầy yêu thương. </p>
 
-      <div class="bg-warning py-5 rounded-5" style="background-image: url('bg-pattern-2.png') no-repeat;">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-4">
-              <img src="<?= asset('phone.png') ?>" alt="phone" class="image-float img-fluid"> 
-            </div>
-            <div class="col-md-8">
-              <h2 class="my-5">Shop faster with foodmart App</h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sagittis sed ptibus liberolectus nonet
-                psryroin. Amet sed lorem posuere sit iaculis amet, ac urna. Adipiscing fames semper erat ac in
-                suspendisse iaculis. Amet blandit tortor praesent ante vitae. A, enim pretiummi senectus magna. Sagittis
-                sed ptibus liberolectus non et psryroin.</p>
-              <div class="d-flex gap-2 flex-wrap">
-                <img src="<?= asset('app-store.jpg') ?>" alt="app-store">
-                <img src="<?= asset('google-play.jpg') ?>" alt="google-play">
+                  <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
+                      <a href="#" class="px-8 py-4 text-lg font-bold text-orange-600 transition-all duration-300 transform bg-white shadow-lg hover:bg-orange-50 rounded-2xl hover:scale-105 font-lexend">
+                          <i class="mr-2 fas fa-phone"></i>
+                          Liên Hệ Ngay </a>
+                      <a href="#" class="px-8 py-4 text-lg font-bold text-white transition-all duration-300 transform border-2 border-white hover:bg-white hover:text-orange-600 rounded-2xl hover:scale-105 font-lexend">
+                          <i class="mr-2 fas fa-shopping-cart"></i>
+                          Đặt Hàng Ngay </a>
+                  </div>
+
+                  <!-- Trust Indicators -->
+                  <div class="flex flex-wrap items-center justify-center gap-8 pt-8 mt-8 border-t border-white/20">
+                      <div class="flex items-center text-white/90">
+                          <i class="mr-3 text-2xl fas fa-truck"></i>
+                          <span class="font-medium">Giao hàng miễn phí</span>
+                      </div>
+                      <div class="flex items-center text-white/90">
+                          <i class="mr-3 text-2xl fas fa-shield-alt"></i>
+                          <span class="font-medium">Đảm bảo chất lượng</span>
+                      </div>
+                      <div class="flex items-center text-white/90">
+                          <i class="mr-3 text-2xl fas fa-headset"></i>
+                          <span class="font-medium">Hỗ trợ 24/7</span>
+                      </div>
+                  </div>
               </div>
-            </div>
           </div>
-        </div>
       </div>
 
-    </div>
+      <!-- Floating Fruit Elements -->
+      <div class="absolute top-1/4 right-8 opacity-30 animate-float">
+          <div class="text-6xl transform rotate-12"><img draggable="false" role="img" class="emoji" alt="🍊" src="https://s.w.org/images/core/emoji/16.0.1/svg/1f34a.svg"></div>
+      </div>
+      <div class="absolute delay-1000 bottom-1/4 left-8 opacity-30 animate-float">
+          <div class="text-5xl transform -rotate-12"><img draggable="false" role="img" class="emoji" alt="🥝" src="https://s.w.org/images/core/emoji/16.0.1/svg/1f95d.svg"></div>
+      </div>
   </section>
 
-  <section class="py-5">
-    <div class="container-fluid">
-      <h2 class="my-5">People are also looking for</h2>
-      <a href="#" class="btn btn-warning me-2 mb-2">Blue diamon almonds</a>
-      <a href="#" class="btn btn-warning me-2 mb-2">Angie’s Boomchickapop Corn</a>
-      <a href="#" class="btn btn-warning me-2 mb-2">Salty kettle Corn</a>
-      <a href="#" class="btn btn-warning me-2 mb-2">Chobani Greek Yogurt</a>
-      <a href="#" class="btn btn-warning me-2 mb-2">Sweet Vanilla Yogurt</a>
-      <a href="#" class="btn btn-warning me-2 mb-2">Foster Farms Takeout Crispy wings</a>
-      <a href="#" class="btn btn-warning me-2 mb-2">Warrior Blend Organic</a>
-      <a href="#" class="btn btn-warning me-2 mb-2">Chao Cheese Creamy</a>
-      <a href="#" class="btn btn-warning me-2 mb-2">Chicken meatballs</a>
-      <a href="#" class="btn btn-warning me-2 mb-2">Blue diamon almonds</a>
-      <a href="#" class="btn btn-warning me-2 mb-2">Angie’s Boomchickapop Corn</a>
-      <a href="#" class="btn btn-warning me-2 mb-2">Salty kettle Corn</a>
-      <a href="#" class="btn btn-warning me-2 mb-2">Chobani Greek Yogurt</a>
-      <a href="#" class="btn btn-warning me-2 mb-2">Sweet Vanilla Yogurt</a>
-      <a href="#" class="btn btn-warning me-2 mb-2">Foster Farms Takeout Crispy wings</a>
-      <a href="#" class="btn btn-warning me-2 mb-2">Warrior Blend Organic</a>
-      <a href="#" class="btn btn-warning me-2 mb-2">Chao Cheese Creamy</a>
-      <a href="#" class="btn btn-warning me-2 mb-2">Chicken meatballs</a>
-    </div>
+
+
+  <!-- Gallery Section -->
+  <section class="relative m-0 py-16 overflow-hidden lg:py-20 bg-gradient-to-br from-green-50 to-brand-light">
+      <!-- Background Decorations -->
+      <div class="absolute inset-0 opacity-5">
+          <div class="absolute w-48 h-48 rounded-full top-20 left-10 bg-brand-primary"></div>
+          <div class="absolute w-32 h-32 rounded-full bottom-20 right-10 bg-brand-secondary"></div>
+          <div class="absolute w-24 h-24 rounded-full top-1/2 left-1/3 bg-brand-accent"></div>
+      </div>
+
+      <div class="container relative z-10 px-4 mx-auto">
+          <!-- Section Header -->
+          <div class="mb-12 text-center lg:mb-16">
+              <h2 class="mb-4 text-3xl font-bold lg:text-5xl text-brand-darker lg:mb-6 font-cal-sans">
+                  Thư Viện Hình Ảnh &amp; Video </h2>
+              <p class="max-w-3xl mx-auto text-lg leading-relaxed text-gray-600 lg:text-xl font-questrial">
+                  Khám phá bộ sưu tập hình ảnh và video về quy trình sản xuất, sản phẩm chất lượng cao của FoodMart </p>
+          </div>
+
+          <!-- Main Gallery Grid -->
+          <div class="grid gap-8 lg:grid-cols-2 lg:gap-12">
+
+              <!-- Left Column - Image Gallery -->
+              <div class="space-y-6">
+                  <div class="flex items-center justify-between mb-6">
+                      <h3 class="flex items-center text-2xl font-bold text-brand-darker font-league-spartan">
+                          <i class="mr-3 fas fa-images text-brand-primary"></i>
+                          Hình Ảnh Sản Phẩm
+                      </h3>
+                  </div>
+
+                  <!-- Featured Image -->
+                  <div class="relative overflow-hidden transition-all duration-500 shadow-lg cursor-pointer group rounded-3xl hover:shadow-2xl">
+                      <img src="https://pricot.vn/wp-content/uploads/2025/09/mo-ngam-duong-pricot-5-1.jpg" alt="" class="object-cover w-full h-64 transition-transform duration-500 lg:h-80 group-hover:scale-105">
+                      <!-- Overlay -->
+                      <div class="absolute inset-0 transition-opacity duration-300 opacity-0 bg-gradient-to-t from-black/60 via-transparent to-transparent group-hover:opacity-100"></div>
+                      <!-- View Button -->
+                      <div class="absolute inset-0 flex items-center justify-center transition-all duration-300 opacity-0 group-hover:opacity-100">
+                          <button class="px-6 py-3 font-semibold transition-all duration-300 transform rounded-full bg-white/90 backdrop-blur-sm text-brand-primary hover:bg-white hover:scale-105" fdprocessedid="vw3bqti">
+                              <i class="mr-2 fas fa-search-plus"></i>
+                              Xem chi tiết
+                          </button>
+                      </div>
+                      <!-- Image Label -->
+                      <div class="absolute bottom-4 left-4 right-4">
+                          <h4 class="text-lg font-bold text-white transition-opacity duration-300 opacity-0 font-league-spartan group-hover:opacity-100">
+                              mo-ngam-duong-foodmart-5 </h4>
+                      </div>
+                  </div>
+
+                  <!-- Image Grid -->
+                  <div class="grid grid-cols-2 gap-4">
+                      <div class="relative overflow-hidden transition-all duration-300 shadow-md cursor-pointer group rounded-2xl hover:shadow-xl">
+                          <img src="https://pricot.vn/wp-content/uploads/2025/09/mo-ngam-duong-pricot-2.jpg" alt="" class="object-cover w-full h-32 transition-transform duration-300 lg:h-40 group-hover:scale-110">
+                          <div class="absolute inset-0 flex items-center justify-center transition-opacity duration-300 opacity-0 bg-black/40 group-hover:opacity-100">
+                              <i class="text-xl text-white fas fa-expand-alt"></i>
+                          </div>
+                          <div class="absolute bottom-2 left-2 right-2">
+                              <p class="text-sm font-medium text-white transition-opacity duration-300 opacity-0 group-hover:opacity-100">
+                                  mo-ngam-duong-foodmart-2 </p>
+                          </div>
+                      </div>
+                      <div class="relative overflow-hidden transition-all duration-300 shadow-md cursor-pointer group rounded-2xl hover:shadow-xl">
+                          <img src="https://pricot.vn/wp-content/uploads/2025/09/mo-ngam-duong-pricot-5.jpg" alt="" class="object-cover w-full h-32 transition-transform duration-300 lg:h-40 group-hover:scale-110">
+                          <div class="absolute inset-0 flex items-center justify-center transition-opacity duration-300 opacity-0 bg-black/40 group-hover:opacity-100">
+                              <i class="text-xl text-white fas fa-expand-alt"></i>
+                          </div>
+                          <div class="absolute bottom-2 left-2 right-2">
+                              <p class="text-sm font-medium text-white transition-opacity duration-300 opacity-0 group-hover:opacity-100">
+                                  mo-ngam-duong-foodmart-5 </p>
+                          </div>
+                      </div>
+                      <div class="relative overflow-hidden transition-all duration-300 shadow-md cursor-pointer group rounded-2xl hover:shadow-xl">
+                          <img src="https://pricot.vn/wp-content/uploads/2025/09/mo-ngam-duong-pricot-4.jpg" alt="" class="object-cover w-full h-32 transition-transform duration-300 lg:h-40 group-hover:scale-110">
+                          <div class="absolute inset-0 flex items-center justify-center transition-opacity duration-300 opacity-0 bg-black/40 group-hover:opacity-100">
+                              <i class="text-xl text-white fas fa-expand-alt"></i>
+                          </div>
+                          <div class="absolute bottom-2 left-2 right-2">
+                              <p class="text-sm font-medium text-white transition-opacity duration-300 opacity-0 group-hover:opacity-100">
+                                  mo-ngam-duong-foodrmart-4 </p>
+                          </div>
+                      </div>
+                      <div class="relative overflow-hidden transition-all duration-300 shadow-md cursor-pointer group rounded-2xl hover:shadow-xl">
+                          <img src="https://pricot.vn/wp-content/uploads/2025/09/hoa-atiso-do-ngam-duong-6.jpg" alt="" class="object-cover w-full h-32 transition-transform duration-300 lg:h-40 group-hover:scale-110">
+                          <div class="absolute inset-0 flex items-center justify-center transition-opacity duration-300 opacity-0 bg-black/40 group-hover:opacity-100">
+                              <i class="text-xl text-white fas fa-expand-alt"></i>
+                          </div>
+                          <div class="absolute bottom-2 left-2 right-2">
+                              <p class="text-sm font-medium text-white transition-opacity duration-300 opacity-0 group-hover:opacity-100">
+                                  hoa-atiso-do-ngam-duong-6 </p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Right Column - Video Gallery -->
+              <div class="space-y-6">
+                  <div class="flex items-center justify-between mb-6">
+                      <h3 class="flex items-center text-2xl font-bold text-brand-darker font-league-spartan">
+                          <i class="mr-3 fas fa-video text-brand-primary"></i>
+                          Video Giới Thiệu
+                      </h3>
+                  </div>
+
+                  <!-- Featured Video -->
+                  <div class="relative overflow-hidden transition-all duration-500 shadow-lg cursor-pointer group rounded-3xl hover:shadow-2xl">
+
+                      <a href="https://www.youtube.com/watch?v=TXlkZIP4c-0" target="_blank" rel="noopener" class="relative block">
+
+
+                          <img src="https://pricot.vn/wp-content/uploads/2025/09/mo-ngam-duong-pricot-5.png" alt="Mơ ngâm đường thương hiệu Pricot" class="object-cover w-full h-64 transition-transform duration-500 lg:h-80 group-hover:scale-105">
+
+                          <!-- Play Button -->
+                          <div class="absolute inset-0 flex items-center justify-center">
+                              <div class="flex items-center justify-center w-20 h-20 transition-all duration-300 rounded-full shadow-xl bg-white/90 backdrop-blur-sm group-hover:scale-110">
+                                  <i class="ml-1 text-2xl fas fa-play text-brand-primary"></i>
+                              </div>
+                          </div>
+
+                          <!-- Gradient Overlay -->
+                          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+
+                          <!-- Video Info -->
+                          <div class="absolute bottom-4 left-4 right-4">
+                              <h4 class="mb-2 text-lg font-bold text-white font-league-spartan">
+                                  Mơ ngâm đường thương hiệu Foodmart </h4>
+                              <div class="flex items-center text-sm text-white/80">
+                                  <i class="mr-2 fas fa-clock"></i>
+                                  <span>0:33</span>
+                                  <i class="ml-4 mr-2 fas fa-eye"></i>
+                                  <span>247</span>
+                              </div>
+                          </div>
+                      </a>
+                  </div>
+
+                  <!-- Video List -->
+                  <div class="space-y-3">
+
+                      <a href="https://www.youtube.com/watch?v=TXlkZIP4c-0" target="_blank" rel="noopener" class="flex p-3 space-x-4 transition-all duration-300 bg-white shadow-md cursor-pointer rounded-2xl hover:shadow-lg group">
+
+                          <div class="relative flex-shrink-0 w-24 h-16 overflow-hidden lg:w-32 lg:h-20 rounded-xl">
+
+                              <img src="https://pricot.vn/wp-content/uploads/2025/09/mo-ngam-duong-pricot-5.png" alt="Mơ ngâm đường thương hiệu Pricot" class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110">
+
+                              <div class="absolute inset-0 flex items-center justify-center">
+                                  <div class="flex items-center justify-center w-8 h-8 rounded-full bg-white/90">
+                                      <i class="fas fa-play text-brand-primary text-sm ml-0.5"></i>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="flex-1">
+                              <h5 class="text-sm font-bold text-gray-800 transition-colors lg:text-base font-league-spartan group-hover:text-brand-primary">
+                                  Mơ ngâm đường thương hiệu Foodmart </h5>
+                              <p class="mt-1 text-xs text-gray-600 lg:text-sm font-questrial">
+                                  Tại Foodmart.vn chuyên bán sỉ và lẻ nước mơ ngâm với đường đảm bảo chất lượng cao </p>
+                              <div class="flex items-center mt-2 text-xs text-gray-500">
+                                  <i class="mr-1 fas fa-clock"></i>
+                                  <span>2:34</span>
+                                  <i class="ml-3 mr-1 fas fa-eye"></i>
+                                  <span>123</span>
+                              </div>
+                          </div>
+                      </a>
+
+                      <a href="https://www.youtube.com/watch?v=TXlkZIP4c-0" target="_blank" rel="noopener" class="flex p-3 space-x-4 transition-all duration-300 bg-white shadow-md cursor-pointer rounded-2xl hover:shadow-lg group">
+
+                          <div class="relative flex-shrink-0 w-24 h-16 overflow-hidden lg:w-32 lg:h-20 rounded-xl">
+
+                              <img src="https://pricot.vn/wp-content/uploads/2025/09/mo-ngam-duong-pricot-5-1.jpg" alt="Mơ ngâm đường thương hiệu Pricot" class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110">
+
+                              <div class="absolute inset-0 flex items-center justify-center">
+                                  <div class="flex items-center justify-center w-8 h-8 rounded-full bg-white/90">
+                                      <i class="fas fa-play text-brand-primary text-sm ml-0.5"></i>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="flex-1">
+                              <h5 class="text-sm font-bold text-gray-800 transition-colors lg:text-base font-league-spartan group-hover:text-brand-primary">
+                                  Mơ ngâm đường thương hiệu FoodMart </h5>
+                              <p class="mt-1 text-xs text-gray-600 lg:text-sm font-questrial">
+                                  Tại FoodMart.vn chuyên bán sỉ và lẻ nước mơ ngâm với đường đảm bảo chất lượng cao </p>
+                              <div class="flex items-center mt-2 text-xs text-gray-500">
+                                  <i class="mr-1 fas fa-clock"></i>
+                                  <span>3:45</span>
+                                  <i class="ml-3 mr-1 fas fa-eye"></i>
+                                  <span>132</span>
+                              </div>
+                          </div>
+                      </a>
+
+                      <a href="https://www.youtube.com/watch?v=TXlkZIP4c-0" target="_blank" rel="noopener" class="flex p-3 space-x-4 transition-all duration-300 bg-white shadow-md cursor-pointer rounded-2xl hover:shadow-lg group">
+
+                          <div class="relative flex-shrink-0 w-24 h-16 overflow-hidden lg:w-32 lg:h-20 rounded-xl">
+
+                              <img src="https://pricot.vn/wp-content/uploads/2025/09/mo-ngam-duong-pricot-5.jpg" alt="Mơ ngâm đường thương hiệu Pricot" class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110">
+
+                              <div class="absolute inset-0 flex items-center justify-center">
+                                  <div class="flex items-center justify-center w-8 h-8 rounded-full bg-white/90">
+                                      <i class="fas fa-play text-brand-primary text-sm ml-0.5"></i>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="flex-1">
+                              <h5 class="text-sm font-bold text-gray-800 transition-colors lg:text-base font-league-spartan group-hover:text-brand-primary">
+                                  Mơ ngâm đường thương hiệu FoodMart </h5>
+                              <p class="mt-1 text-xs text-gray-600 lg:text-sm font-questrial">
+                                  Tại FoodMart.vn chuyên bán sỉ và lẻ nước mơ ngâm với đường đảm bảo chất lượng cao </p>
+                              <div class="flex items-center mt-2 text-xs text-gray-500">
+                                  <i class="mr-1 fas fa-clock"></i>
+                                  <span>123</span>
+                                  <i class="ml-3 mr-1 fas fa-eye"></i>
+                                  <span>234</span>
+                              </div>
+                          </div>
+                      </a>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+
+      <!-- Floating Fruit Elements -->
+      <div class="absolute top-1/4 right-8 opacity-20 animate-bounce">
+          <div class="text-5xl transform rotate-12"><img src="https://pricot.vn/wp-content/themes/wppricot/assets/images//icon.png" alt="Icon" width="100"></div>
+      </div>
+      <div class="absolute delay-500 bottom-1/4 left-8 opacity-20 animate-bounce">
+          <div class="text-4xl transform -rotate-12"><img src="https://pricot.vn/wp-content/themes/wppricot/assets/images//icon.png" alt="Icon" width="100"></div>
+      </div>
   </section>
 
-  <section class="py-5">
-    <div class="container-fluid">
-      <div class="row row-cols-1 row-cols-sm-3 row-cols-lg-5">
-        <div class="col">
-          <div class="card mb-3 border-0">
-            <div class="row">
-              <div class="col-md-2 text-dark">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                  <path fill="currentColor"
-                    d="M21.5 15a3 3 0 0 0-1.9-2.78l1.87-7a1 1 0 0 0-.18-.87A1 1 0 0 0 20.5 4H6.8l-.33-1.26A1 1 0 0 0 5.5 2h-2v2h1.23l2.48 9.26a1 1 0 0 0 1 .74H18.5a1 1 0 0 1 0 2h-13a1 1 0 0 0 0 2h1.18a3 3 0 1 0 5.64 0h2.36a3 3 0 1 0 5.82 1a2.94 2.94 0 0 0-.4-1.47A3 3 0 0 0 21.5 15Zm-3.91-3H9L7.34 6H19.2ZM9.5 20a1 1 0 1 1 1-1a1 1 0 0 1-1 1Zm8 0a1 1 0 1 1 1-1a1 1 0 0 1-1 1Z" />
-                </svg>
-              </div>
-              <div class="col-md-10">
-                <div class="card-body p-0">
-                  <h5>Free delivery</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card mb-3 border-0">
-            <div class="row">
-              <div class="col-md-2 text-dark">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                  <path fill="currentColor"
-                    d="M19.63 3.65a1 1 0 0 0-.84-.2a8 8 0 0 1-6.22-1.27a1 1 0 0 0-1.14 0a8 8 0 0 1-6.22 1.27a1 1 0 0 0-.84.2a1 1 0 0 0-.37.78v7.45a9 9 0 0 0 3.77 7.33l3.65 2.6a1 1 0 0 0 1.16 0l3.65-2.6A9 9 0 0 0 20 11.88V4.43a1 1 0 0 0-.37-.78ZM18 11.88a7 7 0 0 1-2.93 5.7L12 19.77l-3.07-2.19A7 7 0 0 1 6 11.88v-6.3a10 10 0 0 0 6-1.39a10 10 0 0 0 6 1.39Zm-4.46-2.29l-2.69 2.7l-.89-.9a1 1 0 0 0-1.42 1.42l1.6 1.6a1 1 0 0 0 1.42 0L15 11a1 1 0 0 0-1.42-1.42Z" />
-                </svg>
-              </div>
-              <div class="col-md-10">
-                <div class="card-body p-0">
-                  <h5>100% secure payment</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card mb-3 border-0">
-            <div class="row">
-              <div class="col-md-2 text-dark">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                  <path fill="currentColor"
-                    d="M22 5H2a1 1 0 0 0-1 1v4a3 3 0 0 0 2 2.82V22a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-9.18A3 3 0 0 0 23 10V6a1 1 0 0 0-1-1Zm-7 2h2v3a1 1 0 0 1-2 0Zm-4 0h2v3a1 1 0 0 1-2 0ZM7 7h2v3a1 1 0 0 1-2 0Zm-3 4a1 1 0 0 1-1-1V7h2v3a1 1 0 0 1-1 1Zm10 10h-4v-2a2 2 0 0 1 4 0Zm5 0h-3v-2a4 4 0 0 0-8 0v2H5v-8.18a3.17 3.17 0 0 0 1-.6a3 3 0 0 0 4 0a3 3 0 0 0 4 0a3 3 0 0 0 4 0a3.17 3.17 0 0 0 1 .6Zm2-11a1 1 0 0 1-2 0V7h2ZM4.3 3H20a1 1 0 0 0 0-2H4.3a1 1 0 0 0 0 2Z" />
-                </svg>
-              </div>
-              <div class="col-md-10">
-                <div class="card-body p-0">
-                  <h5>Quality guarantee</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card mb-3 border-0">
-            <div class="row">
-              <div class="col-md-2 text-dark">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                  <path fill="currentColor"
-                    d="M12 8.35a3.07 3.07 0 0 0-3.54.53a3 3 0 0 0 0 4.24L11.29 16a1 1 0 0 0 1.42 0l2.83-2.83a3 3 0 0 0 0-4.24A3.07 3.07 0 0 0 12 8.35Zm2.12 3.36L12 13.83l-2.12-2.12a1 1 0 0 1 0-1.42a1 1 0 0 1 1.41 0a1 1 0 0 0 1.42 0a1 1 0 0 1 1.41 0a1 1 0 0 1 0 1.42ZM12 2A10 10 0 0 0 2 12a9.89 9.89 0 0 0 2.26 6.33l-2 2a1 1 0 0 0-.21 1.09A1 1 0 0 0 3 22h9a10 10 0 0 0 0-20Zm0 18H5.41l.93-.93a1 1 0 0 0 0-1.41A8 8 0 1 1 12 20Z" />
-                </svg>
-              </div>
-              <div class="col-md-10">
-                <div class="card-body p-0">
-                  <h5>guaranteed savings</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card mb-3 border-0">
-            <div class="row">
-              <div class="col-md-2 text-dark">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                  <path fill="currentColor"
-                    d="M18 7h-.35A3.45 3.45 0 0 0 18 5.5a3.49 3.49 0 0 0-6-2.44A3.49 3.49 0 0 0 6 5.5A3.45 3.45 0 0 0 6.35 7H6a3 3 0 0 0-3 3v2a1 1 0 0 0 1 1h1v6a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-6h1a1 1 0 0 0 1-1v-2a3 3 0 0 0-3-3Zm-7 13H8a1 1 0 0 1-1-1v-6h4Zm0-9H5v-1a1 1 0 0 1 1-1h5Zm0-4H9.5A1.5 1.5 0 1 1 11 5.5Zm2-1.5A1.5 1.5 0 1 1 14.5 7H13ZM17 19a1 1 0 0 1-1 1h-3v-7h4Zm2-8h-6V9h5a1 1 0 0 1 1 1Z" />
-                </svg>
-              </div>
-              <div class="col-md-10">
-                <div class="card-body p-0">
-                  <h5>Daily offers</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+  <!-- Blog/News Section -->
+  <section class="relative m-0 py-16 overflow-hidden bg-white lg:py-20">
+      <!-- Background Decorations -->
+      <div class="absolute inset-0 opacity-5">
+          <div class="absolute w-40 h-40 rounded-full top-20 right-10 bg-brand-primary"></div>
+          <div class="absolute w-32 h-32 rounded-full bottom-20 left-10 bg-brand-secondary"></div>
       </div>
-    </div>
+
+      <div class="container relative z-10 px-4 mx-auto">
+          <!-- Section Header -->
+          <div class="mb-12 text-center lg:mb-16">
+              <h2 class="mb-4 text-3xl font-bold lg:text-5xl text-brand-darker lg:mb-6 font-cal-sans">
+                  Tin Tức &amp; <span class="text-brand-primary">Blog</span>
+              </h2>
+              <p class="max-w-3xl mx-auto text-lg leading-relaxed text-gray-600 lg:text-xl font-questrial">
+                  Cập nhật những thông tin mới nhất về trái cây, dinh dưỡng và xu hướng ẩm thực healthy
+              </p>
+          </div>
+
+          <!-- Featured Article -->
+          <div class="mb-12 lg:mb-16">
+
+              <div class="overflow-hidden transition-all duration-500 shadow-lg bg-gradient-to-br from-brand-light to-white rounded-3xl hover:shadow-2xl">
+                  <div class="grid gap-0 lg:grid-cols-2">
+                      <!-- Image -->
+                      <div class="relative overflow-hidden">
+                          <img width="600" height="450" src="https://pricot.vn/wp-content/uploads/2025/09/trai-cay-theo-mua-lua-chon-thong-minh-2.jpg" class="object-cover w-full h-64 transition-transform duration-500 lg:h-full hover:scale-105 wp-post-image" alt="Lợi ích của nước mơ ngâm đường đối với sức khỏe và đời sống" decoding="async" fetchpriority="high">
+                          <div class="absolute top-4 left-4">
+                              <span class="px-4 py-2 text-sm font-semibold text-white rounded-full bg-brand-primary">
+                                  Bài viết nổi bật
+                              </span>
+                          </div>
+                      </div>
+
+                      <!-- Content -->
+                      <div class="flex flex-col justify-center p-8 lg:p-12">
+                          <div class="flex items-center mb-4 space-x-4">
+                              <span class="px-3 py-1 text-sm font-medium rounded-full text-brand-primary bg-brand-light">
+                                  Tin tức </span>
+                              <span class="text-sm text-gray-500">07 Tháng 9, 2025</span>
+                          </div>
+
+                          <h3 class="mb-4 text-2xl font-bold transition-colors cursor-pointer lg:text-3xl text-brand-darker font-cal-sans hover:text-brand-primary">
+                              <a href="https://pricot.vn/trai-cay-theo-mua-lua-chon-thong-minh/" class="hover:text-brand-primary">
+                                  Lợi ích của nước mơ ngâm đường đối với sức khỏe và đời sống </a>
+                          </h3>
+
+                          <p class="mb-6 text-lg leading-relaxed text-gray-600 font-questrial">
+                              Lợi ích của nước mơ ngâm đường đối với sức khỏe và đời sống 1. Giải khát, thanh nhiệt mùa hè Nước mơ ngâm đường... </p>
+
+                          <div class="flex items-center justify-between">
+                              <div class="flex items-center space-x-4">
+                                  <img src="https://secure.gravatar.com/avatar/2e9212c6275802b69bc209edee0e87ce5e437659f29a097e4251d8abc2413160?s=100&amp;d=mm&amp;r=g" alt="WP Theme" class="object-cover w-12 h-12 rounded-full">
+                                  <div>
+                                      <p class="font-semibold text-gray-800 font-lexend">Gái Xinh</p>
+                                      <p class="text-sm text-gray-500">3 phút đọc</p>
+                                  </div>
+                              </div>
+
+                              <a href="https://pricot.vn/trai-cay-theo-mua-lua-chon-thong-minh/" class="px-6 py-3 font-semibold text-white transition-all duration-300 transform bg-brand-primary hover:bg-brand-dark rounded-2xl hover:scale-105 font-lexend">
+                                  Đọc tiếp
+                                  <i class="ml-2 fas fa-arrow-right"></i>
+                              </a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+
+          <!-- View All Blog Button -->
+          <div class="mt-12 text-center lg:mt-16">
+              <a href="https://pricot.vn/category/tin-tuc/" class="inline-flex items-center px-8 py-4 text-lg font-semibold text-white transition-all duration-300 transform shadow-lg bg-gradient-to-r from-brand-primary to-brand-secondary hover:from-brand-dark hover:to-brand-primary rounded-2xl hover:scale-105 hover:shadow-xl font-lexend">
+                  <i class="mr-2 fas fa-newspaper"></i>
+                  Xem tất cả bài viết
+              </a>
+          </div>
+      </div>
   </section>

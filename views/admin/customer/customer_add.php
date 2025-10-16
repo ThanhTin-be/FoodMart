@@ -10,9 +10,6 @@
 
         <main class="p-6">
             <h2 class="text-2xl font-bold mb-6">Thêm Khách Hàng</h2>
-                <?php if (!empty($data['error'])): ?>
-                    <div class="alert alert-danger"><?= $data['error'] ?></div>  
-                <?php endif; ?>
             <form action="/FoodMartLab/admin/admin_customer/add" method="post" class="bg-white rounded-lg shadow-sm p-6">
                 <div class="mb-4">
                     <label for="name" class="block text-sm font-medium text-gray-700">Tên</label>
@@ -23,16 +20,12 @@
                     <input type="email" id="email" name="email" value="" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required>
                 </div>
                 <div class="mb-4">
-                    <label for="address" class="block text-sm font-medium text-gray-700">Địa chỉ</label>
-                    <input type="text" id="address" name="address" value="" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm">
-                </div>
-                <div class="mb-4">
                     <label for="phone" class="block text-sm font-medium text-gray-700">SĐT</label>
                     <input type="text" id="phone" name="phone" value="" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required>
                 </div>
-                 <div class="mb-4">
-                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                    <input type="text" id="password" name="password" value="" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required>
+                <div class="mb-4">
+                    <label for="address" class="block text-sm font-medium text-gray-700">Địa chỉ</label>
+                    <input type="text" id="address" name="address" value="" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm">
                 </div>
                 <div class="mb-4">
                     <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
