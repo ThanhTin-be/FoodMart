@@ -1,9 +1,8 @@
 <?php
 require_once ROOT . 'models/DashboardModel.php'; 
 
-class DashboardController extends Controller {
+class DashboardController {
     public function index() {
-        
         $model = new DashboardModel();
         $dashboardData = $model->getDashboardData();
 

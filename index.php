@@ -9,8 +9,5 @@ require_once ROOT . "core" . DIRECTORY_SEPARATOR . "app.php";
 require_once ROOT . "core" . DIRECTORY_SEPARATOR . "controller.php";
 require_once ROOT . "core" . DIRECTORY_SEPARATOR . "database.php";
 
-
-
 // Khởi tạo app
 $app = new App();
-

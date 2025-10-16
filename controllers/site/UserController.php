@@ -1,10 +1,9 @@
 <?php
-class UserController extends Controller {
-    public function login() {
-        // Kiểm tra nếu session chưa được khởi tạo
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+class UserController extends Controller
+{
+    public function login()
+    {
+        session_start();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = trim($_POST['email']);
@@ -13,18 +12,23 @@ class UserController extends Controller {
             $user = $userModel->getByEmail($email);
 
             if ($user) {
+                // 🐞 Debug
+                // var_dump("Nhập:", $password);
+                // var_dump("Hash trong DB:", $user['password']);
+                // var_dump("Verify:", password_verify($password, $user['password']));
+
                 if (password_verify($password, $user['password'])) {
-                    // ✅ Đăng nhập thành công
+                    // ✅ Login thành công
                     $_SESSION['user'] = [
-                        'id' => $user['id'],
-                        'name' => $user['name'],
+                        'id'    => $user['id'],
+                        'name'  => $user['name'],
                         'email' => $user['email'],
                         'phone' => $user['phone'],
-                        'role' => $user['role'],
+                        'role'  => $user['role'],
                         'address' => $user['address'],
                     ];
 
-                    // Đồng bộ giỏ hàng từ database
+                    //NEW: Đồng bộ giỏ hàng từ database
                     require_once ROOT . 'controllers/site/CartController.php';
                     $cartController = new CartController();
                     $cartController->syncCartOnLogin($user['id']);
@@ -63,11 +67,12 @@ class UserController extends Controller {
             $this->view('user/login', [], 'default');
         }
     }
-    
-     // Hiển thị trang profile
-      public function profile() {
+
+    // Hiển thị trang profile
+    public function profile()
+    {
         if (!isset($_SESSION['user'])) {
-            header("Location: " . BASE_URL . "user/login");
+            header("Location: " . BASE_URL . "account/login");
             exit;
         }
         $userModel = $this->model('User');
@@ -75,7 +80,8 @@ class UserController extends Controller {
         $this->view("user/profile", ['user' => $user]);
     }
 
-    public function updateProfile() {
+    public function updateProfile()
+    {
         if (!isset($_SESSION['user'])) {
             header("Location: " . BASE_URL . "user/login");
             exit;
@@ -102,7 +108,8 @@ class UserController extends Controller {
     }
 
     // Trang đổi mật khẩu
-    public function changePassword() {
+    public function changePassword()
+    {
         if (!isset($_SESSION['user'])) {
             header("Location: " . BASE_URL . "user/login");
             exit;
@@ -111,7 +118,8 @@ class UserController extends Controller {
     }
 
     // Xử lý đổi mật khẩu
-    public function updatePassword() {
+    public function updatePassword()
+    {
         if (!isset($_SESSION['user'])) {
             header("Location: " . BASE_URL . "user/login");
             exit;
@@ -149,74 +157,22 @@ class UserController extends Controller {
         exit;
     }
 
-    public function logout() {
-        // Kiểm tra nếu session chưa được khởi tạo
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        // Xóa session giỏ hàng và thông tin người dùng
-        unset($_SESSION['cart']);
-        unset($_SESSION['user']);
+    public function logout()
+    {
+        session_start();
         session_destroy();
         header("Location: " . BASE_URL . "user/login");
         exit;
     }
 
     // 📝 Register (chưa làm UI, chừa để sau này code)
-    public function register() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Lấy dữ liệu từ form
-            $name = trim($_POST['name'] ?? '');
-            $email = trim($_POST['email'] ?? '');
-            $address = trim($_POST['address'] ?? '');
-            $phone = trim($_POST['phone'] ?? '');
-            $password = trim($_POST['password'] ?? '');
-            $confirm_password = trim($_POST['confirm_password'] ?? '');
-            $role = $_POST['role'] ?? 'user';
-
-            // Kiểm tra hợp lệ cơ bản
-            if (empty($name) || empty($email) || empty($password)) {
-                $data['error'] = "Vui lòng nhập đầy đủ thông tin!";
-                return $this->view('user/register', $data, 'default');
-            }
-
-            // Kiểm tra mật khẩu và xác nhận mật khẩu khớp
-            if ($password !== $confirm_password) {
-                $data['error'] = "Mật khẩu và xác nhận mật khẩu không khớp!";
-                return $this->view('user/register', $data, 'default');
-            }
-
-            // Gọi model User
-            $userModel = $this->model('User');
-
-            // Kiểm tra email tồn tại
-            if ($userModel->getByEmail($email)) {
-                $data['error'] = "Email này đã được đăng ký!";
-                return $this->view('user/register', $data, 'default');
-            }
-
-            // Mã hóa mật khẩu
-            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
-            // Thêm thời gian tạo
-            date_default_timezone_set('Asia/Ho_Chi_Minh');
-            $createdAt = date('Y-m-d H:i:s');
-
-            // Thêm user
-            $isCreated = $userModel->addUser($name, $email,  $address, $phone, $hashedPassword, $role, $createdAt);
-
-            if ($isCreated) {
-                header('Location: ' . BASE_URL . 'user/login?success=1');
-                exit;
-            } else {
-                $data['error'] = "Đăng ký thất bại, vui lòng thử lại!";
-                $this->view('user/register', $data, 'default');
-            }
-        } else {
-            // Hiển thị form đăng ký
-            $this->view('user/register', [], 'default');
-        }
-        }
+    public function register()
+    {
+        // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        //     // Xử lý tạo user mới qua User->create()
+        // }
+        // else {
+        //     $this->view('user/register');
+        // }
     }
-
-?>
+}

@@ -23,23 +23,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (data.success) {
         updateMiniCart(data)
+        updateCartPage(data) // ✅ cập nhật luôn trang cart nếu đang mở
 
-        // ✅ Nếu là Buy Now thì redirect sau khi thêm giỏ xong
+        // ✅ Nếu là Buy Now → chuyển sang checkout
         if (isBuyNow) {
           console.log('➡️ Redirecting to checkout...')
           setTimeout(() => {
             window.location.href = `${BASE_URL}checkout/index`
-          }, 500) // đợi 0.5s cho UI cập nhật xong
+          }, 500)
         }
       } else {
         console.warn('⚠️ Server trả về lỗi:', data)
+        if (data.error) {
+          alert(data.error) // NEW CHANGE: Thêm alert lỗi từ server
+        }
       }
     } catch (err) {
       console.error('❌ Fetch add-to-cart error:', err)
     }
   })
 
-  // ========== 2️⃣ CỘNG / TRỪ TRONG MINI CART ==========
+  // ========== 2️⃣ CỘNG / TRỪ SỐ LƯỢNG ==========
   document.body.addEventListener('click', async (e) => {
     if (
       e.target.classList.contains('cart-plus') ||
@@ -47,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ) {
       const id = e.target.dataset.id
       const input = document.querySelector(`.cart-qty-input[data-id='${id}']`)
+      if (!input) return
       let qty = parseInt(input.value)
 
       if (e.target.classList.contains('cart-plus')) qty++
@@ -72,6 +77,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (data.success) {
           updateMiniCart(data)
+          updateCartPage(data) // ✅ cập nhật trang cart
+        } else {
+          console.warn('⚠️ Server trả về lỗi:', data)
+          if (data.error) {
+            alert(data.error) // NEW CHANGE: Thêm alert lỗi từ server
+            input.value = data.cart.find((item) => item.id == id)?.qty || 0 // Cập nhật input với qty đã điều chỉnh
+          }
         }
       } catch (err) {
         console.error('❌ Update error:', err)
@@ -79,25 +91,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })
 
-  // ========== 3️⃣ XOÁ SẢN PHẨM TRỰC TIẾP ==========
+  // ========== 3️⃣ XOÁ SẢN PHẨM ==========
   document.body.addEventListener('click', async (e) => {
-    if (e.target.closest('.cart-remove')) {
-      e.preventDefault()
-      const id = e.target.closest('.cart-remove').dataset.id
-      if (!confirm('🗑 Xóa sản phẩm này khỏi giỏ hàng?')) return
+    const btn = e.target.closest('.cart-remove')
+    if (!btn) return
+    e.preventDefault()
 
-      try {
-        const url = `${BASE_URL}cart/update/${id}?qty=0&ajax=1`
-        console.log('🗑 Removing:', url)
+    const id = btn.dataset.id
+    if (!confirm('🗑 Xóa sản phẩm này khỏi giỏ hàng?')) return
 
-        const response = await fetch(url, {
-          headers: { 'X-Requested-With': 'XMLHttpRequest' }
-        })
-        const data = await response.json()
-        if (data.success) updateMiniCart(data)
-      } catch (err) {
-        console.error('❌ Remove error:', err)
+    try {
+      const url = `${BASE_URL}cart/update/${id}?qty=0&ajax=1`
+      console.log('🗑 Removing:', url)
+
+      const response = await fetch(url, {
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      })
+      const data = await response.json()
+
+      if (data.success) {
+        updateMiniCart(data)
+        updateCartPage(data) // ✅ cập nhật luôn trang cart
+      } else {
+        console.warn('⚠️ Server trả về lỗi:', data)
+        if (data.error) {
+          alert(data.error) // NEW CHANGE: Thêm alert lỗi từ server
+        }
       }
+    } catch (err) {
+      console.error('❌ Remove error:', err)
     }
   })
 })
@@ -107,133 +129,155 @@ function formatCurrency(n) {
   return new Intl.NumberFormat('vi-VN').format(n) + ' đ'
 }
 
-// ====================== CẬP NHẬT MINI CART + CART PAGE ======================
+// ====================== MINI CART DROPDOWN ======================
 function updateMiniCart(data) {
   try {
     console.log('🔄 updateMiniCart:', data)
 
-    // 1️⃣ Cập nhật các badge đếm item (nhiều nơi)
+    // 1️⃣ Badge số lượng
     document
       .querySelectorAll('.cart-count-badge, .cart-count')
       .forEach((el) => {
-        if (el) el.textContent = data.count
+        el.textContent = data.count || 0
       })
 
-    // 2️⃣ Cập nhật tổng tiền (nhiều nơi)
+    // 2️⃣ Tổng tiền
     document
-      .querySelectorAll('.cart-total, .cart-total-float')
+      .querySelectorAll('.cart-total, .cart-total-float, #mini-cart-total')
       .forEach((el) => {
-        if (el) el.textContent = formatCurrency(data.total)
+        el.textContent = formatCurrency(data.total || 0)
       })
 
-    // 3️⃣ Patch danh sách sản phẩm trong Offcanvas MiniCart
-    const container = document.querySelector('.cart-items')
-    if (container) {
-      const map = new Map()
-      data.cart.forEach((it) => map.set(String(it.id), it))
+    // 3️⃣ Danh sách trong dropdown
+    const container = document.getElementById('mini-cart-items')
+    if (!container) return
 
-      // Xóa sản phẩm không còn trong giỏ
-      container.querySelectorAll('.cart-item').forEach((row) => {
-        if (!map.has(row.dataset.id)) row.remove()
-      })
+    container.innerHTML = ''
 
-      // Cập nhật hoặc thêm mới
-      data.cart.forEach((item) => {
-        let row = container.querySelector(`.cart-item[data-id="${item.id}"]`)
-        if (!row) {
-          row = document.createElement('li')
-          row.className =
-            'list-group-item d-flex justify-content-between align-items-center lh-sm cart-item'
-          row.dataset.id = item.id
-          row.innerHTML = `
-            <div class="d-flex align-items-center gap-2">
-              <img src="${BASE_URL}assets/images/${item.image}" alt="${
-            item.name
-          }"
-                   class="rounded" width="50" height="50" style="object-fit:cover;">
-              <div>
-                <h6 class="my-0">${item.name}</h6>
-                <div class="d-flex align-items-center btn-outline-secondary cart-qty-box">
-                  <button class="btn btn-sm btn-outline-secondary cart-minus" data-id="${
-                    item.id
-                  }">−</button>
-                  <input type="text" class="cart-qty-input form-control form-control-sm text-center"
-                         data-id="${item.id}" value="${
-            item.qty
-          }" style="width:45px;">
-                  <button class="btn btn-sm btn-outline-secondary cart-plus" data-id="${
-                    item.id
-                  }">+</button>
-                  <span class="text-muted">× ${new Intl.NumberFormat(
-                    'vi-VN'
-                  ).format(item.price)}đ</span>
-                </div>
-              </div>
-            </div>
-            <span class="text-black fw-bold ms-auto cart-line-total">${formatCurrency(
-              item.price * item.qty
-            )}</span>
-          `
-          container.appendChild(row)
-        } else {
-          const qtyInput = row.querySelector('.cart-qty-input')
-          if (qtyInput) qtyInput.value = item.qty
-
-          const lineTotal = row.querySelector('.cart-line-total')
-          if (lineTotal)
-            lineTotal.textContent = formatCurrency(item.price * item.qty)
-        }
-      })
-
-      if (data.cart.length === 0) {
-        container.innerHTML = `<li class="list-group-item text-center text-muted empty-cart">Giỏ hàng trống</li>`
-      }
+    if (!data.cart || data.cart.length === 0) {
+      container.innerHTML = `<div class="px-4 py-8 text-center text-gray-500"><p>Giỏ hàng trống</p></div>`
+      const footer = document.getElementById('mini-cart-footer')
+      if (footer) footer.classList.add('hidden')
+      return
     }
 
-    // 4️⃣ Floating MiniCart (badge + total)
-    const floatCart = document.getElementById('floating-cart')
-    if (floatCart) {
-      const badge = floatCart.querySelector('.cart-count-badge')
-      const total = floatCart.querySelector('.cart-total-float')
-      if (badge) badge.textContent = data.count
-      if (total) total.textContent = formatCurrency(data.total)
-    }
+    data.cart.forEach((item) => {
+      const row = document.createElement('div')
+      row.className =
+        'flex items-center justify-between p-3 border-b border-gray-100'
+      row.dataset.id = item.id
+      row.innerHTML = `
+        <div class="flex items-center gap-3">
+          <img src="${BASE_URL}assets/images/${item.image}" alt="${
+        item.name
+      }" class="w-12 h-12 rounded object-cover">
+          <div>
+            <p class="text-sm font-medium text-gray-900">${item.name}</p>
+            <p class="text-xs text-gray-500">${formatCurrency(item.price)}</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="text-gray-500 hover:text-gray-700 cart-minus" data-id="${
+            item.id
+          }">−</button>
+          <input type="text" value="${item.qty}" data-id="${
+        item.id
+      }" class="cart-qty-input w-10 text-center border rounded">
+          <button class="text-gray-500 hover:text-gray-700 cart-plus" data-id="${
+            item.id
+          }">+</button>
+        </div>`
+      container.appendChild(row)
+    })
 
-    // 5️⃣ Cập nhật trang Cart (cart/index.php)
-    const cartPage = document.querySelector('.cart table tbody')
-    if (cartPage) {
-      console.log('🧾 Updating main cart table...')
+    const footer = document.getElementById('mini-cart-footer')
+    const total = document.getElementById('mini-cart-total')
+    if (footer) footer.classList.remove('hidden')
+    if (total) total.textContent = formatCurrency(data.total)
 
-      // a) Cập nhật từng dòng
-      data.cart.forEach((item) => {
-        const row = cartPage.querySelector(`tr[data-id='${item.id}']`)
-        if (row) {
-          // Update số lượng input
-          const qtyInput = row.querySelector('.cart-qty-input')
-          if (qtyInput) qtyInput.value = item.qty
-
-          // Update subtotal
-          const subtotal = row.querySelector('.money.text-dark')
-          if (subtotal)
-            subtotal.textContent = formatCurrency(item.price * item.qty)
-        }
-      })
-
-      // b) Xóa các dòng không còn trong giỏ
-      cartPage.querySelectorAll('tr[data-id]').forEach((row) => {
-        const id = row.dataset.id
-        const stillExist = data.cart.some((p) => String(p.id) === String(id))
-        if (!stillExist) row.remove()
-      })
-
-      // c) Cập nhật tổng giá bên phải (Cart Total)
-      document.querySelectorAll('.cart-totals .text-dark').forEach((el) => {
-        el.textContent = formatCurrency(data.total)
-      })
-    }
-
-    console.log('✅ MiniCart + FloatingCart + Cart page synced!')
+    console.log('✅ Mini Cart Dropdown updated!')
   } catch (err) {
     console.error('❌ updateMiniCart lỗi:', err)
   }
+}
+
+// ====================== CẬP NHẬT TRANG CART INDEX ======================
+function updateCartPage(data) {
+  const cartContainer = document.querySelector('#cart-page-items')
+  if (!cartContainer) return // không có => không ở trang cart
+
+  console.log('🧾 updateCartPage:', data)
+
+  // Nếu giỏ hàng trống
+  if (!data.cart || data.cart.length === 0) {
+    cartContainer.innerHTML = `
+      <div class="py-16 text-center text-gray-500">
+        Giỏ hàng trống. <a href="${BASE_URL}shop/index" class="text-green-600 hover:underline">Mua sắm ngay</a>
+      </div>
+    `
+    document.querySelector('#cart-subtotal').textContent = formatCurrency(0)
+    document.querySelector('#cart-total').textContent = formatCurrency(0)
+    return
+  }
+
+  // Render sản phẩm
+  cartContainer.innerHTML = data.cart
+    .map(
+      (item) => `
+    <div class="items-center hidden p-6 space-x-4 lg:flex" data-id="${item.id}">
+      <div class="flex-shrink-0 w-20 h-20 overflow-hidden bg-gray-100 rounded-lg">
+        <img src="${BASE_URL}assets/images/${item.image}" alt="${
+        item.name
+      }" class="object-contain w-full h-full">
+      </div>
+      <div class="flex-1 min-w-0">
+        <h3 class="text-lg font-medium text-gray-900 truncate">${item.name}</h3>
+        <p class="mt-1 text-sm text-gray-500">x<input type="text" value="${
+          item.qty
+        }" data-id="${
+        item.id
+      }" class="cart-qty-input w-10 text-center border rounded" readonly></p>
+        <p class="mt-2 text-lg font-semibold text-gray-900">${formatCurrency(
+          item.price
+        )}</p>
+      </div>
+      <div class="flex items-center space-x-3">
+        <button type="button" class="flex items-center justify-center w-5 h-5 text-gray-600 border border-gray-300 rounded-full hover:bg-gray-50 cart-minus" data-id="${
+          item.id
+        }">−</button>
+        <input type="text" value="${item.qty}" data-id="${
+        item.id
+      }" class="cart-qty-input w-10 text-center border rounded" readonly>
+        <button type="button" class="flex items-center justify-center w-5 h-5 text-gray-600 border border-gray-300 rounded-full hover:bg-gray-50 cart-plus" data-id="${
+          item.id
+        }">+</button>
+      </div>
+      <div class="text-right">
+        <p class="text-lg font-semibold text-red-700 cart-line-total">${formatCurrency(
+          item.price * item.qty
+        )}</p>
+        <button type="button" class="flex items-center mt-1 text-sm text-red-600 hover:text-red-800 cart-remove" data-id="${
+          item.id
+        }">
+          <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" clip-rule="evenodd"></path>
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+          </svg>
+          Remove
+        </button>
+      </div>
+    </div>
+  `
+    )
+    .join('')
+
+  // Tổng tiền
+  document.querySelector('#cart-subtotal').textContent = formatCurrency(
+    data.total
+  )
+  document.querySelector('#cart-total').textContent = formatCurrency(data.total)
+  console.log(
+    'Cart page updated, items:',
+    document.querySelectorAll('.cart-plus').length
+  ) // Debug
 }

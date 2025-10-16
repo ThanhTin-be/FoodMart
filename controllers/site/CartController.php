@@ -41,6 +41,36 @@ class CartController extends Controller {
         }
 
         $quantityToAdd = 1;
+        $currentQty = isset($_SESSION['cart'][$id]) ? $_SESSION['cart'][$id]['qty'] : 0;
+        $newQty = $currentQty + $quantityToAdd;
+
+        // NEW: Kiểm tra tồn kho trước khi thêm
+        $stock = isset($product['stock']) ? (int)$product['stock'] : 0;
+        if ($newQty > $stock) {
+            $adjustedQty = $stock > 0 ? $stock : 0; // Điều chỉnh về stock hoặc 0 nếu hết
+            if (isset($_SESSION['cart'][$id])) {
+                $_SESSION['cart'][$id]['qty'] = $adjustedQty;
+            } else if ($adjustedQty > 0) {
+                $_SESSION['cart'][$id] = [
+                    'id' => $product['id'],
+                    'name' => $product['name'],
+                    'price' => (float)$product['price'],
+                    'qty' => $adjustedQty,
+                    'image' => $product['image']
+                ];
+            }
+            $message = $stock > 0 ? 'Số lượng đã quá hàng tồn kho! Đã điều chỉnh về ' . $stock . '.' : 'Đã bán hết!';
+            header('Content-Type: application/json');
+            echo json_encode([
+                'success' => false,
+                'error' => $message,
+                'count' => $this->getCartCount(),
+                'total' => $this->getCartTotal(),
+                'cart' => array_values($_SESSION['cart'])
+            ]);
+            return;
+        }
+
         if (isset($_SESSION['cart'][$id])) {
             $_SESSION['cart'][$id]['qty'] += $quantityToAdd;
         } else {
@@ -97,6 +127,31 @@ class CartController extends Controller {
 
         $qty = isset($_GET['qty']) ? (int)$_GET['qty'] : 1;
 
+        $product = $this->productModel->getById($id);
+        if (!$product) {
+            echo json_encode(['success' => false, 'error' => 'Không tìm thấy sản phẩm']);
+            return;
+        }
+
+        // NEW: Kiểm tra tồn kho trước khi cập nhật
+        $stock = isset($product['stock']) ? (int)$product['stock'] : 0;
+        $currentQty = isset($_SESSION['cart'][$id]) ? $_SESSION['cart'][$id]['qty'] : 0;
+        if ($qty > $stock) {
+            $adjustedQty = $stock > 0 ? $stock : 0; // Điều chỉnh về stock hoặc 0 nếu hết
+            if (isset($_SESSION['cart'][$id])) {
+                $_SESSION['cart'][$id]['qty'] = $adjustedQty;
+            }
+            $message = $stock > 0 ? 'Số lượng đã quá hàng tồn kho! Đã điều chỉnh về ' . $stock . '.' : 'Đã bán hết!';
+            echo json_encode([
+                'success' => false,
+                'error' => $message,
+                'count' => $this->getCartCount(),
+                'total' => $this->getCartTotal(),
+                'cart' => array_values($_SESSION['cart'] ?? [])
+            ]);
+            return;
+        }
+
         $dbSuccess = true;
         if ($qty <= 0) {
             unset($_SESSION['cart'][$id]);
@@ -128,16 +183,29 @@ class CartController extends Controller {
         $dbSuccess = true;
         if (isset($_GET['id']) && isset($_SESSION['cart'][$_GET['id']])) {
             $id = $_GET['id'];
+            $originalItem = $_SESSION['cart'][$id]; // Lưu dữ liệu cũ để rollback
             unset($_SESSION['cart'][$id]);
             if (isset($_SESSION['user']['id'])) {
                 $dbSuccess = $this->cartModel->removeFromCart($_SESSION['user']['id'], $id);
+                if (!$dbSuccess) {
+                    $_SESSION['cart'][$id] = $originalItem; // Rollback nếu database thất bại
+                    error_log("Failed to remove from carts table: user_id={$_SESSION['user']['id']}, product_id=$id");
+                }
             }
         }
-        header("Location: " . $_SERVER['HTTP_REFERER']);
+
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => $dbSuccess,
+            'count' => $this->getCartCount(),
+            'total' => $this->getCartTotal(),
+            'cart' => array_values($_SESSION['cart'] ?? []),
+            'error' => $dbSuccess ? null : 'Lỗi khi xóa sản phẩm khỏi giỏ hàng'
+        ]);
         exit;
     }
 
-    public function syncCartOnLogin($userId) {
+   public function syncCartOnLogin($userId) {
         $dbCart = $this->cartModel->getCartByUserId($userId);
         if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = [];
@@ -147,25 +215,53 @@ class CartController extends Controller {
         // Merge session cart với db cart
         foreach ($dbCart as $item) {
             $productId = $item['product_id'];
+            $product = $this->productModel->getById($productId); // NEW: Lấy thông tin sản phẩm để kiểm tra stock
+            $stock = isset($product['stock']) ? (int)$product['stock'] : 0;
+
             if (isset($_SESSION['cart'][$productId])) {
                 // Nếu sản phẩm đã tồn tại trong session, cộng dồn số lượng
-                $_SESSION['cart'][$productId]['qty'] += $item['quantity'];
+                $currentQty = $_SESSION['cart'][$productId]['qty'];
+                $newQty = $currentQty + $item['quantity'];
+
+                // NEW: Kiểm tra và điều chỉnh số lượng dựa trên stock
+                if ($newQty > $stock) {
+                    $adjustedQty = $stock > 0 ? $stock : 0;
+                    $_SESSION['cart'][$productId]['qty'] = $adjustedQty;
+                    error_log("Sync cart adjusted: user_id=$userId, product_id=$productId, qty adjusted from $newQty to $adjustedQty due to stock limit.");
+                } else {
+                    $_SESSION['cart'][$productId]['qty'] = $newQty;
+                }
             } else {
                 // Nếu chưa tồn tại, thêm mới từ database
-                $_SESSION['cart'][$productId] = [
-                    'id' => $item['product_id'],
-                    'name' => $item['name'],
-                    'price' => (float)$item['price'],
-                    'qty' => $item['quantity'],
-                    'image' => $item['image']
-                ];
+                $initialQty = $item['quantity'];
+                $adjustedQty = $stock > 0 ? min($initialQty, $stock) : 0; // NEW: Điều chỉnh về stock hoặc 0
+
+                if ($adjustedQty > 0) {
+                    $_SESSION['cart'][$productId] = [
+                        'id' => $item['product_id'],
+                        'name' => $item['name'],
+                        'price' => (float)$item['price'],
+                        'qty' => $adjustedQty,
+                        'image' => $item['image']
+                    ];
+                    if ($adjustedQty < $initialQty) {
+                        error_log("Sync cart adjusted: user_id=$userId, product_id=$productId, qty adjusted from $initialQty to $adjustedQty due to stock limit.");
+                    }
+                }
             }
         }
 
         // Đồng bộ ngược lại database để đảm bảo tính nhất quán
         if (isset($_SESSION['user']['id'])) {
             foreach ($_SESSION['cart'] as $id => $item) {
-                $dbSuccess = $this->cartModel->updateCart($_SESSION['user']['id'], $id, $item['qty']);
+                $product = $this->productModel->getById($id); // NEW: Kiểm tra stock trước khi đồng bộ
+                $stock = isset($product['stock']) ? (int)$product['stock'] : 0;
+                if ($item['qty'] > $stock) {
+                    $adjustedQty = $stock > 0 ? $stock : 0;
+                    $_SESSION['cart'][$id]['qty'] = $adjustedQty;
+                    error_log("Sync cart adjusted before DB sync: user_id={$_SESSION['user']['id']}, product_id=$id, qty adjusted from {$item['qty']} to $adjustedQty due to stock limit.");
+                }
+                $dbSuccess = $this->cartModel->updateCart($_SESSION['user']['id'], $id, $_SESSION['cart'][$id]['qty']);
                 if (!$dbSuccess) {
                     error_log("Failed to sync cart to database: user_id={$_SESSION['user']['id']}, product_id=$id");
                 }

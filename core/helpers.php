@@ -30,9 +30,8 @@ if (!function_exists('generateSlug')) {
         }
 
         return $slug;
-    }  
+    }
 }
-
 // Hàm tạo mã QR thanh toán qua VietQR
 class VietQR {
     public static function generate($bank_bin, $account_no, $account_name, $amount, $orderId) {
@@ -59,5 +58,4 @@ class VietQR {
         $result = json_decode($res, true);
         return $result['data']['qrDataURL'] ?? null;
     }
-}
-
+}  

@@ -24,20 +24,8 @@ class Admin_customerController {
             $address = $_POST['address'];
             $phone = $_POST['phone'];
             $role= $_POST['role'];
-
-            // Sử dụng thời gian tạo hiện tại (01:25 PM +07, Sunday, October 12, 2025)
-            date_default_timezone_set('Asia/Ho_Chi_Minh'); // Đảm bảo múi giờ +07
-            $createdAt = date('Y-m-d H:i:s');
-
-            // Kiểm tra email đã tồn tại
-            $customerModel = new CustomerModel();
-            $existingCustomer = $customerModel->getCustomerByEmail($email);
-            if ($existingCustomer) {
-                // Nếu email đã tồn tại, hiển thị lỗi hoặc xử lý theo ý muốn
-                $data['error'] = "Email '$email' đã tồn tại!";
-                require_once ROOT . '/views/admin/customer/customer_add.php';
-                return;
-            }
+            // Thêm thời gian tạo (11:11 AM +07, Wednesday, October 01, 2025)
+            $createdAt = date('Y-m-d H:i:s', strtotime('2025-10-01 11:11:00 +07:00'));
             $this->model->addCustomer($name, $email, $address, $phone, $role, $createdAt);
             header('Location: ' . BASE_URL . 'admin/admin_customer/index');
         } else {
