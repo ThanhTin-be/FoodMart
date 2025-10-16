@@ -3,40 +3,59 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('🛒 cart.js loaded, BASE_URL =', BASE_URL);
 
   // ========== 1️⃣ SỰ KIỆN THÊM VÀO GIỎ / MUA NGAY ==========
-  document.body.addEventListener('click', async (e) => {
-    const btn = e.target.closest('.add-to-cart, .btn-buy');
-    if (!btn) return;
+document.body.addEventListener('click', async (e) => {
+  const btn = e.target.closest('.add-to-cart, .btn-buy');
+  if (!btn) return;
 
-    const productId = btn.dataset.id;
-    const isBuyNow = btn.classList.contains('btn-buy');
-    console.log('🛒 Click:', isBuyNow ? 'Buy Now' : 'Add to Cart', productId);
+  const productId = btn.dataset.id;
+  const isBuyNow = btn.classList.contains('btn-buy');
 
-    try {
-      const url = `${BASE_URL}cart/add/${productId}?ajax=1`;
-      const response = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  // ✅ TÌM INPUT SỐ LƯỢNG
+  let qty = 1;
+  // 1️⃣ Ưu tiên tìm input có id = quantity-{id}
+  const directInput = document.getElementById(`quantity-${productId}`);
+  // 2️⃣ Nếu không có, thử tìm input gần nút nhất
+  const nearbyInput = btn.closest('form')?.querySelector('input[type="number"]');
+  const input = directInput || nearbyInput;
 
-      const data = await response.json();
-      console.log('✅ Server response:', data);
+  if (input) {
+    qty = parseInt(input.value) || 1;
+  }
 
-      if (data.success) {
-        updateMiniCart(data);
-        updateCartPage(data); // ✅ cập nhật luôn trang cart nếu đang mở
+  console.log(`🛒 [DEBUG] Add to Cart Click:
+    ➤ Product ID: ${productId}
+    ➤ Quantity: ${qty}
+    ➤ Source Input:`, input);
 
-        // ✅ Nếu là Buy Now → chuyển sang checkout
-        if (isBuyNow) {
-          console.log('➡️ Redirecting to checkout...');
-          setTimeout(() => {
-            window.location.href = `${BASE_URL}checkout/index`;
-          }, 500);
-        }
-      } else {
-        console.warn('⚠️ Server trả về lỗi:', data);
+  try {
+    const url = `${BASE_URL}cart/add/${productId}?qty=${qty}&ajax=1`;
+    console.log('📡 [DEBUG] Fetch URL:', url);
+
+    const response = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    const data = await response.json();
+    console.log('✅ [DEBUG] Server Response:', data);
+
+    if (data.success) {
+      updateMiniCart(data);
+      updateCartPage(data);
+
+      if (isBuyNow) {
+        console.log('➡️ [DEBUG] Redirecting to checkout...');
+        setTimeout(() => {
+          window.location.href = `${BASE_URL}checkout/index`;
+        }, 500);
       }
-    } catch (err) {
-      console.error('❌ Fetch add-to-cart error:', err);
+    } else {
+      console.warn('⚠️ [DEBUG] Server báo lỗi:', data);
     }
-  });
+  } catch (err) {
+    console.error('❌ [DEBUG] Fetch add-to-cart error:', err);
+  }
+});
+
+
 
   // ========== 2️⃣ CỘNG / TRỪ SỐ LƯỢNG ==========
   document.body.addEventListener('click', async (e) => {
@@ -96,6 +115,18 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } catch (err) {
       console.error('❌ Remove error:', err);
+    }
+  });
+    // ====================== CHỌN SỐ LƯỢNG TRƯỚC KHI ADD TO CART ======================
+    document.body.addEventListener('click', e => {
+    if(e.target.closest('.qty-increase') || e.target.closest('.qty-decrease')) {
+      const wrapper = e.target.closest('div.flex.items-center.space-x-3');
+      if(!wrapper) return;
+      const input = wrapper.querySelector('input[type="number"]');
+      let qty = parseInt(input.value);
+      if(e.target.closest('.qty-increase')) qty++;
+      else if(e.target.closest('.qty-decrease')) qty = Math.max(1, qty-1);
+      input.value = qty;
     }
   });
 });

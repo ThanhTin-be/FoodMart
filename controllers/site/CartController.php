@@ -1,8 +1,10 @@
 <?php
-class CartController extends Controller {
+class CartController extends Controller
+{
 
     // Trang giỏ hàng chính
-    public function index() {
+    public function index()
+    {
         $cart = $_SESSION['cart'] ?? [];
         $total = $this->getCartTotal();
 
@@ -14,9 +16,8 @@ class CartController extends Controller {
 
 
     // Thêm sản phẩm vào giỏ
-    public function add($id = null) {
-       
-
+    public function add($id = null)
+    {
         if (!$id && isset($_GET['id'])) {
             $id = intval($_GET['id']);
         }
@@ -26,6 +27,9 @@ class CartController extends Controller {
             return;
         }
 
+        // ✅ Lấy số lượng từ query string (nếu không có thì mặc định là 1)
+        $qty = isset($_GET['qty']) ? max(1, intval($_GET['qty'])) : 1;
+
         $productModel = $this->model("ProductModel");
         $product = $productModel->getById($id);
 
@@ -34,46 +38,45 @@ class CartController extends Controller {
             return;
         }
 
-        // ✅ giữ dữ liệu cũ
+        // ✅ Bảo đảm session cart tồn tại
         if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = [];
         }
 
-        // ✅ nếu sản phẩm đã có, tăng số lượng
+        // ✅ Thêm hoặc cộng thêm đúng số lượng
         if (isset($_SESSION['cart'][$id])) {
-            $_SESSION['cart'][$id]['qty'] += 1;
+            $_SESSION['cart'][$id]['qty'] += $qty;
         } else {
             $_SESSION['cart'][$id] = [
                 'id'    => $product['id'],
                 'name'  => $product['name'],
                 'price' => (float)$product['price'],
-                'qty'   => 1,
+                'qty'   => $qty,
                 'image' => $product['image']
             ];
         }
 
-        $cart = $_SESSION['cart'];
-
-        // ✅ Tính tổng
+        // ✅ Tính tổng tiền
         $total = 0;
-        foreach ($cart as $item) {
-            $total += $item['price'] * $item['qty'];
-        }
-
-        header('Content-Type: application/json');
-
-        // Tính tổng số lượng sản phẩm
         $totalQty = 0;
         foreach ($_SESSION['cart'] as $item) {
+            $total += $item['price'] * $item['qty'];
             $totalQty += $item['qty'];
         }
+
+        // ✅ Debug log (chỉ in khi dev)
+        error_log("[🛒 ADD] ID={$id}, QTY={$qty}, TOTAL={$total}, COUNT={$totalQty}");
+
+        // ✅ Trả JSON response
+        header('Content-Type: application/json');
         echo json_encode([
             'success' => true,
             'count'   => $totalQty,
             'total'   => $total,
-            'cart'    => array_values($cart)
+            'cart'    => array_values($_SESSION['cart'])
         ]);
     }
+
 
     // Cập nhật số lượng sản phẩm trong giỏ (AJAX)
     public function update($id = null)
@@ -117,7 +120,8 @@ class CartController extends Controller {
 
 
     // Xóa sản phẩm khỏi giỏ
-    public function remove() {
+    public function remove()
+    {
         if (isset($_GET['id']) && isset($_SESSION['cart'][$_GET['id']])) {
             unset($_SESSION['cart'][$_GET['id']]);
         }
@@ -126,7 +130,8 @@ class CartController extends Controller {
     }
 
     // Tính tổng tiền giỏ hàng
-    private function getCartTotal() {
+    private function getCartTotal()
+    {
         $total = 0;
         if (!empty($_SESSION['cart'])) {
             foreach ($_SESSION['cart'] as $item) {
@@ -137,7 +142,8 @@ class CartController extends Controller {
     }
 
     // Đếm tổng số sản phẩm
-    private function getCartCount() {
+    private function getCartCount()
+    {
         $count = 0;
         if (!empty($_SESSION['cart'])) {
             foreach ($_SESSION['cart'] as $item) {
@@ -147,4 +153,3 @@ class CartController extends Controller {
         return $count;
     }
 }
-?>
