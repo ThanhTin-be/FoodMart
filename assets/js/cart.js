@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCartPage(data) // ✅ cập nhật luôn trang cart nếu đang mở
 
         // ✅ Nếu là Buy Now → chuyển sang checkout
+        // ✅ Nếu là Buy Now → chuyển sang checkout
         if (isBuyNow) {
           console.log('➡️ Redirecting to checkout...')
           setTimeout(() => {
@@ -92,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   // ========== 3️⃣ XOÁ SẢN PHẨM ==========
+  // ========== 3️⃣ XOÁ SẢN PHẨM ==========
   document.body.addEventListener('click', async (e) => {
     const btn = e.target.closest('.cart-remove')
     if (!btn) return
@@ -129,6 +131,7 @@ function formatCurrency(n) {
   return new Intl.NumberFormat('vi-VN').format(n) + ' đ'
 }
 
+// ====================== MINI CART DROPDOWN ======================
 // ====================== MINI CART DROPDOWN ======================
 function updateMiniCart(data) {
   try {

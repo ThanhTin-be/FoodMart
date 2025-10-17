@@ -1,8 +1,10 @@
 <?php
-class CheckoutController extends Controller {
+class CheckoutController extends Controller
+{
 
     // Trang checkout chính
-    public function index() {
+    public function index()
+    {
         if (empty($_SESSION['user'])) {
             $_SESSION['return_url'] = 'checkout/index';
             header("Location: " . BASE_URL . "user/login");
@@ -36,7 +38,8 @@ class CheckoutController extends Controller {
     }
 
     // Áp dụng voucher (AJAX)
-    public function validateVoucher() {
+    public function validateVoucher()
+    {
         header('Content-Type: application/json; charset=utf-8');
 
         if (empty($_SESSION['user'])) {
@@ -99,7 +102,8 @@ class CheckoutController extends Controller {
     }
 
     // Đặt hàng
-    public function placeOrder() {
+    public function placeOrder()
+    {
         if (empty($_SESSION['user'])) {
             header("Location: " . BASE_URL . "user/login");
             exit;
@@ -112,10 +116,16 @@ class CheckoutController extends Controller {
         }
 
         $userId = (int)$_SESSION['user']['id'];
+        $userId = (int)$_SESSION['user']['id'];
         $subtotal = $this->calcCartSubtotal($cart);
         $discount = !empty($_SESSION['voucher']['discount']) ? (float)$_SESSION['voucher']['discount'] : 0;
         $grand = max($subtotal - $discount, 0);
+        $grand = max($subtotal - $discount, 0);
 
+        // ✅ Lấy dữ liệu người nhận từ form POST
+        $fullname = trim($_POST['fullname'] ?? '');
+        $phone = trim($_POST['phone'] ?? '');
+        $address = trim($_POST['address'] ?? '');
         // ✅ Lấy dữ liệu người nhận từ form POST
         $fullname = trim($_POST['fullname'] ?? '');
         $phone = trim($_POST['phone'] ?? '');
@@ -127,10 +137,17 @@ class CheckoutController extends Controller {
         }
 
         // ✅ Gọi model lưu đơn hàng
+        if ($fullname === '' || $phone === '' || $address === '') {
+            die("<h3 style='color:red'>❌ Thiếu thông tin người nhận. Vui lòng kiểm tra lại!</h3>");
+        }
+
+        // ✅ Gọi model lưu đơn hàng
         $orderModel = $this->model('OrderModel');
+        $orderId = $orderModel->createOrder($userId, $fullname, $phone, $address, $paymentMethod, $cart, $grand);
         $orderId = $orderModel->createOrder($userId, $fullname, $phone, $address, $paymentMethod, $cart, $grand);
 
         if ($orderId) {
+            // Giảm lượt dùng voucher (nếu có)
             // Giảm lượt dùng voucher (nếu có)
             if (!empty($_SESSION['voucher']['voucher_id'])) {
                 $voucherId = (int)$_SESSION['voucher']['voucher_id'];
@@ -139,7 +156,8 @@ class CheckoutController extends Controller {
                     if (method_exists($voucherModel, 'decreaseUsage')) {
                         $voucherModel->decreaseUsage($voucherId);
                     }
-                } catch (\Throwable $e) { /* ignore */ }
+                } catch (\Throwable $e) { /* ignore */
+                }
             }
 
             // Clear cart + voucher
@@ -171,6 +189,7 @@ class CheckoutController extends Controller {
                     exit;
             }
         }
+
 
         echo "<h3 style='color:red'>❌ Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại!</h3>";
     }
@@ -221,8 +240,10 @@ class CheckoutController extends Controller {
     }
 
 
+
     // --------- Helpers ----------
-    private function calcCartSubtotal(array $cart): float {
+    private function calcCartSubtotal(array $cart): float
+    {
         $sum = 0;
         foreach ($cart as $it) {
             $sum += ((float)$it['price']) * ((int)$it['qty']);

@@ -17,7 +17,9 @@
 
     <!-- Nội dung trang -->
     <div class="max-w-6xl p-6 mx-auto">
-        <?= $content ?>
+        <div class="space-y-6">
+            <?= $content ?>
+        </div>
     </div>
 
 </div>
