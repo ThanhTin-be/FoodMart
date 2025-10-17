@@ -1,6 +1,10 @@
 <?php
-class UserController extends Controller
-{
+class UserController extends Controller {
+    private $userModel;
+    public function __construct() {
+        // Khởi tạo model
+        $this->userModel = $this->model('User');
+    }
     public function login()
     {
         session_start();
@@ -165,14 +169,59 @@ class UserController extends Controller
         exit;
     }
 
-    // 📝 Register (chưa làm UI, chừa để sau này code)
-    public function register()
-    {
-        // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        //     // Xử lý tạo user mới qua User->create()
-        // }
-        // else {
-        //     $this->view('user/register');
-        // }
+    // 📝 Register
+    public function register() {
+        $data = [
+            'name' => '',
+            'email' => '',
+            'phone' => '',
+            'address' => '',
+            'password' => '',
+            'confirm_password' => '',
+            'error' => '',
+            'success' => ''
+        ];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data['name'] = trim($_POST['name']);
+            $data['email'] = trim($_POST['email']);
+            $data['phone'] = trim($_POST['phone']);
+            $data['address'] = trim($_POST['address']);
+            $data['password'] = $_POST['password'];
+            $data['confirm_password'] = $_POST['confirm_password'];
+
+            // Kiểm tra validate
+            if (!$data['name'] || !$data['email'] || !$data['password'] || !$data['confirm_password']) {
+                $data['error'] = 'Vui lòng nhập đầy đủ thông tin.';
+            } elseif ($data['password'] !== $data['confirm_password']) {
+                $data['error'] = 'Mật khẩu xác nhận không khớp.';
+            } elseif ($this->userModel->findByEmail($data['email'])) {
+                $data['error'] = 'Email này đã được đăng ký.';
+            } else {
+                $hashed = password_hash($data['password'], PASSWORD_DEFAULT);
+                $ok = $this->userModel->createUser(
+                    $data['name'], 
+                    $data['email'], 
+                    $hashed, 
+                    $data['address'], 
+                    $data['phone']
+                );
+
+                if ($ok) {
+                    // ✅ Lưu flash message vào session
+                    session_start();
+                    $_SESSION['success_message'] = 'Đăng ký thành công! Vui lòng đăng nhập.';
+
+                    // ✅ Chuyển hướng sang login
+                    header('Location: ' . BASE_URL . 'user/login');
+                exit;
+                } else {
+                    $data['error'] = 'Đăng ký thất bại, vui lòng thử lại.';
+                }
+            }
+        }
+
+        // Load view và truyền $data
+        $this->view('user/register', $data);
     }
 }

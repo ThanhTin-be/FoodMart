@@ -59,7 +59,7 @@ class CartController extends Controller {
                     'image' => $product['image']
                 ];
             }
-            $message = $stock > 0 ? 'Số lượng đã quá hàng tồn kho! Đã điều chỉnh về ' . $stock . '.' : 'Đã bán hết!';
+            $message = $stock > 0 ? 'Số lượng đã quá hàng tồn kho!' : 'Đã bán hết!';
             header('Content-Type: application/json');
             echo json_encode([
                 'success' => false,
@@ -141,7 +141,7 @@ class CartController extends Controller {
             if (isset($_SESSION['cart'][$id])) {
                 $_SESSION['cart'][$id]['qty'] = $adjustedQty;
             }
-            $message = $stock > 0 ? 'Số lượng đã quá hàng tồn kho! Đã điều chỉnh về ' . $stock . '.' : 'Đã bán hết!';
+            $message = $stock > 0 ? 'Số lượng đã quá hàng tồn kho!' : 'Đã bán hết!';
             echo json_encode([
                 'success' => false,
                 'error' => $message,

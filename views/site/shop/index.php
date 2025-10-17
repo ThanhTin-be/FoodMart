@@ -116,7 +116,5 @@
   </div>
 </div>
 
-<script>
-  const BASE_URL = "<?= BASE_URL ?>";
-</script>
+
 <script src="<?= BASE_URL ?>assets/js/shop.js"></script>
