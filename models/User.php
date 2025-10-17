@@ -67,4 +67,38 @@ class User extends Database
         $stmt = $this->conn->prepare("UPDATE users SET password = ? WHERE id = ?");
         return $stmt->execute([$hashedPassword, $id]);
     }
+
+    // Tìm user theo email
+    public function findByEmail($email) {
+        $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
+        if (!$stmt) {
+            die("Prepare failed: " . $this->conn->error);
+        }
+
+        $stmt->bind_param("s", $email); // "s" = string
+        $stmt->execute();
+
+        $result = $stmt->get_result(); // trả về mysqli_result
+        $user = $result->fetch_assoc(); // lấy 1 bản ghi dạng mảng liên kết
+
+        $stmt->close();
+        return $user; // nếu không có trả về null
+    }
+
+    // Tạo user mới
+    public function createUser($name, $email, $password, $address = null, $phone = null) {
+        $stmt = $this->conn->prepare("
+            INSERT INTO users (name, email, password, address, phone, role)
+            VALUES (?, ?, ?, ?, ?, 'user')
+        ");
+        if (!$stmt) {
+            die("Prepare failed: " . $this->conn->error);
+        }
+
+        $stmt->bind_param("sssss", $name, $email, $password, $address, $phone);
+        $result = $stmt->execute();
+        $stmt->close();
+
+        return $result; // true nếu insert thành công
+    }
 }
