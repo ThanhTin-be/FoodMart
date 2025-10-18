@@ -1,17 +1,25 @@
 <?php
-class PagesController extends Controller {
-    public function show($page = 'home', $data = []) {
-        echo "<pre>DEBUG PagesController loading view: pages/$page</pre>";
+class PagesController extends Controller
+{
+    public function show($page = '', $data = [])
+    {
+        echo "<pre>DEBUG PagesController loading view: site/pages/$page</pre>";
 
+        // ✅ Nếu không truyền trang nào → redirect sang about
+        if (empty($page)) {
+            header("Location: " . BASE_URL . "pages/about");
+            exit;
+        }
+
+        // ✅ Chỉ cần "pages/" — không thêm "site/"
         $viewPath = "pages/" . $page;
-        $fullPath = ROOT . "views" . DIRECTORY_SEPARATOR . $viewPath . ".php";
+        $fullPath = ROOT . "views/site/" . $viewPath . ".php";
 
         if (file_exists($fullPath)) {
             echo "<pre>DEBUG Found file: $fullPath</pre>";
-            parent::view($viewPath, $data); // mặc định -> layout user
+            parent::view($viewPath, $data); // layout mặc định site
         } else {
             echo "<pre>DEBUG Not found: $fullPath</pre>";
-            // ⚠️ Sử dụng layout none để không bị dính header/footer user
             parent::view("errors/404", [], "none");
         }
     }

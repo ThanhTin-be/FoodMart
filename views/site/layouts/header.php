@@ -268,44 +268,47 @@ $categories = $categories ?? [];
             <div class="flex items-center justify-between">
                 <!-- Logo -->
                 <a href="<?= BASE_URL ?>" class="inline-block"><img src="<?= BASE_URL ?>assets/images/logo.png" style="max-height:60px;" alt="" class="h-20"></a> <!-- Navigation Menu - Desktop -->
+                <?php
+                $current = $_SERVER['REQUEST_URI']; // Lấy đường dẫn hiện tại
+                ?>
+
                 <nav class="items-center hidden space-x-1 lg:flex">
-                    <a href="<?= BASE_URL ?>" class="flex items-center px-4 py-3 space-x-2 font-medium transition-all duration-300 rounded-full group text-brand-primary bg-brand-light hover:text-brand-dark">
+                    <!-- HOME -->
+                    <a href="<?= BASE_URL ?>"
+                        class="flex items-center px-4 py-3 space-x-2 font-medium transition-all duration-300 rounded-full group 
+     <?= $current === '/FoodMartLab/' ? 'text-brand-primary bg-brand-light' : 'text-gray-700 hover:text-brand-primary hover:bg-brand-light' ?>">
                         <i class="text-sm transition-transform fas fa-home group-hover:scale-110"></i>
                         <span>Home</span>
                     </a>
-                    <a href="1/gioi-thieu/" class="flex items-center px-4 py-3 space-x-2 font-medium transition-all duration-300 rounded-full group text-gray-700 hover:text-brand-primary hover:bg-brand-light">
+
+                    <!-- GIỚI THIỆU -->
+                    <a href="<?= BASE_URL ?>pages/about"
+                        class="flex items-center px-4 py-3 space-x-2 font-medium transition-all duration-300 rounded-full group 
+     <?= str_contains($current, '/pages/about') ? 'text-brand-primary bg-brand-light' : 'text-gray-700 hover:text-brand-primary hover:bg-brand-light' ?>">
                         <span>Giới thiệu</span>
                     </a>
-                    <div class="relative group">
-                        <button class="flex items-center px-4 py-3 space-x-2 font-medium transition-all duration-300 rounded-full group text-gray-700 hover:text-brand-primary hover:bg-brand-light" fdprocessedid="3dn75n">
-                            <span>Sản phẩm</span>
-                            <i class="text-xs transition-transform fas fa-chevron-down group-hover:rotate-180"></i>
-                        </button>
 
-                        <div class="absolute left-0 invisible w-56 mt-2 transition-all duration-300 transform translate-y-2 bg-white border shadow-xl opacity-0 top-full rounded-2xl border-brand-light/50 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
-                            <div class="p-2">
-                                <a href="1/product/sau-ngam-duong/" class="flex items-center px-4 py-3 space-x-3 transition-all duration-200 rounded-xl text-gray-700 hover:text-brand-primary hover:bg-brand-light/50">
-                                    <span>Sấu Ngâm Đường</span>
-                                </a>
-                                <a href="1/product/mo-ngam-duong/" class="flex items-center px-4 py-3 space-x-3 transition-all duration-200 rounded-xl text-gray-700 hover:text-brand-primary hover:bg-brand-light/50">
-                                    <span>Mơ ngâm đường</span>
-                                </a>
-                                <a href="1/product/dau-tam-ngam-duong/" class="flex items-center px-4 py-3 space-x-3 transition-all duration-200 rounded-xl text-gray-700 hover:text-brand-primary hover:bg-brand-light/50">
-                                    <span>Dâu Tằm Ngâm Đường</span>
-                                </a>
-                                <a href="1/product/hoa-atiso-do-ngam-duong/" class="flex items-center px-4 py-3 space-x-3 transition-all duration-200 rounded-xl text-gray-700 hover:text-brand-primary hover:bg-brand-light/50">
-                                    <span>Hoa Atiso Đỏ Ngâm Đường</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="1/category/tin-tuc/" class="flex items-center px-4 py-3 space-x-2 font-medium transition-all duration-300 rounded-full group text-gray-700 hover:text-brand-primary hover:bg-brand-light">
+                    <!-- SẢN PHẨM -->
+                    <a href="<?= BASE_URL ?>shop/index"
+                        class="flex items-center px-4 py-3 space-x-2 font-medium transition-all duration-300 rounded-full group 
+     <?= str_contains($current, '/shop') ? 'text-brand-primary bg-brand-light' : 'text-gray-700 hover:text-brand-primary hover:bg-brand-light' ?>">
+                        <span>Sản Phẩm</span>
+                    </a>
+                    <!-- TIN TỨC -->
+                    <a href="<?= BASE_URL ?>blog"
+                        class="flex items-center px-4 py-3 space-x-2 font-medium transition-all duration-300 rounded-full group 
+     <?= str_contains($current, '/blog') ? 'text-brand-primary bg-brand-light' : 'text-gray-700 hover:text-brand-primary hover:bg-brand-light' ?>">
                         <span>Tin tức</span>
                     </a>
-                    <a href="1/lien-he/" class="flex items-center px-4 py-3 space-x-2 font-medium transition-all duration-300 rounded-full group text-gray-700 hover:text-brand-primary hover:bg-brand-light">
+
+                    <!-- LIÊN HỆ -->
+                    <a href="<?= BASE_URL ?>pages/contact"
+                        class="flex items-center px-4 py-3 space-x-2 font-medium transition-all duration-300 rounded-full group 
+     <?= str_contains($current, '/pages/contact') ? 'text-brand-primary bg-brand-light' : 'text-gray-700 hover:text-brand-primary hover:bg-brand-light' ?>">
                         <span>Liên hệ</span>
                     </a>
                 </nav>
+
 
                 <!-- Search & Cart Section -->
                 <div class="flex items-center space-x-4">
