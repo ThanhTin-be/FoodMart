@@ -20,7 +20,7 @@
 
                   <!-- CTA Buttons -->
                   <div class="flex flex-col justify-center gap-4 mb-12 sm:flex-row lg:justify-start">
-                      <a href="#" class="px-8 py-4 text-lg font-semibold text-white transition-all duration-300 transform rounded-full shadow-lg bg-gradient-to-r from-brand-primary to-brand-secondary hover:from-brand-dark hover:to-brand-primary rounded-2xl hover:scale-105 hover:shadow-xl font-lexend">
+                      <a href="<?= BASE_URL ?>shop/index" class="px-8 py-4 text-lg font-semibold text-white transition-all duration-300 transform rounded-full shadow-lg bg-gradient-to-r from-brand-primary to-brand-secondary hover:from-brand-dark hover:to-brand-primary rounded-2xl hover:scale-105 hover:shadow-xl font-lexend">
                           <i class="mr-2 fas fa-shopping-bag"></i>
                           Mua Ngay </a>
                       <a href="#" class="px-8 py-4 text-lg font-semibold text-orange-400 transition-all duration-300 transform border-2 border-orange-400 rounded-full hover:bg-orange-400 hover:text-white rounded-2xl hover:scale-105 font-lexend">
@@ -497,7 +497,7 @@
                       FoodMart – đồng hành cùng bạn tạo nên những bữa cơm trọn vẹn, tiện lợi và đầy yêu thương. </p>
 
                   <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
-                      <a href="#" class="px-8 py-4 text-lg font-bold text-orange-600 transition-all duration-300 transform bg-white shadow-lg hover:bg-orange-50 rounded-2xl hover:scale-105 font-lexend">
+                      <a href="<?= BASE_URL ?>pages/contact" class="px-8 py-4 text-lg font-bold text-orange-600 transition-all duration-300 transform bg-white shadow-lg hover:bg-orange-50 rounded-2xl hover:scale-105 font-lexend">
                           <i class="mr-2 fas fa-phone"></i>
                           Liên Hệ Ngay </a>
                       <a href="#" class="px-8 py-4 text-lg font-bold text-white transition-all duration-300 transform border-2 border-white hover:bg-white hover:text-orange-600 rounded-2xl hover:scale-105 font-lexend">

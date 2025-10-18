@@ -1,120 +1,67 @@
+<div class="px-4 py-2 mx-auto max-w-7xl">
+  <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+    <!-- Main Content -->
+    <div class="lg:col-span-2">
+      <h1 class="pb-4 text-2xl font-bold text-gray-800 font-cal-sans">
+        Liên hệ </h1>
+      <div class="mb-4 overflow-hidden text-gray-800 bg-white shadow-lg rounded-2xl">
+        <div class="p-4">
+          <div class="max-w-none">
+            <form class="ajax-form space-y-5" data-form-name="contact" data-handler-attached="true">
+              <!-- Config -->
+              <input type="hidden" name="form_to" value="dev.zota@gmail.com">
+              <input type="hidden" name="form_subject" value="Liên hệ từ {{name}} - {{email}}">
+              <input type="hidden" name="form_required" value="name,email,message">
+              <input type="hidden" name="form_validate" value="email:email,phone:phone">
+              <input type="hidden" name="form_success_message" value="Cảm ơn bạn! Chúng tôi sẽ phản hồi trong 24h.">
 
-
-    <section class="py-5 mb-5" style="background: url('<?= asset('background-pattern.jpg') ?>');">
-      <div class="container-fluid">
-        <div class="d-flex justify-content-between">
-          <h1 class="page-title pb-2">Contact info</h1>
-          <nav class="breadcrumb fs-6">
-            <a class="breadcrumb-item nav-link" href="#">Home</a>
-            <a class="breadcrumb-item nav-link" href="#">Pages</a>
-            <span class="breadcrumb-item active" aria-current="page">Contact info</span>
-          </nav>
-        </div>
-      </div>
-    </section>
-
-    <section class="contact-us py-5">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="contact-info col-lg-6 pb-3">
-            <p>Tortor dignissim convallis aenean et tortor at risus viverra adipiscing.</p>
-            <div class="page-content d-flex flex-wrap">
-              <div class="col-lg-6 col-sm-12">
-                <div class="content-box text-dark pe-4 mb-5">
-                  <h3 class="card-title">Office</h3>
-                  <div class="contact-address pt-3">
-                    <p>730 Glenstone Ave 65802, Springfield, US</p>
-                  </div>
-                  <div class="contact-number">
-                    <p>
-                      <a href="#">+123 987 321</a>
-                    </p>
-                    <p>
-                      <a href="#">+123 123 654</a>
-                    </p>
-                  </div>
-                  <div class="email-address">
-                    <p>
-                      <a href="#">contact@website.com</a>
-                    </p>
-                  </div>
+              <!-- Fields -->
+              <div class="grid md:grid-cols-2 gap-4">
+                <div class="relative">
+                  <i class="fa fa-user absolute left-3 top-1/2 -translate-y-1/2 text-green-500"></i>
+                  <input name="name" placeholder="Họ tên" class="pl-10 pr-4 py-3 border border-green-500 rounded-lg focus:border-orange-600 focus:ring-2 focus:ring-orange-300 focus:outline-none transition-colors w-full" required="required">
+                </div>
+                <div class="relative">
+                  <i class="fa fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-green-500"></i>
+                  <input name="email" type="email" placeholder="Email" class="pl-10 pr-4 py-3 border border-green-500 rounded-lg focus:border-orange-600 focus:ring-2 focus:ring-orange-300 focus:outline-none transition-colors w-full" required="required">
                 </div>
               </div>
-              <div class="col-lg-6 col-sm-12">
-                <div class="content-box">
-                  <h3 class="card-title">Management</h3>
-                  <div class="contact-address pt-3">
-                    <p>730 Glenstone Ave 65802, Springfield, US</p>
-                  </div>
-                  <div class="contact-number">
-                    <p>
-                      <a href="#">+123 987 321</a>
-                    </p>
-                    <p>
-                      <a href="#">+123 123 654</a>
-                    </p>
-                  </div>
-                  <div class="email-address">
-                    <p>
-                      <a href="#">contact@website.com</a>
-                    </p>
-                  </div>
+
+              <div class="grid md:grid-cols-2 gap-4">
+                <div class="relative">
+                  <i class="fa fa-phone absolute left-3 top-1/2 -translate-y-1/2 text-green-500"></i>
+                  <input name="phone" type="tel" placeholder="Số điện thoại" class="pl-10 pr-4 py-3 border border-green-500 rounded-lg focus:border-orange-600 focus:ring-2 focus:ring-orange-300 focus:outline-none transition-colors w-full" pattern="[0-9+\-\s()]{8,15}">
+                </div>
+                <div class="relative">
+                  <i class="fa fa-building absolute left-3 top-1/2 -translate-y-1/2 text-green-500"></i>
+                  <input name="company" placeholder="Công ty" class="pl-10 pr-4 py-3 border border-green-500 rounded-lg focus:border-orange-600 focus:ring-2 focus:ring-orange-300 focus:outline-none transition-colors w-full">
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="inquiry-item col-lg-6">
-            <div class="bg-light p-5 rounded-5">
-              <h2 class="display-7 text-dark">Get in Touch</h2>
-              <p>Use the form below to get in touch with us.</p>
-              <form id="form" class="form-group flex-wrap">
-                <div class="form-input col-lg-12 d-flex mb-3">
-                  <input type="text" name="email" placeholder="Write Your Name Here" class="form-control ps-3 me-3">
-                  <input type="text" name="email" placeholder="Write Your Email Here" class="form-control ps-3">
-                </div>
-                <div class="col-lg-12 mb-3">
-                  <input type="text" name="email" placeholder="Phone Number" class="form-control ps-3">
-                </div>
-                <div class="col-lg-12 mb-3">
-                  <input type="text" name="email" placeholder="Write Your Subject Here" class="form-control ps-3">
-                </div>
-                <div class="col-lg-12 mb-3">
-                  <textarea placeholder="Write Your Message Here" class="form-control ps-3" style="height:150px;"></textarea>
-                </div>
-              </form>
-              <div class="d-grid">
-                <button class="btn btn-primary btn-lg text-uppercase btn-rounded-none">Submit</button>
+
+              <div class="relative">
+                <i class="fa fa-comment-dots absolute left-3 top-4 text-green-500"></i>
+                <textarea name="message" rows="4" placeholder="Tin nhắn" class="pl-10 pr-4 py-3 border border-green-500 rounded-lg focus:border-orange-600 focus:ring-2 focus:ring-orange-300 focus:outline-none transition-colors resize-none w-full" required="required"></textarea>
               </div>
-            </div>
+
+              <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg transition-colors font-medium flex items-center justify-center gap-2">
+                <i class="fa fa-paper-plane"></i> Gửi tin nhắn
+              </button>
+            </form>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+    <!-- Sidebar -->
+    <?php include_once view_path("site/partials/sidebar_info.php") ?>;
+  </div>
+</div>
+</div>
 
-    <section class="google-map">
-      <div class="mapouter">
-        <div class="gmap_canvas">
-          <iframe width="100%" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=2880%20Broadway,%20New%20York&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
-          <a href="https://getasearch.com/fmovies"></a>
-          <br>
-          <style>
-            .mapouter {
-              position: relative;
-              text-align: right;
-              height: 500px;
-              width: 100%;
-            }
-          </style>
-          <a href="https://www.embedgooglemap.net">embedgooglemap.net</a>
-          <style>
-            .gmap_canvas {
-              overflow: hidden;
-              background: none !important;
-              height: 500px;
-              width: 100%;
-            }
-          </style>
-        </div>
-      </div>
-    </section>
+<script>
+  const shop_ajax = {
+    ajax_url: "<?= BASE_URL ?>ajax/contact/send",
+    nonce: "<?= md5(session_id() . 'contact_form'); ?>"
+  };
+</script>
 
+<script src="<?= BASE_URL ?>assets/js/contact.js"></script>
