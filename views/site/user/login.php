@@ -1,6 +1,5 @@
 <div class="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-gray-50 to-gray-100 sm:px-6 lg:px-4">
-
-        
+      
     <!-- Login Form -->
 <div class="flex items-center justify-center min-h-screen rounded-3xl bg-gradient-to-br from-gray-50 to-gray-100">
     <div class="w-full max-w-6xl overflow-hidden shadow-2xl rounded-3xl">
@@ -84,7 +83,20 @@
                             Sign in to your account to continue your journey
                         </p>
                     </div>
-
+                    <!-- ✅ Thông báo đăng ký thành công -->
+                    <?php
+                      if (!empty($_SESSION['success_message'])): ?>
+                          <div class="p-4 mb-4 text-green-800 bg-green-200 rounded">
+                              <?= $_SESSION['success_message']; ?>
+                          </div>
+                      <?php unset($_SESSION['success_message']); endif; 
+                    ?>
+                    <!-- ✅ Thông báo lỗi đăng nhập -->
+                    <?php if(!empty($data['error'])): ?>
+                        <div class="p-4 mb-4 text-red-800 bg-red-200 rounded">
+                            <?= $data['error']; ?>
+                        </div>
+                    <?php endif; ?>
                     <form method="POST"  action="<?= BASE_URL ?>site/user/login" id="login-form" class="space-y-6" novalidate="">
                         <input type="hidden" id="login_nonce" name="login_nonce" value="e06fc4b571"><input type="hidden" name="_wp_http_referer" value="/login/">                        
                         <!-- Username/Email Field -->
@@ -156,116 +168,3 @@
     </div>
 </div>
 </div>
-
-
-<!-- <?php
-/**
- * views/site/user/login.php
- * - Tailwind UI form (Pricot style)
- * - Kết nối logic đăng nhập PHP sẵn (controller UserController@login)
- */
-?>
-
-<div class="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-gray-50 to-gray-100 sm:px-6 lg:px-4">
-
-  <div class="w-full max-w-6xl overflow-hidden shadow-2xl rounded-3xl">
-    <div class="grid grid-cols-1 lg:grid-cols-2 min-h-[600px]">
-
-      <!-- Left Side -->
-      <div class="relative flex items-center justify-center p-12 bg-gradient-to-br from-green-400 via-green-500 to-green-600">
-        <div class="absolute inset-0 opacity-10">
-          <div class="absolute top-0 left-0 w-full h-full">
-            <div class="absolute w-32 h-32 bg-white rounded-full top-12 left-12 opacity-20"></div>
-            <div class="absolute w-24 h-24 bg-white rounded-full top-32 right-16 opacity-15"></div>
-            <div class="absolute w-16 h-16 bg-white rounded-full opacity-25 bottom-24 left-20"></div>
-            <div class="absolute w-40 h-40 bg-white rounded-full bottom-12 right-12 opacity-10"></div>
-          </div>
-        </div>
-
-        <div class="relative z-10 text-center">
-          <div class="relative mx-auto mb-8">
-            <div class="flex items-center justify-center w-48 h-48 border-4 rounded-full border-white/30">
-              <div class="flex items-center justify-center border-4 rounded-full w-36 h-36 border-white/50 animate-pulse">
-                <div class="flex items-center justify-center w-24 h-24 bg-white rounded-full shadow-2xl">
-                  <svg class="w-10 h-10 text-green-800" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V11.5C15.4,12.1 16,12.8 16,14V18C16,19.1 15.1,20 14,20H10C8.9,20 8,19.1 8,18V14C8,12.8 8.6,12.1 9.2,11.5V10C9.2,8.6 10.6,7 12,7Z" />
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="flex justify-center mt-8 space-x-6 text-white">
-            <div class="text-sm">✅ Secure</div>
-            <div class="text-sm">⚡ Fast</div>
-            <div class="text-sm">🛡 Reliable</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right Side - Login Form -->
-      <div class="flex items-center justify-center p-12 bg-white">
-        <div class="w-full max-w-md">
-          <div class="mb-8 text-center">
-            <h2 class="my-2 text-3xl font-bold text-gray-900">Welcome Back</h2>
-            <p class="text-gray-600">Sign in to your account</p>
-          </div>
-
-          <!-- Hiển thị lỗi -->
-          <?php if (!empty($data['error'])): ?>
-            <div class="p-3 mb-4 text-sm text-red-700 bg-red-100 border border-red-300 rounded-md">
-              <?= htmlspecialchars($data['error']) ?>
-            </div>
-          <?php endif; ?>
-
-          <!-- Form Login -->
-          <form method="POST" action="<?= BASE_URL ?>site/user/login" class="space-y-6">
-            <div class="space-y-2">
-              <label for="email" class="block text-sm font-semibold text-gray-700">
-                Email Address
-              </label>
-              <input id="email" name="email" type="email" required
-                class="block w-full py-4 pl-4 pr-4 text-gray-900 transition-all duration-200 border border-gray-200 bg-gray-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                placeholder="Enter your email" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
-            </div>
-
-            <div class="space-y-2">
-              <label for="password" class="block text-sm font-semibold text-gray-700">
-                Password
-              </label>
-              <input id="password" name="password" type="password" required
-                class="block w-full py-4 pl-4 pr-4 text-gray-900 transition-all duration-200 border border-gray-200 bg-gray-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                placeholder="Enter your password">
-            </div>
-
-            <div class="flex items-center justify-between">
-              <label class="flex items-center">
-                <input type="checkbox" name="remember"
-                  class="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500 focus:ring-2">
-                <span class="ml-3 text-sm font-medium text-gray-700">Remember me</span>
-              </label>
-              <a href="#" class="text-sm font-semibold text-green-600 hover:underline">
-                Forgot password?
-              </a>
-            </div>
-
-            <button type="submit"
-              class="w-full py-4 text-white transition-all duration-200 rounded-xl bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg">
-              Log in
-            </button>
-
-            <div class="pt-6 text-center border-t border-gray-200">
-              <p class="text-sm text-gray-600">
-                Don’t have an account?
-                <a href="<?= BASE_URL ?>user/register" class="font-semibold text-green-600 hover:underline">
-                  Sign up here
-                </a>
-              </p>
-            </div>
-          </form>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
- -->

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * views/site/checkout/thankyou.php
  * Trang hoàn tất đơn hàng – UI Tailwind (giữ nguyên 100%)
@@ -114,15 +113,15 @@
                   <dt class="mb-1 font-medium text-gray-500">Status</dt>
                   <dd>
                     <?php
-                    $statusMap = [
-                      'cho_xac_nhan' => ['Pending', 'bg-amber-100 text-amber-800'],
-                      'da_xac_nhan' => ['Confirmed', 'bg-blue-100 text-blue-800'],
-                      'dang_giao' => ['Shipping', 'bg-indigo-100 text-indigo-800'],
-                      'da_giao' => ['Delivered', 'bg-green-100 text-green-800'],
-                      'thanh_cong' => ['Completed', 'bg-emerald-100 text-emerald-800'],
-                      'huy' => ['Cancelled', 'bg-red-100 text-red-800']
-                    ];
-                    [$label, $color] = $statusMap[$order['status']] ?? ['Pending', 'bg-gray-100 text-gray-700'];
+                      $statusMap = [
+                        'cho_xac_nhan' => ['Pending', 'bg-amber-100 text-amber-800'],
+                        'da_xac_nhan' => ['Confirmed', 'bg-blue-100 text-blue-800'],
+                        'dang_giao' => ['Shipping', 'bg-indigo-100 text-indigo-800'],
+                        'da_giao' => ['Delivered', 'bg-green-100 text-green-800'],
+                        'thanh_cong' => ['Completed', 'bg-emerald-100 text-emerald-800'],
+                        'huy' => ['Cancelled', 'bg-red-100 text-red-800']
+                      ];
+                      [$label, $color] = $statusMap[$order['status']] ?? ['Pending', 'bg-gray-100 text-gray-700'];
                     ?>
                     <span class="inline-flex items-center px-2 py-1 text-xs font-medium rounded-full <?= $color ?>">
                       <span class="w-1.5 h-1.5 bg-current rounded-full mr-1"></span><?= $label ?>
@@ -209,7 +208,7 @@
           </svg>
           Continue Shopping
         </a>
-        <a href="<?= BASE_URL ?>order/orders" class="inline-flex items-center justify-center px-8 py-3 text-base font-medium text-white transition-all duration-200 rounded-full shadow-sm bg-emerald-600 hover:bg-emerald-700">
+        <a href="<?= BASE_URL ?>order/myorders" class="inline-flex items-center justify-center px-8 py-3 text-base font-medium text-white transition-all duration-200 rounded-full shadow-sm bg-emerald-600 hover:bg-emerald-700">
           <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
           </svg>

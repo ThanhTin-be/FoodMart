@@ -32,3 +32,30 @@ if (!function_exists('generateSlug')) {
         return $slug;
     }
 }
+// Hàm tạo mã QR thanh toán qua VietQR
+class VietQR {
+    public static function generate($bank_bin, $account_no, $account_name, $amount, $orderId) {
+        $desc = "ThanhToanDonHang_" . $orderId;
+        $url = "https://api.vietqr.io/v2/generate";
+        $data = [
+            "accountNo"   => $account_no,
+            "accountName" => $account_name,
+            "acqId"       => $bank_bin,
+            "addInfo"     => $desc,
+            "amount"      => (int)$amount,
+            "template"    => "compact"
+        ];
+
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => json_encode($data),
+            CURLOPT_HTTPHEADER => ["Content-Type: application/json"]
+        ]);
+        $res = curl_exec($ch);
+        curl_close($ch);
+        $result = json_decode($res, true);
+        return $result['data']['qrDataURL'] ?? null;
+    }
+}  
