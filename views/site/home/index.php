@@ -787,14 +787,12 @@
               </p>
           </div>
 
-          <!-- Featured Article -->
-          <div class="mb-12 lg:mb-16">
-
+          <?php if (!empty($blogFeatured)): ?>
               <div class="overflow-hidden transition-all duration-500 shadow-lg bg-gradient-to-br from-brand-light to-white rounded-3xl hover:shadow-2xl">
                   <div class="grid gap-0 lg:grid-cols-2">
                       <!-- Image -->
                       <div class="relative overflow-hidden">
-                          <img width="600" height="450" src="https://pricot.vn/wp-content/uploads/2025/09/trai-cay-theo-mua-lua-chon-thong-minh-2.jpg" class="object-cover w-full h-64 transition-transform duration-500 lg:h-full hover:scale-105 wp-post-image" alt="Lợi ích của nước mơ ngâm đường đối với sức khỏe và đời sống" decoding="async" fetchpriority="high">
+                          <img width="600" height="450" src="<?= $blogFeatured['thumbnail'] ?? 'https://via.placeholder.com/600x450' ?>" class="object-cover w-full h-64 transition-transform duration-500 lg:h-full hover:scale-105 wp-post-image" alt="<?= $blogFeatured['title'] ?? 'Bài viết nổi bật' ?>" decoding="async">
                           <div class="absolute top-4 left-4">
                               <span class="px-4 py-2 text-sm font-semibold text-white rounded-full bg-brand-primary">
                                   Bài viết nổi bật
@@ -806,28 +804,31 @@
                       <div class="flex flex-col justify-center p-8 lg:p-12">
                           <div class="flex items-center mb-4 space-x-4">
                               <span class="px-3 py-1 text-sm font-medium rounded-full text-brand-primary bg-brand-light">
-                                  Tin tức </span>
-                              <span class="text-sm text-gray-500">07 Tháng 9, 2025</span>
+                                  <?= $blogFeatured['category'] ?? 'Tin tức' ?>
+                              </span>
+                              <span class="text-sm text-gray-500"><?= isset($blogFeatured['created_at']) ? date('d M, Y', strtotime($blogFeatured['created_at'])) : '' ?></span>
                           </div>
 
                           <h3 class="mb-4 text-2xl font-bold transition-colors cursor-pointer lg:text-3xl text-brand-darker font-cal-sans hover:text-brand-primary">
-                              <a href="https://pricot.vn/trai-cay-theo-mua-lua-chon-thong-minh/" class="hover:text-brand-primary">
-                                  Lợi ích của nước mơ ngâm đường đối với sức khỏe và đời sống </a>
+                              <a href="<?= isset($blogFeatured['id']) ? BASE_URL . 'blog/detail/' . $blogFeatured['id'] : '#' ?>" class="hover:text-brand-primary">
+                                  <?= $blogFeatured['title'] ?? 'Bài viết nổi bật' ?>
+                              </a>
                           </h3>
 
                           <p class="mb-6 text-lg leading-relaxed text-gray-600 font-questrial">
-                              Lợi ích của nước mơ ngâm đường đối với sức khỏe và đời sống 1. Giải khát, thanh nhiệt mùa hè Nước mơ ngâm đường... </p>
+                              <?= $blogFeatured['excerpt'] ?? '' ?>
+                          </p>
 
                           <div class="flex items-center justify-between">
                               <div class="flex items-center space-x-4">
-                                  <img src="https://secure.gravatar.com/avatar/2e9212c6275802b69bc209edee0e87ce5e437659f29a097e4251d8abc2413160?s=100&amp;d=mm&amp;r=g" alt="WP Theme" class="object-cover w-12 h-12 rounded-full">
+                                  <img src="https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=100&d=mm&r=g" alt="Author" class="object-cover w-12 h-12 rounded-full">
                                   <div>
-                                      <p class="font-semibold text-gray-800 font-lexend">Gái Xinh</p>
+                                      <p class="font-semibold text-gray-800 font-lexend">Tác giả</p>
                                       <p class="text-sm text-gray-500">3 phút đọc</p>
                                   </div>
                               </div>
 
-                              <a href="https://pricot.vn/trai-cay-theo-mua-lua-chon-thong-minh/" class="px-6 py-3 font-semibold text-white transition-all duration-300 transform bg-brand-primary hover:bg-brand-dark rounded-2xl hover:scale-105 font-lexend">
+                              <a href="<?= isset($blogFeatured['id']) ? BASE_URL . 'blog/detail/' . $blogFeatured['id'] : '#' ?>" class="px-6 py-3 font-semibold text-white transition-all duration-300 transform bg-brand-primary hover:bg-brand-dark rounded-2xl hover:scale-105 font-lexend">
                                   Đọc tiếp
                                   <i class="ml-2 fas fa-arrow-right"></i>
                               </a>
@@ -835,12 +836,12 @@
                       </div>
                   </div>
               </div>
-          </div>
+          <?php endif; ?>
 
 
           <!-- View All Blog Button -->
           <div class="mt-12 text-center lg:mt-16">
-              <a href="https://pricot.vn/category/tin-tuc/" class="inline-flex items-center px-8 py-4 text-lg font-semibold text-white transition-all duration-300 transform shadow-lg bg-gradient-to-r from-brand-primary to-brand-secondary hover:from-brand-dark hover:to-brand-primary rounded-2xl hover:scale-105 hover:shadow-xl font-lexend">
+              <a href="<?= BASE_URL ?>blog" class="inline-flex items-center px-8 py-4 text-lg font-semibold text-white transition-all duration-300 transform shadow-lg bg-gradient-to-r from-brand-primary to-brand-secondary hover:from-brand-dark hover:to-brand-primary rounded-2xl hover:scale-105 hover:shadow-xl font-lexend">
                   <i class="mr-2 fas fa-newspaper"></i>
                   Xem tất cả bài viết
               </a>
