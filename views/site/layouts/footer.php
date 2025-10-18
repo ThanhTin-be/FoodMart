@@ -206,6 +206,11 @@
 </footer>
 
 <!-- ===================== JS ===================== -->
+ <!-- Khai báo BASE_URL -->
+<script>
+    const BASE_URL = "<?= BASE_URL ?>";
+    console.log("✅ PHP BASE_URL =", BASE_URL);
+</script>
 <!-- jQuery luôn load đầu tiên -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="<?= BASE_URL ?>assets/js/cart.js"></script>
@@ -219,11 +224,6 @@
 <!-- Cuối cùng mới đến script chính -->
 <script src="<?= BASE_URL ?>assets/js/script.js"></script>
 
-<!-- Khai báo BASE_URL -->
-<script>
-    const BASE_URL = "<?= BASE_URL ?>";
-    console.log("✅ PHP BASE_URL =", BASE_URL);
-</script>
 
 <!-- Chỉ load khi ở trang checkout -->
 <?php if (strpos($uri, 'checkout/index') !== false): ?>

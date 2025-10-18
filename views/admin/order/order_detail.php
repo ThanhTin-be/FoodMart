@@ -68,7 +68,6 @@ $orderDetails = $data['order_details'] ?? [];
                             <label for="status" class="block text-sm font-medium text-gray-700">Trạng thái mới:</label>
                             <select name="status" id="status" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
                                 <option value="cho_xac_nhan" <?php echo ($order['status'] ?? '') === 'cho_xac_nhan' ? 'selected' : ''; ?>>Chờ xác nhận</option>
-                                <option value="da_xac_nhan" <?php echo ($order['status'] ?? '') === 'da_xac_nhan' ? 'selected' : ''; ?>>Đã xác nhận</option>
                                 <option value="dang_giao" <?php echo ($order['status'] ?? '') === 'dang_giao' ? 'selected' : ''; ?>>Đang giao</option>
                                 <option value="da_giao" <?php echo ($order['status'] ?? '') === 'da_giao' ? 'selected' : ''; ?>>Đã giao</option>
                                 <option value="thanh_cong" <?php echo ($order['status'] ?? '') === 'thanh_cong' ? 'selected' : ''; ?>>Thành công</option>
