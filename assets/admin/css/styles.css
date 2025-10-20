@@ -1,0 +1,59 @@
+/* Đảm bảo kích thước bao gồm cả padding và border */
+body {
+  box-sizing: border-box;
+}
+
+/* Hiệu ứng chuyển động mượt mà cho thanh bên */
+.sidebar-transition {
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Định dạng vùng chứa biểu đồ với chiều cao cố định */
+.chart-container {
+  position: relative;
+  height: 300px;
+}
+
+/* Định dạng thẻ thống kê 1 với nền gradient */
+.stat-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Định dạng thẻ thống kê 2 với nền gradient khác */
+.stat-card-2 {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+/* Định dạng thẻ thống kê 3 với nền gradient khác */
+.stat-card-3 {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+/* Định dạng thẻ thống kê 4 với nền gradient khác */
+.stat-card-4 {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+.bg-white1 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(186 102 102 / 24);
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.under {
+  text-decoration: underline-none !important;
+}

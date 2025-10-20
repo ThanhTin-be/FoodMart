@@ -1,0 +1,52 @@
+<?php
+// controllers/site/ProductController.php
+require_once ROOT . '/models/WishlistModel.php';
+
+class ProductController extends Controller
+{
+    // Trang detail theo slug
+    public function index($slug)
+    {
+        $product = $this->model("ProductModel")->getBySlug($slug);
+        $user_id = $_SESSION['user']['id'] ?? 0;
+
+        $wishlistModel = new WishlistModel();
+        // ✅ Lấy danh sách wishlist cho user (nếu chưa đăng nhập thì sẽ rỗng)
+        $wishlistItems = [];
+        if ($user_id > 0) {
+            $wishlistItems = $wishlistModel->getByUser($user_id);
+        }
+
+        if (!$product) {
+            $this->view("errors/404");
+            return;
+        }
+
+        $relatedProducts = $this->model("ProductModel")->getRelated($product['category_id'], $product['id']);
+
+        $this->view("product/detail", [
+            "product" => $product,
+            "relatedProducts" => $relatedProducts,
+            "wishlist" => $wishlistItems,
+        ]);
+    }
+
+    // fallback: /product/detail/{id} (cho link cũ)
+    public function detail($id)
+    {
+        $product = $this->model("ProductModel")->getById($id);
+        if (!$product) {
+            $this->view("errors/404");
+            return;
+        }
+
+        $relatedProducts = $this->model("ProductModel")->getRelated($product['category_id'], $product['id']);
+        $reviews = $this->model("ReviewModel")->getByProduct($product['id']);
+
+        $this->view("product/detail", [
+            "product" => $product,
+            "relatedProducts" => $relatedProducts,
+            "reviews" => $reviews
+        ]);
+    }
+}
