@@ -1,13 +1,14 @@
 <?php
-class UserController extends Controller {
+class UserController extends Controller
+{
     private $userModel;
-    public function __construct() {
+    public function __construct()
+    {
         // Khởi tạo model
         $this->userModel = $this->model('User');
     }
     public function login()
     {
-        session_start();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = trim($_POST['email']);
@@ -170,7 +171,8 @@ class UserController extends Controller {
     }
 
     // 📝 Register
-    public function register() {
+    public function register()
+    {
         $data = [
             'name' => '',
             'email' => '',
@@ -200,10 +202,10 @@ class UserController extends Controller {
             } else {
                 $hashed = password_hash($data['password'], PASSWORD_DEFAULT);
                 $ok = $this->userModel->createUser(
-                    $data['name'], 
-                    $data['email'], 
-                    $hashed, 
-                    $data['address'], 
+                    $data['name'],
+                    $data['email'],
+                    $hashed,
+                    $data['address'],
                     $data['phone']
                 );
 
@@ -214,7 +216,7 @@ class UserController extends Controller {
 
                     // ✅ Chuyển hướng sang login
                     header('Location: ' . BASE_URL . 'user/login');
-                exit;
+                    exit;
                 } else {
                     $data['error'] = 'Đăng ký thất bại, vui lòng thử lại.';
                 }

@@ -23,7 +23,7 @@
                       <a href="<?= BASE_URL ?>shop/index" class="px-8 py-4 text-lg font-semibold text-white transition-all duration-300 transform rounded-full shadow-lg bg-gradient-to-r from-brand-primary to-brand-secondary hover:from-brand-dark hover:to-brand-primary rounded-2xl hover:scale-105 hover:shadow-xl font-lexend">
                           <i class="mr-2 fas fa-shopping-bag"></i>
                           Mua Ngay </a>
-                      <a href="#" class="px-8 py-4 text-lg font-semibold text-orange-400 transition-all duration-300 transform border-2 border-orange-400 rounded-full hover:bg-orange-400 hover:text-white rounded-2xl hover:scale-105 font-lexend">
+                      <a href="https://www.youtube.com/watch?v=1Q6QZqbRVDA" class="px-8 py-4 text-lg font-semibold text-orange-400 transition-all duration-300 transform border-2 border-orange-400 rounded-full hover:bg-orange-400 hover:text-white rounded-2xl hover:scale-105 font-lexend">
                           <i class="mr-2 fas fa-play"></i>
                           Xem Video </a>
                   </div>
@@ -277,9 +277,18 @@
                               </a>
 
                               <!-- Wishlist Button -->
+                              <?php
+                                $wishlistModel = new WishlistModel();
+                                $isFav = isset($_SESSION['user'])
+                                    ? $wishlistModel->exists($_SESSION['user']['id'], $p['id'])
+                                    : false;
+                                ?>
                               <div class="absolute top-4 right-4">
-                                  <button class="flex items-center justify-center w-10 h-10 text-gray-600 transition-all duration-300 rounded-full bg-white/90 backdrop-blur-sm hover:text-red-500 hover:bg-white wishlist-btn">
-                                      <i class="fa-regular fa-heart"></i>
+                                  <button
+                                      id="wishlist-btn-<?= $p['id'] ?>"
+                                      class="flex items-center justify-center w-10 h-10 text-gray-600 transition-all duration-300 rounded-full bg-white/90 backdrop-blur-sm hover:text-red-500 hover:bg-white wishlist-btn"
+                                      onclick="toggleWishlist(<?= $p['id'] ?>)">
+                                      <i class="<?= $isFav ? 'fa-solid fa-heart text-red-500' : 'fa-regular fa-heart' ?>"></i>
                                   </button>
                               </div>
                           </div>
@@ -287,7 +296,7 @@
                           <!-- Product Info -->
                           <div class="p-6">
                               <h3 class="mb-2 text-xl font-bold transition-colors text-brand-darker font-league-spartan group-hover:text-brand-primary">
-                                  <a href="<?= BASE_URL ?>product/detail/<?= $p['id'] ?>" class="hover:text-brand-primary">
+                                  <a href="<?= BASE_URL ?>product/<?= $p['slug'] ?>" class="hover:text-brand-primary">
                                       <?= htmlspecialchars($p['name']) ?>
                                   </a>
                               </h3>
@@ -567,7 +576,7 @@
 
                   <!-- Featured Image -->
                   <div class="relative overflow-hidden transition-all duration-500 shadow-lg cursor-pointer group rounded-3xl hover:shadow-2xl">
-                      <img src="https://pricot.vn/wp-content/uploads/2025/09/mo-ngam-duong-pricot-5-1.jpg" alt="" class="object-cover w-full h-64 transition-transform duration-500 lg:h-80 group-hover:scale-105">
+                      <img src="https://images.pexels.com/photos/1132047/pexels-photo-1132047.jpeg" alt="" class="object-cover w-full h-64 transition-transform duration-500 lg:h-80 group-hover:scale-105">
                       <!-- Overlay -->
                       <div class="absolute inset-0 transition-opacity duration-300 opacity-0 bg-gradient-to-t from-black/60 via-transparent to-transparent group-hover:opacity-100"></div>
                       <!-- View Button -->
@@ -580,50 +589,50 @@
                       <!-- Image Label -->
                       <div class="absolute bottom-4 left-4 right-4">
                           <h4 class="text-lg font-bold text-white transition-opacity duration-300 opacity-0 font-league-spartan group-hover:opacity-100">
-                              mo-ngam-duong-foodmart-5 </h4>
+                              Trái cây nhiệt đới </h4>
                       </div>
                   </div>
 
                   <!-- Image Grid -->
                   <div class="grid grid-cols-2 gap-4">
                       <div class="relative overflow-hidden transition-all duration-300 shadow-md cursor-pointer group rounded-2xl hover:shadow-xl">
-                          <img src="https://pricot.vn/wp-content/uploads/2025/09/mo-ngam-duong-pricot-2.jpg" alt="" class="object-cover w-full h-32 transition-transform duration-300 lg:h-40 group-hover:scale-110">
+                          <img src="https://images.pexels.com/photos/9009923/pexels-photo-9009923.jpeg" alt="" class="object-cover w-full h-32 transition-transform duration-300 lg:h-40 group-hover:scale-110">
                           <div class="absolute inset-0 flex items-center justify-center transition-opacity duration-300 opacity-0 bg-black/40 group-hover:opacity-100">
                               <i class="text-xl text-white fas fa-expand-alt"></i>
                           </div>
                           <div class="absolute bottom-2 left-2 right-2">
                               <p class="text-sm font-medium text-white transition-opacity duration-300 opacity-0 group-hover:opacity-100">
-                                  mo-ngam-duong-foodmart-2 </p>
+                                  Chanh vàng mỹ </p>
                           </div>
                       </div>
                       <div class="relative overflow-hidden transition-all duration-300 shadow-md cursor-pointer group rounded-2xl hover:shadow-xl">
-                          <img src="https://pricot.vn/wp-content/uploads/2025/09/mo-ngam-duong-pricot-5.jpg" alt="" class="object-cover w-full h-32 transition-transform duration-300 lg:h-40 group-hover:scale-110">
+                          <img src="https://images.pexels.com/photos/5946066/pexels-photo-5946066.jpeg" alt="" class="object-cover w-full h-32 transition-transform duration-300 lg:h-40 group-hover:scale-110">
                           <div class="absolute inset-0 flex items-center justify-center transition-opacity duration-300 opacity-0 bg-black/40 group-hover:opacity-100">
                               <i class="text-xl text-white fas fa-expand-alt"></i>
                           </div>
                           <div class="absolute bottom-2 left-2 right-2">
                               <p class="text-sm font-medium text-white transition-opacity duration-300 opacity-0 group-hover:opacity-100">
-                                  mo-ngam-duong-foodmart-5 </p>
+                                  Đu đủ </p>
                           </div>
                       </div>
                       <div class="relative overflow-hidden transition-all duration-300 shadow-md cursor-pointer group rounded-2xl hover:shadow-xl">
-                          <img src="https://pricot.vn/wp-content/uploads/2025/09/mo-ngam-duong-pricot-4.jpg" alt="" class="object-cover w-full h-32 transition-transform duration-300 lg:h-40 group-hover:scale-110">
+                          <img src="https://images.pexels.com/photos/2294477/pexels-photo-2294477.jpeg" alt="" class="object-cover w-full h-32 transition-transform duration-300 lg:h-40 group-hover:scale-110">
                           <div class="absolute inset-0 flex items-center justify-center transition-opacity duration-300 opacity-0 bg-black/40 group-hover:opacity-100">
                               <i class="text-xl text-white fas fa-expand-alt"></i>
                           </div>
                           <div class="absolute bottom-2 left-2 right-2">
                               <p class="text-sm font-medium text-white transition-opacity duration-300 opacity-0 group-hover:opacity-100">
-                                  mo-ngam-duong-foodrmart-4 </p>
+                                  Quý mùa thu hoạch </p>
                           </div>
                       </div>
                       <div class="relative overflow-hidden transition-all duration-300 shadow-md cursor-pointer group rounded-2xl hover:shadow-xl">
-                          <img src="https://pricot.vn/wp-content/uploads/2025/09/hoa-atiso-do-ngam-duong-6.jpg" alt="" class="object-cover w-full h-32 transition-transform duration-300 lg:h-40 group-hover:scale-110">
+                          <img src="https://images.pexels.com/photos/867349/pexels-photo-867349.jpeg" alt="" class="object-cover w-full h-32 transition-transform duration-300 lg:h-40 group-hover:scale-110">
                           <div class="absolute inset-0 flex items-center justify-center transition-opacity duration-300 opacity-0 bg-black/40 group-hover:opacity-100">
                               <i class="text-xl text-white fas fa-expand-alt"></i>
                           </div>
                           <div class="absolute bottom-2 left-2 right-2">
                               <p class="text-sm font-medium text-white transition-opacity duration-300 opacity-0 group-hover:opacity-100">
-                                  hoa-atiso-do-ngam-duong-6 </p>
+                                  kiwi ma nở </p>
                           </div>
                       </div>
                   </div>
@@ -641,10 +650,10 @@
                   <!-- Featured Video -->
                   <div class="relative overflow-hidden transition-all duration-500 shadow-lg cursor-pointer group rounded-3xl hover:shadow-2xl">
 
-                      <a href="https://www.youtube.com/watch?v=TXlkZIP4c-0" target="_blank" rel="noopener" class="relative block">
+                      <a href="https://www.youtube.com/watch?v=KWjYak7zMYo" target="_blank" rel="noopener" class="relative block">
 
 
-                          <img src="https://pricot.vn/wp-content/uploads/2025/09/mo-ngam-duong-pricot-5.png" alt="Mơ ngâm đường thương hiệu Pricot" class="object-cover w-full h-64 transition-transform duration-500 lg:h-80 group-hover:scale-105">
+                          <img src="https://images.pexels.com/photos/22858008/pexels-photo-22858008.jpeg" alt="Mơ ngâm đường thương hiệu Pricot" class="object-cover w-full h-64 transition-transform duration-500 lg:h-80 group-hover:scale-105">
 
                           <!-- Play Button -->
                           <div class="absolute inset-0 flex items-center justify-center">
@@ -659,7 +668,7 @@
                           <!-- Video Info -->
                           <div class="absolute bottom-4 left-4 right-4">
                               <h4 class="mb-2 text-lg font-bold text-white font-league-spartan">
-                                  Mơ ngâm đường thương hiệu Foodmart </h4>
+                                  Lựu mùa thu hoạch </h4>
                               <div class="flex items-center text-sm text-white/80">
                                   <i class="mr-2 fas fa-clock"></i>
                                   <span>0:33</span>

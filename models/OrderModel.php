@@ -77,6 +77,30 @@ class OrderModel extends Database
         return $stmt->execute();
     }
 
+    // ====================== ⚡ DÙNG CHO AJAX ======================
+    public function getById($order_id, $user_id)
+    {
+        $sql = "SELECT * FROM orders WHERE id = ? AND user_id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ii", $order_id, $user_id);
+        $stmt->execute();
+        $order = $stmt->get_result()->fetch_assoc();
+
+        if (!$order) return null;
+
+        // Lấy danh sách sản phẩm trong đơn
+        $sql_items = "SELECT oi.*, p.name, p.image 
+                  FROM order_items oi 
+                  JOIN products p ON oi.product_id = p.id
+                  WHERE oi.order_id = ?";
+        $stmt2 = $this->conn->prepare($sql_items);
+        $stmt2->bind_param("i", $order_id);
+        $stmt2->execute();
+        $order['items'] = $stmt2->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        return $order;
+    }
+
     // ====================== 📊 THỐNG KÊ / DASHBOARD ======================
     // Tổng đơn hàng
     public function countOrdersByUser($user_id)

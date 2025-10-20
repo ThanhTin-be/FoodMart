@@ -1,12 +1,15 @@
 <?php
 class ShopController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         require_once ROOT . "models/CategoryModel.php";
         require_once ROOT . "models/ProductModel.php";
+        require_once ROOT . '/models/WishlistModel.php';
 
         $categoryModel = new CategoryModel();
         $productModel  = new ProductModel();
+        $wishlistModel = new WishlistModel();
 
         // Lấy danh mục hiện tại (nếu có slug hoặc id)
         $cat = null;
@@ -15,6 +18,12 @@ class ShopController extends Controller
             $cat = $categoryModel->getCategoryById($catId);
         } elseif (!empty($_GET['slug'])) {
             $cat = $categoryModel->getBySlug($_GET['slug']);
+        }
+        // ✅ Lấy danh sách wishlist cho user (nếu chưa đăng nhập thì sẽ rỗng)
+        $user_id = $_SESSION['user']['id'] ?? 0;
+        $wishlistItems = [];
+        if ($user_id > 0) {
+            $wishlistItems = $wishlistModel->getByUser($user_id);
         }
 
         // Lấy tất cả danh mục
@@ -52,12 +61,15 @@ class ShopController extends Controller
             "totalPages"  => $totalPages,
             "total"       => $total,
             "totalAll"    => $totalAll,
-            "sort"        => $sort
+            "sort"        => $sort,
+            "wishlist"     => $wishlistItems
+
         ]);
     }
 
     // ✅ API AJAX trả về HTML partial sản phẩm
-    public function ajaxProducts() {
+    public function ajaxProducts()
+    {
         require_once ROOT . "models/ProductModel.php";
         $productModel = new ProductModel();
 

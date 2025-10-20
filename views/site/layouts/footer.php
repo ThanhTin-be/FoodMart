@@ -40,31 +40,31 @@
                     <h4 class="mb-6 text-xl font-bold font-league-spartan">Liên Kết Nhanh</h4>
                     <ul class="space-y-3 quick-links-menu">
                         <li>
-                            <a href="<? BASE_URL ?>" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="<?= BASE_URL ?>" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Trang chủ
                             </a>
                         </li>
                         <li>
-                            <a href="1/gioi-thieu/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="<?= BASE_URL ?>pages/about " class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Giới thiệu
                             </a>
                         </li>
                         <li>
-                            <a href="1/category/tin-tuc/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="<?= BASE_URL ?>blog" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Tin tức
                             </a>
                         </li>
                         <li>
-                            <a href="1/product-all/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="<?= BASE_URL ?>shop/index" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Sản phẩm
                             </a>
                         </li>
                         <li>
-                            <a href="1/lien-he/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="<?= BASE_URL ?>pages/contact" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Liên hệ
                             </a>
@@ -77,31 +77,31 @@
                     <h4 class="mb-6 text-xl font-bold font-league-spartan">Chính Sách</h4>
                     <ul class="space-y-3 policies-menu">
                         <li>
-                            <a href="1/chinh-sach-baos-mat/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="<?= BASE_URL ?>pages/privacy" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Chính sách bảo mật
                             </a>
                         </li>
                         <li>
-                            <a href="1/chinh-sach-dosi-tra/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="<?= BASE_URL ?>pages/return/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Chính sách đổi trả
                             </a>
                         </li>
                         <li>
-                            <a href="1/chinh-sach-giaso-hang/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="<?= BASE_URL ?>pages/shipping" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Chính sách giao hàng
                             </a>
                         </li>
                         <li>
-                            <a href="1/dieu-khoan-sus-dung/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="<?= BASE_URL ?>pages/terms" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Điều khoản sử dụng
                             </a>
                         </li>
                         <li>
-                            <a href="1/phuong-thucs-thanh-toan/" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
+                            <a href="<?= BASE_URL ?>pages/payment" class="flex items-center text-gray-300 transition-colors duration-300 hover:text-brand-accent font-questrial">
                                 <i class="mr-2 fas fa-chevron-right text-brand-primary text-xs"></i>
                                 Phương thức thanh toán
                             </a>
@@ -121,7 +121,7 @@
                             <div>
                                 <p class="font-medium text-white font-lexend">Địa chỉ</p>
                                 <div class="text-sm text-gray-300 font-questrial">
-                                    Số 1349, Tỉnh Lộ 8, Xã Trung An, Huyện Củ Chi, TP. Hồ Chí Minh </div>
+                                    Số 613 Âu Cơ, phường Tân Phú, TP. Hồ Chí Minh </div>
                             </div>
                         </div>
 
@@ -206,7 +206,7 @@
 </footer>
 
 <!-- ===================== JS ===================== -->
- <!-- Khai báo BASE_URL -->
+<!-- Khai báo BASE_URL -->
 <script>
     const BASE_URL = "<?= BASE_URL ?>";
     console.log("✅ PHP BASE_URL =", BASE_URL);
@@ -219,11 +219,14 @@
 
 <!-- Các thư viện JS khác -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-
+<script src="<?= BASE_URL ?>assets/js/wishlist.js"></script>
 
 <!-- Cuối cùng mới đến script chính -->
 <script src="<?= BASE_URL ?>assets/js/script.js"></script>
 
+<?php
+$uri = $uri ?? ($_SERVER['REQUEST_URI'] ?? '');
+?>
 
 <!-- Chỉ load khi ở trang checkout -->
 <?php if (strpos($uri, 'checkout/index') !== false): ?>

@@ -3,18 +3,21 @@
 require_once ROOT . "core/database.php";
 require_once ROOT . "core/helpers.php"; // dùng generateSlug
 
-class ProductModel extends Database {
+class ProductModel extends Database
+{
     protected $table = "products";
 
     // Lấy tất cả sản phẩm
-    public function getAll() {
+    public function getAll()
+    {
         $sql = "SELECT * FROM {$this->table} ORDER BY id DESC";
         $result = $this->conn->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     // Lấy theo ID
-    public function getById($id) {
+    public function getById($id)
+    {
         $sql = "SELECT * FROM {$this->table} WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $id);
@@ -23,7 +26,8 @@ class ProductModel extends Database {
     }
 
     // Lấy theo slug (SEO link)
-    public function getBySlug($slug) {
+    public function getBySlug($slug)
+    {
         $sql = "SELECT * FROM {$this->table} WHERE slug = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("s", $slug);
@@ -32,7 +36,8 @@ class ProductModel extends Database {
     }
 
     // Lấy sản phẩm theo category
-    public function getByCategory($catId, $limit = 10) {
+    public function getByCategory($catId, $limit = 10)
+    {
         $sql = "SELECT * FROM {$this->table} WHERE category_id = ? ORDER BY id DESC LIMIT ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("ii", $catId, $limit);
@@ -40,119 +45,132 @@ class ProductModel extends Database {
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    
+
     // Đếm tổng sản phẩm (lọc theo category, giá, keyword)
-   public function countByShopFilter($filters) {
-    $sql = "SELECT COUNT(*) AS total FROM {$this->table} WHERE status = 1";
-    $params = [];
-    $types  = "";
+    public function countByShopFilter($filters)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM {$this->table} WHERE status = 1";
+        $params = [];
+        $types  = "";
 
-    // Lọc theo keyword
-    if (!empty($filters['keyword'])) {
-        $sql .= " AND name LIKE ?";
-        $params[] = "%" . $filters['keyword'] . "%";
-        $types .= "s";
-    }
+        // Lọc theo keyword
+        if (!empty($filters['keyword'])) {
+            $sql .= " AND name LIKE ?";
+            $params[] = "%" . $filters['keyword'] . "%";
+            $types .= "s";
+        }
 
-    // Lọc theo category
-    if (!empty($filters['category'])) {
-        $sql .= " AND category_id = ?";
-        $params[] = (int)$filters['category'];
-        $types .= "i";
-    }
+        // Lọc theo category
+        if (!empty($filters['category'])) {
+            $sql .= " AND category_id = ?";
+            $params[] = (int)$filters['category'];
+            $types .= "i";
+        }
 
-    // Lọc theo khoảng giá
-    if (!empty($filters['min'])) {
-        $sql .= " AND price >= ?";
-        $params[] = (float)$filters['min'];
-        $types .= "d";
-    }
-    if (!empty($filters['max'])) {
-        $sql .= " AND price <= ?";
-        $params[] = (float)$filters['max'];
-        $types .= "d";
-    }
+        // Lọc theo khoảng giá
+        if (!empty($filters['min'])) {
+            $sql .= " AND price >= ?";
+            $params[] = (float)$filters['min'];
+            $types .= "d";
+        }
+        if (!empty($filters['max'])) {
+            $sql .= " AND price <= ?";
+            $params[] = (float)$filters['max'];
+            $types .= "d";
+        }
 
-    $stmt = $this->conn->prepare($sql);
-    if (!empty($params)) {
-        $stmt->bind_param($types, ...$params);
+        $stmt = $this->conn->prepare($sql);
+        if (!empty($params)) {
+            $stmt->bind_param($types, ...$params);
+        }
+        $stmt->execute();
+        $res = $stmt->get_result()->fetch_assoc();
+        return $res['total'] ?? 0;
     }
-    $stmt->execute();
-    $res = $stmt->get_result()->fetch_assoc();
-    return $res['total'] ?? 0;
-}
 
 
     // Lấy danh sách sản phẩm (lọc + phân trang)
-  public function getShopProducts($filters, $limit, $offset, $sort) {
-    // Bắt đầu query
-    $sql = "SELECT * FROM {$this->table} WHERE status = 1";
-    $params = [];
-    $types  = "";
+    public function getShopProducts($filters, $limit, $offset, $sort)
+    {
+        // Bắt đầu query
+        $sql = "SELECT * FROM {$this->table} WHERE status = 1";
+        $params = [];
+        $types  = "";
 
-    // Lọc theo từ khóa
-    if (!empty($filters['keyword'])) {
-        $sql .= " AND name LIKE ?";
-        $params[] = "%" . $filters['keyword'] . "%";
-        $types .= "s";
+        // Lọc theo từ khóa
+        if (!empty($filters['keyword'])) {
+            $sql .= " AND name LIKE ?";
+            $params[] = "%" . $filters['keyword'] . "%";
+            $types .= "s";
+        }
+
+        // Lọc theo danh mục
+        if (!empty($filters['category'])) {
+            $sql .= " AND category_id = ?";
+            $params[] = (int)$filters['category'];
+            $types .= "i";
+        }
+
+        // Lọc theo khoảng giá
+        if (!empty($filters['min'])) {
+            $sql .= " AND price >= ?";
+            $params[] = (float)$filters['min'];
+            $types .= "d";
+        }
+        if (!empty($filters['max'])) {
+            $sql .= " AND price <= ?";
+            $params[] = (float)$filters['max'];
+            $types .= "d";
+        }
+
+        // Sắp xếp
+        switch ($sort) {
+            case "price-asc":
+                $sql .= " ORDER BY price ASC";
+                break;
+            case "price-desc":
+                $sql .= " ORDER BY price DESC";
+                break;
+            case "title-desc":
+                $sql .= " ORDER BY name DESC";
+                break;
+            case "title-asc":
+                $sql .= " ORDER BY name ASC";
+                break;
+            default:
+                $sql .= " ORDER BY id ASC";
+                break;
+        }
+
+        // Giới hạn phân trang (LIMIT phải là literal trong MySQL → không dùng bind_param)
+        $sql .= " LIMIT " . (int)$limit . " OFFSET " . (int)$offset;
+
+        // // Debug
+        // error_log("[ShopProducts] SQL: " . $sql);
+        // error_log("[ShopProducts] Params: " . json_encode($params));
+
+        // Thực thi query
+        $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            error_log("[ShopProducts] Prepare error: " . $this->conn->error);
+            return [];
+        }
+
+        if (!empty($params)) {
+            $stmt->bind_param($types, ...$params);
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $rows = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+
+        error_log("[ShopProducts] Found rows: " . count($rows));
+        return $rows;
     }
-
-    // Lọc theo danh mục
-    if (!empty($filters['category'])) {
-        $sql .= " AND category_id = ?";
-        $params[] = (int)$filters['category'];
-        $types .= "i";
-    }
-
-    // Lọc theo khoảng giá
-    if (!empty($filters['min'])) {
-        $sql .= " AND price >= ?";
-        $params[] = (float)$filters['min'];
-        $types .= "d";
-    }
-    if (!empty($filters['max'])) {
-        $sql .= " AND price <= ?";
-        $params[] = (float)$filters['max'];
-        $types .= "d";
-    }
-
-    // Sắp xếp
-    switch ($sort) {
-        case "price-asc":  $sql .= " ORDER BY price ASC"; break;
-        case "price-desc": $sql .= " ORDER BY price DESC"; break;
-        case "title-desc": $sql .= " ORDER BY name DESC"; break;
-        case "title-asc":  $sql .= " ORDER BY name ASC"; break;
-        default:           $sql .= " ORDER BY id ASC"; break;
-    }
-
-    // Giới hạn phân trang (LIMIT phải là literal trong MySQL → không dùng bind_param)
-    $sql .= " LIMIT " . (int)$limit . " OFFSET " . (int)$offset;
-
-    // Debug
-    error_log("[ShopProducts] SQL: " . $sql);
-    error_log("[ShopProducts] Params: " . json_encode($params));
-
-    // Thực thi query
-    $stmt = $this->conn->prepare($sql);
-    if (!$stmt) {
-        error_log("[ShopProducts] Prepare error: " . $this->conn->error);
-        return [];
-    }
-
-    if (!empty($params)) {
-        $stmt->bind_param($types, ...$params);
-    }
-
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $rows = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
-
-    error_log("[ShopProducts] Found rows: " . count($rows));
-    return $rows;
-}
 
     // Lấy sản phẩm liên quan
-    public function getRelated($catId, $excludeId = null, $limit = 20) {
+    public function getRelated($catId, $excludeId = null, $limit = 20)
+    {
         $sql = "SELECT * FROM {$this->table} WHERE category_id = ? ";
         if ($excludeId) {
             $sql .= "AND id != ? ";
@@ -170,13 +188,15 @@ class ProductModel extends Database {
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getAllProducts() {
+    public function getAllProducts()
+    {
         $stmt = $this->conn->prepare("SELECT * FROM products ORDER BY id ASC");
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getProductsByPage($offset, $perPage) {
+    public function getProductsByPage($offset, $perPage)
+    {
         $sql = "SELECT * FROM products ORDER BY id ASC LIMIT ? OFFSET ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("ii", $perPage, $offset);
@@ -184,7 +204,8 @@ class ProductModel extends Database {
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getProductById($id) {
+    public function getProductById($id)
+    {
         $sql = "SELECT * FROM products WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $id);
@@ -192,7 +213,8 @@ class ProductModel extends Database {
         return $stmt->get_result()->fetch_assoc();
     }
 
-    public function addProduct($name, $category_id, $price, $stock, $description, $status, $image) {
+    public function addProduct($name, $category_id, $price, $stock, $description, $status, $image)
+    {
         $imagePath = $this->uploadImage($image);
         $statusValue = ($status === 'active') ? 1 : 0;
         $sql = "INSERT INTO products (name, category_id, price, stock, description, status, image) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -201,7 +223,8 @@ class ProductModel extends Database {
         $stmt->execute();
     }
 
-    public function updateProduct($id, $name, $category_id, $price, $stock, $description, $status, $image = null, $removeImage = false) {
+    public function updateProduct($id, $name, $category_id, $price, $stock, $description, $status, $image = null, $removeImage = false)
+    {
         $imagePath = null;
         if ($removeImage) {
             $this->removeImageById($id);
@@ -209,7 +232,7 @@ class ProductModel extends Database {
             $this->removeImageById($id);
             $imagePath = $this->uploadImage($image);
         }
-      
+
         // Chuyển đổi status thành số nếu cần (tùy thuộc vào schema)
         $statusValue = ($status === 'active') ? 1 : 0;
 
@@ -233,20 +256,23 @@ class ProductModel extends Database {
         $stmt->bind_param($types, ...$params);
         $stmt->execute();
     }
-      // ProductModel.php
-        public function countByFilter($filters) {
-            $sql = "SELECT COUNT(*) AS total FROM products WHERE 1";
-            $result = $this->conn->query($sql);
-            return $result->fetch_assoc()['total'] ?? 0;
-        }
+    // ProductModel.php
+    public function countByFilter($filters)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM products WHERE 1";
+        $result = $this->conn->query($sql);
+        return $result->fetch_assoc()['total'] ?? 0;
+    }
 
-        public function filterAndPaginate($filters, $limit, $offset, $sort) {
-            $sql = "SELECT * FROM products LIMIT $limit OFFSET $offset";
-            $result = $this->conn->query($sql);
-            return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
-        }
+    public function filterAndPaginate($filters, $limit, $offset, $sort)
+    {
+        $sql = "SELECT * FROM products LIMIT $limit OFFSET $offset";
+        $result = $this->conn->query($sql);
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
 
-    public function deleteProduct($id) {
+    public function deleteProduct($id)
+    {
         $this->removeImageById($id);
         $sql = "DELETE FROM products WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
@@ -254,7 +280,8 @@ class ProductModel extends Database {
         $stmt->execute();
     }
 
-    public function searchProducts($keyword) {
+    public function searchProducts($keyword)
+    {
         $sql = "SELECT * FROM products WHERE 1=1";
         $types = "";
         $params = [];
@@ -275,7 +302,8 @@ class ProductModel extends Database {
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function searchProductsWithLimit($keyword, $offset, $perPage) {
+    public function searchProductsWithLimit($keyword, $offset, $perPage)
+    {
         $sql = "SELECT * FROM products WHERE 1=1";
         $types = "";
         $params = [];
@@ -298,7 +326,8 @@ class ProductModel extends Database {
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getTotalProductsBySearch($keyword) {
+    public function getTotalProductsBySearch($keyword)
+    {
         $sql = "SELECT COUNT(*) FROM products WHERE 1=1";
         $types = "";
         $params = [];
@@ -318,7 +347,8 @@ class ProductModel extends Database {
         return $result[0] ?? 0;
     }
 
-    public function filterProducts($category_id, $status) {
+    public function filterProducts($category_id, $status)
+    {
         $sql = "SELECT * FROM products WHERE 1=1";
         $types = "";
         $params = [];
@@ -343,7 +373,8 @@ class ProductModel extends Database {
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function filterProductsWithLimit($category_id, $status, $offset, $perPage) {
+    public function filterProductsWithLimit($category_id, $status, $offset, $perPage)
+    {
         $sql = "SELECT * FROM products WHERE 1=1";
         $types = "";
         $params = [];
@@ -371,13 +402,15 @@ class ProductModel extends Database {
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getTotalProducts() {
+    public function getTotalProducts()
+    {
         $result = $this->conn->query("SELECT COUNT(*) FROM products");
         $row = $result->fetch_row();
         return $row[0] ?? 0;
     }
 
-    public function getTotalProductsByFilter($category_id, $status) {
+    public function getTotalProductsByFilter($category_id, $status)
+    {
         $sql = "SELECT COUNT(*) FROM products WHERE 1=1";
         $types = "";
         $params = [];
@@ -402,7 +435,8 @@ class ProductModel extends Database {
         return $result[0] ?? 0;
     }
 
-    private function uploadImage($image, $update = false) {
+    private function uploadImage($image, $update = false)
+    {
         if ($update && empty($image['name'])) return null;
 
         $targetDir = "uploads/";
@@ -417,7 +451,8 @@ class ProductModel extends Database {
         return null;
     }
 
-    private function removeImageById($id) {
+    private function removeImageById($id)
+    {
         $sql = "SELECT image FROM products WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $id);
@@ -430,20 +465,18 @@ class ProductModel extends Database {
     }
 
     // Lấy sản phẩm nổi bật, muốn hiển thị ở homepage
-    public function getFeaturedProducts($limit = 8) {
-    $sql = "SELECT p.*
+    public function getFeaturedProducts($limit = 8)
+    {
+        $sql = "SELECT p.*
             FROM products p
             JOIN product_tags pt ON p.id = pt.product_id
             JOIN tags t ON pt.tag_id = t.id
             WHERE t.name = 'nổi bật'
             ORDER BY p.id DESC
             LIMIT ?";
-    $stmt = $this->conn->prepare($sql);
-    $stmt->bind_param("i", $limit);
-    $stmt->execute();
-    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $limit);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
 }
-
-
-}
-?>

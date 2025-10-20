@@ -160,7 +160,7 @@ $paymentCount  = $paymentCount ?? 0;
                 </a>
 
                 <!-- My Addresses -->
-                <a href="<?= htmlspecialchars(BASE_URL . 'user/addresses') ?>" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-primarydb-300 dark:text-gray-400 dark:hover:text-gray-300 whitespace-nowrap py-4 px-4 border-b-2 font-medium text-sm flex items-center transition-all duration-200">
+                <a href="<?= htmlspecialchars(BASE_URL . 'account/addresses') ?>" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-primarydb-300 dark:text-gray-400 dark:hover:text-gray-300 whitespace-nowrap py-4 px-4 border-b-2 font-medium text-sm flex items-center transition-all duration-200">
                     <div class="flex items-center justify-center w-8 h-8 mr-3 rounded-lg bg-gradient-to-r from-orange-500 to-orange-600">
                         <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
@@ -173,7 +173,7 @@ $paymentCount  = $paymentCount ?? 0;
                 </a>
 
                 <!-- Wishlist -->
-                <a href="<?= htmlspecialchars(BASE_URL . 'user/wishlist') ?>" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-primarydb-300 dark:text-gray-400 dark:hover:text-gray-300 whitespace-nowrap py-4 px-4 border-b-2 font-medium text-sm flex items-center transition-all duration-200">
+                <a href="<?= htmlspecialchars(BASE_URL . 'account/wishlist') ?>" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-primarydb-300 dark:text-gray-400 dark:hover:text-gray-300 whitespace-nowrap py-4 px-4 border-b-2 font-medium text-sm flex items-center transition-all duration-200">
                     <div class="flex items-center justify-center w-8 h-8 mr-3 rounded-lg bg-gradient-to-r from-red-500 to-red-600">
                         <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
@@ -191,7 +191,7 @@ $paymentCount  = $paymentCount ?? 0;
                 </a>
 
                 <!-- Payment History -->
-                <a href="<?= htmlspecialchars(BASE_URL . 'user/payments') ?>" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-primarydb-300 dark:text-gray-400 dark:hover:text-gray-300 whitespace-nowrap py-4 px-4 border-b-2 font-medium text-sm flex items-center transition-all duration-200">
+                <a href="<?= htmlspecialchars(BASE_URL . 'account/payments') ?>" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-primarydb-300 dark:text-gray-400 dark:hover:text-gray-300 whitespace-nowrap py-4 px-4 border-b-2 font-medium text-sm flex items-center transition-all duration-200">
                     <div class="flex items-center justify-center w-8 h-8 mr-3 rounded-lg bg-gradient-to-r from-indigo-500 to-indigo-600">
                         <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"></path>
@@ -454,35 +454,37 @@ $paymentCount  = $paymentCount ?? 0;
                     </div>
 
                     <!-- Recent Wishlist Items -->
-                    <div class="p-6 bg-white shadow-sm dark:bg-gray-800 rounded-xl ">
+                    <div class="p-6 bg-white shadow-sm dark:bg-gray-800 rounded-xl">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Wishlist</h3>
-                            <a href="<?= htmlspecialchars(BASE_URL . 'user/wishlist') ?>" class="text-sm font-medium text-primarydb-600 dark:text-primarydb-400 hover:text-primarydb-800 dark:hover:text-primarydb-300">
+                            <a href="<?= BASE_URL ?>account/wishlist"
+                                class="text-sm font-medium text-primarydb-600 dark:text-primarydb-400 hover:text-primarydb-800 dark:hover:text-primarydb-300">
                                 View All
                             </a>
                         </div>
 
                         <div class="space-y-3">
-                            <!-- Static wishlist items as requested -->
-                            <div class="flex items-center space-x-3">
-                                <div class="flex-shrink-0 w-12 h-12 overflow-hidden bg-gray-200 rounded-lg dark:bg-gray-600">
-                                    <img src="https://dev.wptheme.store/s/wppricot/wp-content/uploads/2025/09/mo-ngam-duong-pricot-2.jpg" alt="Mơ ngâm đường Pricot" class="object-cover w-full h-full">
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <h4 class="text-sm font-medium text-gray-900 truncate dark:text-white">Mơ ngâm đường Pricot</h4>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">95.000 ₫</p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center space-x-3">
-                                <div class="flex-shrink-0 w-12 h-12 overflow-hidden bg-gray-200 rounded-lg dark:bg-gray-600">
-                                    <img src="https://dev.wptheme.store/s/wppricot/wp-content/uploads/2025/09/gallery-5.jpg" alt="Chuối organic Đà Lạt" class="object-cover w-full h-full">
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <h4 class="text-sm font-medium text-gray-900 truncate dark:text-white">Chuối organic Đà Lạt</h4>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">40.000 ₫</p>
-                                </div>
-                            </div>
+                            <?php if (!empty($recentWishlist)): ?>
+                                <?php foreach ($recentWishlist as $item): ?>
+                                    <div class="flex items-center space-x-3">
+                                        <a class="flex-shrink-0 w-12 h-12 overflow-hidden bg-gray-200 rounded-lg dark:bg-gray-600">
+                                            <img src="<?= BASE_URL ?>assets/images/<?= $item['image'] ?>"
+                                                alt="<?= htmlspecialchars($item['name']) ?>"
+                                                class="object-cover w-full h-full">
+                                        </a>
+                                        <div class="flex-1 min-w-0">
+                                            <h4 class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                                <?= htmlspecialchars($item['name']) ?>
+                                            </h4>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">
+                                                <?= number_format($item['price'], 0, ',', '.') ?> ₫
+                                            </p>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Bạn chưa có sản phẩm nào trong wishlist.</p>
+                            <?php endif; ?>
                         </div>
                     </div>
 

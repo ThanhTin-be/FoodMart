@@ -110,8 +110,6 @@ $currentFilter = $_GET['filter'] ?? 'all';
                   <?= $label ?>
                 </span>
               </div>
-
-
             </div>
 
             <div class="flex items-center mt-4 space-x-4 sm:mt-0">
@@ -124,7 +122,8 @@ $currentFilter = $_GET['filter'] ?? 'all';
                 </div>
               </div>
               <div class="flex space-x-2">
-                <a href="<?= BASE_URL ?>order/detail/<?= $order['id'] ?>"
+                <!-- ✅ Sửa tên hàm gọi đúng -->
+                <button onclick="openCustomerOrderModal(<?= $order['id'] ?>)"
                   class="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full shadow-sm
                           text-primary-700 bg-primarydb-200 hover:bg-primarydb-600 hover:text-white
                           dark:text-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600">
@@ -135,7 +134,7 @@ $currentFilter = $_GET['filter'] ?? 'all';
                       clip-rule="evenodd"></path>
                   </svg>
                   View
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -178,6 +177,56 @@ $currentFilter = $_GET['filter'] ?? 'all';
     <?php endforeach; ?>
   </div>
 <?php endif; ?>
+
+<!-- ================= Script xử lý modal ================= -->
+<script>
+  // ================== ⚙️ MỞ MODAL CHI TIẾT ĐƠN HÀNG ==================
+  function openCustomerOrderModal(orderId) {
+    const modalContainerId = 'customer-order-modal-container';
+
+    // Nếu chưa có container thì tạo
+    let container = document.getElementById(modalContainerId);
+    if (!container) {
+      container = document.createElement('div');
+      container.id = modalContainerId;
+      document.body.appendChild(container);
+    }
+
+    // Hiển thị loading
+    container.innerHTML = `
+      <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+        <div class="text-white text-lg font-semibold">Đang tải chi tiết đơn hàng...</div>
+      </div>
+    `;
+
+    // Gọi AJAX lấy nội dung modal
+    fetch(BASE_URL + "index.php?url=account/orderDetailAjax/" + orderId)
+      .then(res => res.text())
+      .then(html => {
+        container.innerHTML = html;
+      })
+      .catch(err => {
+        console.error("❌ Lỗi load modal:", err);
+        container.innerHTML = `
+          <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 text-white">
+            <div class="bg-red-600 px-6 py-3 rounded-lg shadow-lg">
+              Lỗi tải thông tin đơn hàng.
+            </div>
+          </div>`;
+      });
+  }
+
+  // ================== ⚙️ ĐÓNG MODAL ==================
+  function closeCustomerOrderModal() {
+    const modal = document.getElementById('customer-order-modal-container');
+    if (modal) modal.remove();
+  }
+
+  // ================== ♻️ ESC ĐỂ ĐÓNG ==================
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeCustomerOrderModal();
+  });
+</script>
 
 <?php
 $content = ob_get_clean();

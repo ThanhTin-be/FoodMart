@@ -29,13 +29,14 @@
         <h1 class="py-2 text-xl font-bold text-gray-800"><?= $blog['title'] ?></h1>
         <div class="mb-4 overflow-hidden text-gray-800 bg-white shadow-lg rounded-2xl">
           <div class="p-4">
-            <div class="prose prose-lg max-w-none">
-              <?= $blog['content'] ?>
-            </div>
+
+            <?= $blog['content'] ?>
+
           </div>
         </div>
-        <?php include_once view_path("site/partials/sidebar_info.php"); ?>
+
       </div>
+      <?php include_once view_path("site/partials/sidebar_info.php"); ?>
     </div>
   </div>
 </div>

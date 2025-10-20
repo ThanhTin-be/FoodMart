@@ -48,7 +48,7 @@ $categories = $categories ?? [];
 
     <!-- Your existing CSS bundles -->
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/vendor.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
+
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.min.css">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -260,7 +260,7 @@ $categories = $categories ?? [];
 
 </head>
 
-<body class="font-lexend bg-gray-50">
+<body class="font-lexend bg-gray-50" style="overflow : auto;">
 
     <!-- ================= HEADER (Tailwind + Font Awesome) ================= -->
     <header class="sticky top-0 z-50 shadow-lg bg-white/95 backdrop-blur-md">

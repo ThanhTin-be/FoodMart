@@ -99,12 +99,23 @@ $gallery = !empty($product['gallery']) ? explode(',', $product['gallery']) : [];
                 <button type="button" data-id="<?= $product['id'] ?>" class="add-to-cart flex items-center justify-center px-5 py-3 text-base font-medium text-white bg-green-600 border border-transparent rounded-full hover:bg-green-700">
                   Thêm giỏ hàng
                 </button>
-                <button type="button" onclick="toggleWishlist(<?= $product['id'] ?>)" class="flex items-center justify-center flex-shrink-0 px-4 py-3 text-base font-medium text-gray-700 bg-white border border-green-300 rounded-full hover:bg-green-50">
-                  <span>Yêu thích</span>
+                <!-- Wish list -->
+                <?php
+                $wishlistModel = new WishlistModel();
+                $isFav = isset($_SESSION['user'])
+                  ? $wishlistModel->exists($_SESSION['user']['id'], $product['id'])
+                  : false;
+                ?>
+
+                <!-- Wishlist Button -->
+                <button
+                  id="wishlist-btn-<?= $product['id'] ?>"
+                  onclick="toggleWishlist(<?= $product['id'] ?>)"
+                  class="flex items-center justify-center flex-shrink-0 px-4 py-3 text-base font-medium text-gray-700 bg-white border border-green-300 rounded-full hover:bg-green-50">
+                  <i class="<?= $isFav ? 'fa-solid fa-heart text-red-500' : 'fa-regular fa-heart' ?>"></i>
                 </button>
               </div>
             </div>
-
           </div>
 
         </div>

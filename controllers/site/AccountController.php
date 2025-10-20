@@ -1,7 +1,6 @@
 <?php
 class AccountController extends Controller
 {
-    // ✅ Trang tổng quan tài khoản (Dashboard)
     public function dashboard()
     {
         if (!isset($_SESSION['user'])) {
@@ -12,6 +11,10 @@ class AccountController extends Controller
         $user_id = $_SESSION['user']['id'];
         $userModel = $this->model('User');
         $orderModel = $this->model('OrderModel');
+        $wishlistModel = $this->model('WishlistModel');
+
+        // 💖 Lấy 4 sản phẩm gần nhất trong wishlist
+        $recentWishlist = $wishlistModel->getRecentByUser($user_id, 4);
 
         $user = $userModel->getUserById($user_id);
 
@@ -20,6 +23,7 @@ class AccountController extends Controller
         $completedOrders = $orderModel->countByStatus($user_id, 'thanh_cong');
         $totalSpent      = $orderModel->getTotalSpentByUser($user_id);
         $recentOrders    = $orderModel->getRecentOrdersByUser($user_id, 5);
+        $wishlistCount   = count($wishlistModel->getByUser($user_id));
 
         $this->view('account/dashboard', [
             'user'            => $user,
@@ -28,8 +32,11 @@ class AccountController extends Controller
             'completedOrders' => $completedOrders,
             'totalSpent'      => $totalSpent,
             'recentOrders'    => $recentOrders,
+            'wishlistCount'   => $wishlistCount,
+            'recentWishlist'  => $recentWishlist,
         ]);
     }
+
 
     // ✅ Trang đơn hàng
     public function orders()
@@ -57,6 +64,31 @@ class AccountController extends Controller
         ]);
     }
 
+    // ✅ Xem chi tiết đơn hàng (AJAX modal)
+    public function orderDetailAjax($id)
+    {
+        header('Content-Type: text/html; charset=UTF-8');
+
+        if (empty($_SESSION['user'])) {
+            http_response_code(403);
+            echo "<div class='py-8 text-center text-red-500'>Vui lòng đăng nhập để xem chi tiết đơn hàng.</div>";
+            return;
+        }
+
+        $user_id = $_SESSION['user']['id'];
+        $orderModel = $this->model('OrderModel');
+        $order = $orderModel->getById($id, $user_id);
+
+        if (!$order) {
+            http_response_code(404);
+            echo "<div class='py-8 text-center text-red-500'>Không tìm thấy đơn hàng.</div>";
+            return;
+        }
+
+        // ✅ Render phần modal chi tiết
+        $this->view('account/_orderDetailModal', ['order' => $order]);
+    }
+
     // ✅ Hồ sơ cá nhân
     public function profile()
     {
@@ -68,6 +100,7 @@ class AccountController extends Controller
         $user_id = $_SESSION['user']['id'];
         $userModel  = $this->model('User');
         $orderModel = $this->model('OrderModel');
+        $wishlistModel = $this->model('WishlistModel'); // 💖 thêm wishlist model
 
         $user = $userModel->getUserById($user_id);
 
@@ -78,7 +111,7 @@ class AccountController extends Controller
 
         $totalOrders   = $orderModel->getOrderCountByUser($user_id);
         $totalSpent    = $orderModel->getTotalSpentByUser($user_id);
-        $wishlistCount = 0; // nếu có bảng wishlist thì lấy thật
+        $wishlistCount = count($wishlistModel->getByUser($user_id)); // 💖 lấy số lượng thật
 
         $this->view('account/profile', [
             'user'          => $user,
@@ -87,6 +120,23 @@ class AccountController extends Controller
             'totalOrders'   => $totalOrders,
             'totalSpent'    => $totalSpent,
             'wishlistCount' => $wishlistCount,
+        ]);
+    }
+
+    // 💖 Trang Wishlist
+    public function wishlist()
+    {
+        if (!isset($_SESSION['user'])) {
+            header("Location: " . BASE_URL . "user/login");
+            exit;
+        }
+
+        $user_id = $_SESSION['user']['id'];
+        $wishlistModel = $this->model('WishlistModel');
+        $wishlist = $wishlistModel->getByUser($user_id);
+
+        $this->view('account/wishlist', [
+            'wishlist' => $wishlist
         ]);
     }
 
@@ -147,8 +197,6 @@ class AccountController extends Controller
             exit;
         }
     }
-
-
 
     // ✅ Đổi mật khẩu (AJAX-friendly)
     public function updatePassword()

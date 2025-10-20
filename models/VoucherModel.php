@@ -1,16 +1,19 @@
 <?php
 require_once ROOT . "core/database.php";
 require_once ROOT . "core/helpers.php"; // dùng generateSlug
-class VoucherModel extends Database {
+class VoucherModel extends Database
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct(); // Kế thừa kết nối từ Database
     }
 
     /**
      * Lấy danh sách tất cả voucher (dùng cho admin)
      */
-    public function getAllVouchers() {
+    public function getAllVouchers()
+    {
         $sql = "SELECT * FROM vouchers ORDER BY id ASC";
         $result = $this->conn->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
@@ -19,7 +22,8 @@ class VoucherModel extends Database {
     /**
      * Lấy voucher theo ID
      */
-    public function getVoucherById($id) {
+    public function getVoucherById($id)
+    {
         $stmt = $this->conn->prepare("SELECT * FROM vouchers WHERE id = ?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
@@ -30,7 +34,8 @@ class VoucherModel extends Database {
     /**
      * Thêm voucher mới
      */
-    public function addVoucher($code, $discount_amount, $start_date, $end_date, $min_order_value, $max_usage, $status) {
+    public function addVoucher($code, $discount_amount, $start_date, $end_date, $min_order_value, $max_usage, $status)
+    {
         $stmt = $this->conn->prepare("
             INSERT INTO vouchers (code, discount_amount, start_date, end_date, min_order_value, max_usage, status)
             VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -42,7 +47,8 @@ class VoucherModel extends Database {
     /**
      * Cập nhật voucher
      */
-    public function updateVoucher($id, $code, $discount_amount, $start_date, $end_date, $min_order_value, $max_usage, $status) {
+    public function updateVoucher($id, $code, $discount_amount, $start_date, $end_date, $min_order_value, $max_usage, $status)
+    {
         $stmt = $this->conn->prepare("
             UPDATE vouchers
             SET code = ?, discount_amount = ?, start_date = ?, end_date = ?, 
@@ -56,7 +62,8 @@ class VoucherModel extends Database {
     /**
      * Xóa voucher
      */
-    public function deleteVoucher($id) {
+    public function deleteVoucher($id)
+    {
         $stmt = $this->conn->prepare("DELETE FROM vouchers WHERE id = ?");
         $stmt->bind_param("i", $id);
         return $stmt->execute();
@@ -65,7 +72,8 @@ class VoucherModel extends Database {
     /**
      * Tìm kiếm voucher theo mã hoặc giá trị
      */
-    public function searchVouchers($keyword) {
+    public function searchVouchers($keyword)
+    {
         $like = "%{$keyword}%";
         $stmt = $this->conn->prepare("
             SELECT * FROM vouchers 
@@ -81,7 +89,8 @@ class VoucherModel extends Database {
     /**
      * Lọc voucher theo trạng thái
      */
-    public function filterVouchers($status) {
+    public function filterVouchers($status)
+    {
         if ($status !== null && $status !== '') {
             $stmt = $this->conn->prepare("SELECT * FROM vouchers WHERE status = ? ORDER BY id DESC");
             $stmt->bind_param("i", $status);
@@ -98,7 +107,8 @@ class VoucherModel extends Database {
      * Kiểm tra status, ngày bắt đầu, ngày kết thúc, max_usage.
      * So sánh theo ngày để tránh lỗi kiểu DATE vs DATETIME.
      */
-    public function getActiveVoucher($code) {
+    public function getActiveVoucher($code)
+    {
         $sql = "SELECT * FROM vouchers 
                 WHERE code = ? 
                 AND status = 1 
@@ -114,7 +124,7 @@ class VoucherModel extends Database {
         $voucher = $result->fetch_assoc();
 
         // Debug tạm (có thể xóa sau)
-        error_log('[DEBUG] Voucher lookup: ' . $code . ' => ' . json_encode($voucher));
+        // error_log('[DEBUG] Voucher lookup: ' . $code . ' => ' . json_encode($voucher));
 
         return $voucher;
     }
@@ -122,7 +132,8 @@ class VoucherModel extends Database {
     /**
      * ✅ Giảm lượt sử dụng voucher (khi đơn hàng dùng mã thành công)
      */
-    public function decreaseUsage($id) {
+    public function decreaseUsage($id)
+    {
         $id = (int)$id;
         $sql = "UPDATE vouchers
                 SET max_usage = CASE 
