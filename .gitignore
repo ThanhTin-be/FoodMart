@@ -9,6 +9,7 @@ Thumbs.db
 # Node & Composer
 node_modules/
 vendor/
+core/service-account.json
 
 # Build
 dist/
