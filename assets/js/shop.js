@@ -3,14 +3,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const grid = document.getElementById("products-grid");
   const sortSelect = document.getElementById("product-sort");
   const loadMoreBtn = document.getElementById("load-more-btn");
+  const searchInput = document.getElementById("product-search");
 
   let currentPage = 1;
 
   // ================== ⚙️ HÀM LOAD SẢN PHẨM ==================
   function loadProducts(params = {}, append = false) {
-    // 🧩 URL chính xác theo MVC
     const url = new URL(BASE_URL + "index.php?url=site/shop/ajaxProducts");
-    Object.entries(params).forEach(([k, v]) => url.searchParams.append(k, v));
+    Object.entries(params).forEach(([k, v]) => {
+      if (v !== undefined && v !== null && v !== "") {
+        url.searchParams.append(k, v);
+      }
+    });
 
     console.log("[SHOP] Fetching:", url.toString());
 
@@ -55,14 +59,43 @@ document.addEventListener("DOMContentLoaded", () => {
   // ================== 🧭 XỬ LÝ SORT ==================
   sortSelect?.addEventListener("change", () => {
     currentPage = 1;
-    loadProducts({ sort: sortSelect.value, page: 1 }, false);
+    loadProducts({
+      sort: sortSelect.value,
+      keyword: searchInput?.value.trim() || "",
+      page: 1,
+    });
   });
 
   // ================== ♻️ XỬ LÝ NÚT "XEM THÊM" ==================
   loadMoreBtn?.addEventListener("click", () => {
     const nextPage = parseInt(loadMoreBtn.dataset.page || "2", 10);
     console.log("[SHOP] Load more: page", nextPage);
-    loadProducts({ sort: sortSelect?.value || "", page: nextPage }, true);
+    loadProducts(
+      {
+        sort: sortSelect?.value || "",
+        keyword: searchInput?.value.trim() || "",
+        page: nextPage,
+      },
+      true
+    );
+  });
+
+  // ================== 🔍 LIVE SEARCH (Debounce) ==================
+  let searchTimeout;
+
+  function handleSearch(keyword) {
+    console.log("[SHOP] Searching for:", keyword);
+    currentPage = 1;
+    loadProducts({ keyword, sort: sortSelect?.value || "", page: 1 }, false);
+  }
+
+  searchInput?.addEventListener("input", (e) => {
+    const keyword = e.target.value.trim();
+    clearTimeout(searchTimeout);
+
+    searchTimeout = setTimeout(() => {
+      handleSearch(keyword);
+    }, 500);
   });
 
   // ================== 🚀 KHỞI TẠO TRANG ==================

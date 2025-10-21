@@ -76,10 +76,23 @@
           </h1>
         </div>
 
+        <!-- 🔍 Search Box -->
+        <div class="p-4 mb-4 bg-gray-100 rounded-lg shadow-sm">
+          <div class="flex items-center gap-3">
+            <input
+              type="text"
+              id="product-search"
+              placeholder="Tìm sản phẩm..."
+              value="<?= htmlspecialchars($filters['keyword'] ?? '') ?>"
+              class="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
+          </div>
+        </div>
+
+
         <!-- Sorting -->
         <div class="p-4 mb-6 bg-gray-100 rounded-lg shadow-sm">
           <div class="flex flex-row items-center justify-between gap-4">
-            <div id="products-counter" class="text-sm text-gray-600">Hiển thị <?= count($products) ?> / <?= $total ?> sản phẩm</div>
+            <div id="products-counter" class="text-sm text-gray-600"></div>
             <div class="flex items-center gap-4">
               <label class="hidden text-sm text-gray-600 sm:block">Sắp xếp theo:</label>
               <select id="product-sort" class="px-3 py-2 text-sm text-gray-900 bg-gray-100 rounded-lg focus:outline-none">
