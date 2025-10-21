@@ -2,7 +2,8 @@
 
 require_once ROOT . "core/database.php";
 
-class OrderModel extends Database {
+class OrderModel extends Database
+{
     private $id;
     private $userId;
     private $fullname;
@@ -40,56 +41,68 @@ class OrderModel extends Database {
     }
 
     // Getter và Setter cho id
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
     }
 
     // Getter và Setter cho userId
-    public function getUserId() {
+    public function getUserId()
+    {
         return $this->userId;
     }
 
-    public function setUserId($userId) {
+    public function setUserId($userId)
+    {
         $this->userId = $userId;
     }
 
     // Getter và Setter cho fullname
-    public function getFullname() {
+    public function getFullname()
+    {
         return $this->fullname;
     }
 
-    public function setFullname($fullname) {
+    public function setFullname($fullname)
+    {
         $this->fullname = $fullname;
     }
 
     // Getter và Setter cho phone
-    public function getPhone() {
+    public function getPhone()
+    {
         return $this->phone;
     }
 
-    public function setPhone($phone) {
+    public function setPhone($phone)
+    {
         $this->phone = $phone;
     }
 
     // Getter và Setter cho address
-    public function getAddress() {
+    public function getAddress()
+    {
         return $this->address;
     }
 
-    public function setAddress($address) {
+    public function setAddress($address)
+    {
         $this->address = $address;
     }
 
     // Getter và Setter cho totalPrice
-    public function getTotalPrice() {
+    public function getTotalPrice()
+    {
         return $this->totalPrice;
     }
 
-    public function setTotalPrice($totalPrice) {
+    public function setTotalPrice($totalPrice)
+    {
         if (is_numeric($totalPrice) && $totalPrice >= 0) {
             $this->totalPrice = number_format((float)$totalPrice, 2, '.', '');
         } else {
@@ -98,11 +111,13 @@ class OrderModel extends Database {
     }
 
     // Getter và Setter cho paymentMethod
-    public function getPaymentMethod() {
+    public function getPaymentMethod()
+    {
         return $this->paymentMethod;
     }
 
-    public function setPaymentMethod($paymentMethod) {
+    public function setPaymentMethod($paymentMethod)
+    {
         $validMethods = ['cod', 'bank', 'paypal'];
         if (in_array($paymentMethod, $validMethods)) {
             $this->paymentMethod = $paymentMethod;
@@ -112,11 +127,13 @@ class OrderModel extends Database {
     }
 
     // Getter và Setter cho status
-    public function getStatus() {
+    public function getStatus()
+    {
         return $this->status;
     }
 
-    public function setStatus($status) {
+    public function setStatus($status)
+    {
         $validStatuses = ['cho_xac_nhan', 'da_xac_nhan', 'dang_giao', 'da_giao', 'thanh_cong', 'huy'];
         if (in_array($status, $validStatuses)) {
             $this->status = $status;
@@ -126,20 +143,24 @@ class OrderModel extends Database {
     }
 
     // Getter và Setter cho createdAt
-    public function getCreatedAt() {
+    public function getCreatedAt()
+    {
         return $this->createdAt;
     }
 
-    public function setCreatedAt($createdAt) {
+    public function setCreatedAt($createdAt)
+    {
         $this->createdAt = $createdAt;
     }
 
     // Getter và Setter cho updatedAt
-    public function getUpdatedAt() {
+    public function getUpdatedAt()
+    {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt($updatedAt) {
+    public function setUpdatedAt($updatedAt)
+    {
         $this->updatedAt = $updatedAt;
     }
 
@@ -210,7 +231,7 @@ class OrderModel extends Database {
 
     public function updateStatus($order_id, $status)
     {
-        $sql = "UPDATE orders SET status = ? WHERE id = ?";
+        $sql = "UPDATE orders SET status = ?, updated_at = NOW() WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("si", $status, $order_id);
         return $stmt->execute();

@@ -71,7 +71,10 @@ class ShopController extends Controller
     public function ajaxProducts()
     {
         require_once ROOT . "models/ProductModel.php";
+        require_once ROOT . "models/WishlistModel.php"; // ✅ thêm dòng này
+
         $productModel = new ProductModel();
+        $wishlistModel = new WishlistModel();
 
         $filters = [
             "keyword"  => $_GET['keyword']  ?? '',
@@ -79,14 +82,25 @@ class ShopController extends Controller
             "min"      => $_GET['min']      ?? '',
             "max"      => $_GET['max']      ?? '',
         ];
+
         $sort     = $_GET['sort'] ?? '';
         $page     = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
         $perPage  = 12;
         $offset   = ($page - 1) * $perPage;
 
+        // ✅ Lấy wishlist user (nếu có đăng nhập)
+        $user_id = $_SESSION['user']['id'] ?? 0;
+        $wishlistItems = [];
+        if ($user_id > 0) {
+            $wishlistItems = $wishlistModel->getByUser($user_id);
+        }
+
         $total    = $productModel->countByShopFilter($filters);
         $products = $productModel->getShopProducts($filters, $perPage, $offset, $sort);
         $totalPages = max(1, ceil($total / $perPage));
+
+        // ✅ Truyền biến wishlist vào view
+        $wishlist = $wishlistItems;
 
         ob_start();
         include ROOT . "views/site/shop/_productGrid.php";

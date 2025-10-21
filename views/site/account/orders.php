@@ -88,7 +88,9 @@ $currentFilter = $_GET['filter'] ?? 'all';
       $previewItems = array_slice($order['items'] ?? [], 0, 3);
       ?>
 
-      <div class="overflow-hidden transition-shadow duration-200 bg-white shadow-sm dark:bg-gray-800 rounded-xl hover:shadow-md">
+      <div data-order-id="<?= $order['id'] ?>"
+        class="overflow-hidden transition-shadow duration-200 bg-white shadow-sm dark:bg-gray-800 rounded-xl hover:shadow-md">
+
         <!-- Header -->
         <div class="px-6 py-4 bg-gray-100 dark:bg-gray-700/50">
           <div class="flex flex-col justify-between sm:flex-row sm:items-center">
@@ -104,7 +106,7 @@ $currentFilter = $_GET['filter'] ?? 'all';
 
               <!-- Status Badge -->
               <div class="flex items-center">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium 
+                <span class="order-status-badge inline-flex items-center px-3 py-1 rounded-full text-sm font-medium 
                              bg-<?= $color ?>-100 text-<?= $color ?>-800 
                              dark:bg-<?= $color ?>-900 dark:text-<?= $color ?>-200">
                   <?= $label ?>
@@ -122,7 +124,6 @@ $currentFilter = $_GET['filter'] ?? 'all';
                 </div>
               </div>
               <div class="flex space-x-2">
-                <!-- ✅ Sửa tên hàm gọi đúng -->
                 <button onclick="openCustomerOrderModal(<?= $order['id'] ?>)"
                   class="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full shadow-sm
                           text-primary-700 bg-primarydb-200 hover:bg-primarydb-600 hover:text-white
@@ -178,13 +179,12 @@ $currentFilter = $_GET['filter'] ?? 'all';
   </div>
 <?php endif; ?>
 
-<!-- ================= Script xử lý modal ================= -->
+
+<!-- ================= Script xử lý modal + huỷ đơn ================= -->
 <script>
-  // ================== ⚙️ MỞ MODAL CHI TIẾT ĐƠN HÀNG ==================
+  // ================== ⚙️ MỞ MODAL CHI TIẾT ==================
   function openCustomerOrderModal(orderId) {
     const modalContainerId = 'customer-order-modal-container';
-
-    // Nếu chưa có container thì tạo
     let container = document.getElementById(modalContainerId);
     if (!container) {
       container = document.createElement('div');
@@ -192,14 +192,11 @@ $currentFilter = $_GET['filter'] ?? 'all';
       document.body.appendChild(container);
     }
 
-    // Hiển thị loading
     container.innerHTML = `
-      <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-        <div class="text-white text-lg font-semibold">Đang tải chi tiết đơn hàng...</div>
-      </div>
-    `;
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+      <div class="text-white text-lg font-semibold">Đang tải chi tiết đơn hàng...</div>
+    </div>`;
 
-    // Gọi AJAX lấy nội dung modal
     fetch(BASE_URL + "index.php?url=account/orderDetailAjax/" + orderId)
       .then(res => res.text())
       .then(html => {
@@ -207,12 +204,9 @@ $currentFilter = $_GET['filter'] ?? 'all';
       })
       .catch(err => {
         console.error("❌ Lỗi load modal:", err);
-        container.innerHTML = `
-          <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 text-white">
-            <div class="bg-red-600 px-6 py-3 rounded-lg shadow-lg">
-              Lỗi tải thông tin đơn hàng.
-            </div>
-          </div>`;
+        container.innerHTML = `<div class='fixed inset-0 flex items-center justify-center text-white bg-black bg-opacity-50'>
+        <div class='bg-red-600 px-6 py-3 rounded-lg shadow-lg'>Lỗi tải thông tin đơn hàng.</div>
+      </div>`;
       });
   }
 
@@ -226,6 +220,52 @@ $currentFilter = $_GET['filter'] ?? 'all';
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeCustomerOrderModal();
   });
+
+  // ================== ⚙️ HUỶ ĐƠN HÀNG ==================
+  function cancelOrder(orderId) {
+    console.log("[JS] cancelOrder called for", orderId);
+
+    if (!confirm("Bạn có chắc muốn huỷ đơn hàng #" + orderId + " không?")) {
+      console.log("[JS] cancelOrder - user cancelled confirm");
+      return;
+    }
+
+    const apiUrl = BASE_URL + "index.php?url=account/cancelOrder/" + orderId;
+    console.log("[JS] API URL:", apiUrl);
+
+    fetch(apiUrl)
+      .then(res => {
+        if (!res.ok) throw new Error("HTTP status " + res.status);
+        return res.json();
+      })
+      .then(data => {
+        console.log("[JS] Response:", data);
+        alert(data.message);
+
+        if (data.success) {
+          try {
+            closeCustomerOrderModal();
+          } catch (e) {}
+
+          const orderCard = document.querySelector(`[data-order-id="${orderId}"]`);
+          if (orderCard) {
+            const badge = orderCard.querySelector(".order-status-badge");
+            if (badge) {
+              badge.className =
+                "order-status-badge inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
+              badge.textContent = "Cancelled";
+            }
+          } else {
+            console.warn("[JS] Không tìm thấy card đơn hàng để update, reload toàn trang.");
+            location.reload();
+          }
+        }
+      })
+      .catch(err => {
+        console.error("[JS] Lỗi khi huỷ đơn hàng:", err);
+        alert("❌ Lỗi khi huỷ đơn. Kiểm tra Console để xem chi tiết.");
+      });
+  }
 </script>
 
 <?php

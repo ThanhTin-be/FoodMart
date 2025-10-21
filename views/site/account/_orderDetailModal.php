@@ -3,7 +3,8 @@
         <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
 
             <!-- Overlay -->
-            <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75 dark:bg-gray-900 dark:bg-opacity-75" onclick="closeCustomerOrderModal()"></div>
+            <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75 dark:bg-gray-900 dark:bg-opacity-75"
+                onclick="closeCustomerOrderModal()"></div>
 
             <!-- Modal content -->
             <div class="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl dark:bg-gray-800 sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
@@ -29,7 +30,6 @@
 
                         <!-- Order Info -->
                         <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-
                             <!-- Order Information -->
                             <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-700">
                                 <h4 class="flex items-center mb-3 text-sm font-semibold text-gray-900 dark:text-white">
@@ -147,17 +147,22 @@
                                 <p class="text-gray-500 dark:text-gray-400">Không có sản phẩm trong đơn hàng này.</p>
                             <?php endif; ?>
                         </div>
-
                     </div>
                 </div>
 
                 <!-- Footer -->
-                <div class="flex justify-end px-6 py-4 bg-gray-100 dark:bg-gray-700">
-                    <button onclick="closeCustomerOrderModal()" class="px-4 py-2 text-sm font-medium text-white rounded-md bg-green-700 hover:bg-green-800">
+                <div class="flex justify-end px-6 py-4 bg-gray-100 dark:bg-gray-700 space-x-3">
+                    <?php if ($order['status'] === 'cho_xac_nhan'): ?>
+                        <button onclick="cancelOrder(<?= $order['id'] ?>)"
+                            class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 transition">
+                            Huỷ đơn hàng
+                        </button>
+                    <?php endif; ?>
+                    <button onclick="closeCustomerOrderModal()"
+                        class="px-4 py-2 text-sm font-medium text-white rounded-md bg-green-700 hover:bg-green-800">
                         Đóng
                     </button>
                 </div>
-
             </div>
         </div>
     </div>

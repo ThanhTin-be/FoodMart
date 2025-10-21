@@ -165,7 +165,7 @@ class CheckoutController extends Controller
             $cartController = new CartController();
             $cartController->clearCartAfterPayment();
             unset($_SESSION['voucher']);
-            
+
 
             // ✅ Lưu session order ID để thankyou sử dụng
             $_SESSION['last_order_id'] = $orderId;
@@ -194,7 +194,8 @@ class CheckoutController extends Controller
     }
 
     // Trang thanh toán VietQR
-    public function vietqr($orderId) {
+    public function vietqr($orderId)
+    {
         $orderModel = $this->model('OrderModel');
         $order = $orderModel->getOrderById($orderId);
 
@@ -218,24 +219,25 @@ class CheckoutController extends Controller
     }
 
     // Trang cảm ơn
-   public function thankyou() {
-    $userId = $_SESSION['user']['id'] ?? null;
-    $orderId = $_GET['order_id'] ?? ($_SESSION['last_order_id'] ?? null);
+    public function thankyou()
+    {
+        $userId = $_SESSION['user']['id'] ?? null;
+        $orderId = $_GET['order_id'] ?? ($_SESSION['last_order_id'] ?? null);
 
-    if (!$orderId || !$userId) {
-        header("Location: " . BASE_URL . "order/myorders");
-        exit;
-    }
+        if (!$orderId || !$userId) {
+            header("Location: " . BASE_URL . "account/orders");
+            exit;
+        }
 
-    $orderModel = $this->model('OrderModel');
-    $order = $orderModel->getOrderDetail($orderId, $userId);
+        $orderModel = $this->model('OrderModel');
+        $order = $orderModel->getOrderDetail($orderId, $userId);
 
-    if (!$order) {
-        header("Location: " . BASE_URL . "order/myorders");
-        exit;
-    }
+        if (!$order) {
+            header("Location: " . BASE_URL . "acctount/myorders");
+            exit;
+        }
 
-    $this->view("checkout/thankyou", ["order" => $order]);
+        $this->view("checkout/thankyou", ["order" => $order]);
     }
 
 

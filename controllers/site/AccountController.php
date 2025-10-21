@@ -89,6 +89,58 @@ class AccountController extends Controller
         $this->view('account/_orderDetailModal', ['order' => $order]);
     }
 
+    // ✅ Hủy đơn hàng
+    public function cancelOrder($order_id)
+    {
+        header('Content-Type: application/json; charset=utf-8');
+
+        // Debug server-side (ghi log)
+        error_log("[DEBUG] cancelOrder called with order_id=" . $order_id);
+
+        if (empty($_SESSION['user'])) {
+            error_log("[DEBUG] cancelOrder - no user session");
+            echo json_encode(['success' => false, 'message' => 'Bạn chưa đăng nhập.']);
+            exit;
+        }
+
+        $user_id = (int)$_SESSION['user']['id'];
+        $orderModel = $this->model('OrderModel');
+
+        $order = $orderModel->getOrderDetail($order_id, $user_id);
+        if (!$order) {
+            error_log("[DEBUG] cancelOrder - order not found or not belongs to user: order_id={$order_id}, user_id={$user_id}");
+            echo json_encode(['success' => false, 'message' => 'Không tìm thấy đơn hàng này.']);
+            exit;
+        }
+
+        if ($order['status'] !== 'cho_xac_nhan') {
+            error_log("[DEBUG] cancelOrder - invalid status: current={$order['status']}");
+            echo json_encode(['success' => false, 'message' => 'Chỉ có thể hủy đơn hàng đang chờ xác nhận.']);
+            exit;
+        }
+
+        $success = $orderModel->updateStatus($order_id, 'huy');
+
+        if ($success) {
+            error_log("[DEBUG] cancelOrder - success updateStatus for order_id={$order_id}");
+            echo json_encode([
+                'success' => true,
+                'message' => "Đã huỷ đơn hàng #{$order_id} thành công.",
+                'order_id' => (int)$order_id,
+                'new_status' => 'huy'
+            ]);
+            exit;
+        } else {
+            error_log("[DEBUG] cancelOrder - DB update failed for order_id={$order_id}");
+            echo json_encode(['success' => false, 'message' => 'Không thể hủy đơn hàng. Vui lòng thử lại.']);
+            exit;
+        }
+    }
+
+
+
+
+
     // ✅ Hồ sơ cá nhân
     public function profile()
     {
