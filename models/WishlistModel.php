@@ -1,6 +1,58 @@
 <?php
-class WishlistModel extends Database
-{
+class WishlistModel extends Database {
+    private $id;
+    private $userId;
+    private $productId;
+    private $createdAt;
+
+    // Constructor
+    public function _construct(
+        $id = null,
+        $userId = null,
+        $productId = null,
+        $createdAt = null
+    ) {
+        $this->id = $id;
+        $this->userId = $userId;
+        $this->productId = $productId;
+        $this->createdAt = $createdAt;
+    }
+
+    // Getter và Setter cho id
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    // Getter và Setter cho userId
+    public function getUserId() {
+        return $this->userId;
+    }
+
+    public function setUserId($userId) {
+        $this->userId = $userId;
+    }
+
+    // Getter và Setter cho productId
+    public function getProductId() {
+        return $this->productId;
+    }
+
+    public function setProductId($productId) {
+        $this->productId = $productId;
+    }
+
+    // Getter và Setter cho createdAt
+    public function getCreatedAt() {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt($createdAt) {
+        $this->createdAt = $createdAt;
+    }
     // ====================== 💖 LẤY DANH SÁCH WISHLIST CỦA USER ======================
     public function getByUser($user_id)
     {

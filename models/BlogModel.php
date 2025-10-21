@@ -1,8 +1,123 @@
 <?php
 require_once ROOT . "core/database.php";
 require_once ROOT . "core/helpers.php"; // dùng generateSlug
-class BlogModel extends Database
-{
+class BlogModel extends Database {
+    private $id;
+    private $title;
+    private $excerpt;
+    private $category;
+    private $content;
+    private $thumbnail;
+    private $createdAt;
+    private $updatedAt;
+    private $type;
+    // Constructor
+    public function _construct(
+        $id = null,
+        $title = '',
+        $excerpt = null,
+        $category = null,
+        $content = '',
+        $thumbnail = null,
+        $createdAt = null,
+        $updatedAt = null,
+        $type = 'blog'
+    ) {
+        $this->id = $id;
+        $this->title = $title;
+        $this->excerpt = $excerpt;
+        $this->category = $category;
+        $this->content = $content;
+        $this->thumbnail = $thumbnail;
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
+        $this->type = $type;
+    }
+
+    // Getter và Setter cho id
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    // Getter và Setter cho title
+    public function getTitle() {
+        return $this->title;
+    }
+
+    public function setTitle($title) {
+        $this->title = $title;
+    }
+
+    // Getter và Setter cho excerpt
+    public function getExcerpt() {
+        return $this->excerpt;
+    }
+
+    public function setExcerpt($excerpt) {
+        $this->excerpt = $excerpt;
+    }
+
+    // Getter và Setter cho category
+    public function getCategory() {
+        return $this->category;
+    }
+
+    public function setCategory($category) {
+        $this->category = $category;
+    }
+
+    // Getter và Setter cho content
+    public function getContent() {
+        return $this->content;
+    }
+
+    public function setContent($content) {
+        $this->content = $content;
+    }
+
+    // Getter và Setter cho thumbnail
+    public function getThumbnail() {
+        return $this->thumbnail;
+    }
+
+    public function setThumbnail($thumbnail) {
+        $this->thumbnail = $thumbnail;
+    }
+
+    // Getter và Setter cho createdAt
+    public function getCreatedAt() {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt($createdAt) {
+        $this->createdAt = $createdAt;
+    }
+
+    // Getter và Setter cho updatedAt
+    public function getUpdatedAt() {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt($updatedAt) {
+        $this->updatedAt = $updatedAt;
+    }
+
+    // Getter và Setter cho type
+    public function getType() {
+        return $this->type;
+    }
+
+    public function setType($type) {
+        if (in_array($type, ['blog', 'policy'])) {
+            $this->type = $type;
+        } else {
+            $this->type = 'blog'; // Giá trị mặc định
+        }
+    }
 
 
     // Lấy danh sách blog theo limit và offset

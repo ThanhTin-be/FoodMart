@@ -3,6 +3,87 @@ require_once ROOT . "core/database.php";
 require_once ROOT . "core/helpers.php"; // dùng generateSlug
 
 class ReviewModel extends Database {
+    private $id;
+    private $productId;
+    private $userId;
+    private $rating;
+    private $comment;
+    private $createdAt;
+
+    // Constructor
+    public function _construct(
+        $id = null,
+        $productId = null,
+        $userId = null,
+        $rating = null,
+        $comment = null,
+        $createdAt = null
+    ) {
+        $this->id = $id;
+        $this->productId = $productId;
+        $this->userId = $userId;
+        $this->rating = $rating;
+        $this->comment = $comment;
+        $this->createdAt = $createdAt;
+    }
+
+    // Getter và Setter cho id
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    // Getter và Setter cho productId
+    public function getProductId() {
+        return $this->productId;
+    }
+
+    public function setProductId($productId) {
+        $this->productId = $productId;
+    }
+
+    // Getter và Setter cho userId
+    public function getUserId() {
+        return $this->userId;
+    }
+
+    public function setUserId($userId) {
+        $this->userId = $userId;
+    }
+
+    // Getter và Setter cho rating
+    public function getRating() {
+        return $this->rating;
+    }
+
+    public function setRating($rating) {
+        if (is_numeric($rating) && $rating >= 1 && $rating <= 5) {
+            $this->rating = (int)$rating;
+        } else {
+            $this->rating = null; // Giá trị mặc định là NULL nếu không hợp lệ
+        }
+    }
+
+    // Getter và Setter cho comment
+    public function getComment() {
+        return $this->comment;
+    }
+
+    public function setComment($comment) {
+        $this->comment = $comment;
+    }
+
+    // Getter và Setter cho createdAt
+    public function getCreatedAt() {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt($createdAt) {
+        $this->createdAt = $createdAt;
+    }
 
     // Lấy tất cả review
     public function getAllReviews() {

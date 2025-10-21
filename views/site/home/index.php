@@ -271,7 +271,7 @@
                               </div>
 
                               <!-- Product Image -->
-                              <a href="<?= BASE_URL ?>product/detail/<?= $p['id'] ?>">
+                              <a href="<?= BASE_URL ?>product/<?= $p['slug'] ?>">
                                   <img src="<?= BASE_URL ?>assets/images/<?= $p['image'] ?>" alt="<?= htmlspecialchars($p['name']) ?>"
                                       class="object-contain w-full h-48 transition-transform duration-500 lg:h-56 group-hover:scale-110" loading="lazy">
                               </a>

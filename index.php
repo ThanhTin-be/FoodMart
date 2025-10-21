@@ -11,3 +11,6 @@ require_once ROOT . "core" . DIRECTORY_SEPARATOR . "database.php";
 
 // Khởi tạo app
 $app = new App();
+
+// Tải Composer Autoload trong terminal thư mục dự án chạy lệnh sau:
+// composer require phpmailer/phpmailer

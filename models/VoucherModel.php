@@ -1,13 +1,145 @@
 <?php
 require_once ROOT . "core/database.php";
 require_once ROOT . "core/helpers.php"; // dùng generateSlug
-class VoucherModel extends Database
-{
+class VoucherModel extends Database {
+    private $id;
+    private $code;
+    private $discountAmount;
+    private $startDate;
+    private $endDate;
+    private $minOrderValue;
+    private $maxUsage;
+    private $status;
+    private $createdAt;
+    private $updatedAt;
 
-    public function __construct()
-    {
-        parent::__construct(); // Kế thừa kết nối từ Database
+    // Constructor
+    public function _construct(
+        $id = null,
+        $code = '',
+        $discountAmount = 0,
+        $startDate = null,
+        $endDate = null,
+        $minOrderValue = 0,
+        $maxUsage = 1,
+        $status = 1,
+        $createdAt = null,
+        $updatedAt = null
+    ) {
+        $this->id = $id;
+        $this->code = $code;
+        $this->discountAmount = $discountAmount;
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
+        $this->minOrderValue = $minOrderValue;
+        $this->maxUsage = $maxUsage;
+        $this->status = $status;
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
     }
+
+    // Getter và Setter cho id
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    // Getter và Setter cho code
+    public function getCode() {
+        return $this->code;
+    }
+
+    public function setCode($code) {
+        $this->code = $code;
+    }
+
+    // Getter và Setter cho discountAmount
+    public function getDiscountAmount() {
+        return $this->discountAmount;
+    }
+
+    public function setDiscountAmount($discountAmount) {
+        if (is_numeric($discountAmount) && $discountAmount >= 0) {
+            $this->discountAmount = (int)$discountAmount;
+        } else {
+            $this->discountAmount = 0; // Giá trị mặc định nếu không hợp lệ
+        }
+    }
+
+    // Getter và Setter cho startDate
+    public function getStartDate() {
+        return $this->startDate;
+    }
+
+    public function setStartDate($startDate) {
+        $this->startDate = $startDate;
+    }
+
+    // Getter và Setter cho endDate
+    public function getEndDate() {
+        return $this->endDate;
+    }
+
+    public function setEndDate($endDate) {
+        $this->endDate = $endDate;
+    }
+
+    // Getter và Setter cho minOrderValue
+    public function getMinOrderValue() {
+        return $this->minOrderValue;
+    }
+
+    public function setMinOrderValue($minOrderValue) {
+        if (is_numeric($minOrderValue) && $minOrderValue >= 0) {
+            $this->minOrderValue = (int)$minOrderValue;
+        } else {
+            $this->minOrderValue = 0; // Giá trị mặc định nếu không hợp lệ
+        }
+    }
+
+    // Getter và Setter cho maxUsage
+    public function getMaxUsage() {
+        return $this->maxUsage;
+    }
+
+    public function setMaxUsage($maxUsage) {
+        if (is_numeric($maxUsage) && $maxUsage >= 0) {
+            $this->maxUsage = (int)$maxUsage;
+        } else {
+            $this->maxUsage = 1; // Giá trị mặc định nếu không hợp lệ
+        }
+    }
+
+    // Getter và Setter cho status
+    public function getStatus() {
+        return $this->status;
+    }
+
+    public function setStatus($status) {
+        $this->status = (bool)$status;
+    }
+
+    // Getter và Setter cho createdAt
+    public function getCreatedAt() {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt($createdAt) {
+        $this->createdAt = $createdAt;
+    }
+
+    // Getter và Setter cho updatedAt
+    public function getUpdatedAt() {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt($updatedAt) {
+        $this->updatedAt = $updatedAt;
+    }
+
 
     /**
      * Lấy danh sách tất cả voucher (dùng cho admin)

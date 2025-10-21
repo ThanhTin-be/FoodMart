@@ -2,8 +2,147 @@
 
 require_once ROOT . "core/database.php";
 
-class OrderModel extends Database
-{
+class OrderModel extends Database {
+    private $id;
+    private $userId;
+    private $fullname;
+    private $phone;
+    private $address;
+    private $totalPrice;
+    private $paymentMethod;
+    private $status;
+    private $createdAt;
+    private $updatedAt;
+
+    // Constructor
+    public function _construct(
+        $id = null,
+        $userId = null,
+        $fullname = null,
+        $phone = null,
+        $address = null,
+        $totalPrice = 0.00,
+        $paymentMethod = 'cod',
+        $status = 'cho_xac_nhan',
+        $createdAt = null,
+        $updatedAt = null
+    ) {
+        $this->id = $id;
+        $this->userId = $userId;
+        $this->fullname = $fullname;
+        $this->phone = $phone;
+        $this->address = $address;
+        $this->totalPrice = $totalPrice;
+        $this->paymentMethod = $paymentMethod;
+        $this->status = $status;
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
+    }
+
+    // Getter và Setter cho id
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    // Getter và Setter cho userId
+    public function getUserId() {
+        return $this->userId;
+    }
+
+    public function setUserId($userId) {
+        $this->userId = $userId;
+    }
+
+    // Getter và Setter cho fullname
+    public function getFullname() {
+        return $this->fullname;
+    }
+
+    public function setFullname($fullname) {
+        $this->fullname = $fullname;
+    }
+
+    // Getter và Setter cho phone
+    public function getPhone() {
+        return $this->phone;
+    }
+
+    public function setPhone($phone) {
+        $this->phone = $phone;
+    }
+
+    // Getter và Setter cho address
+    public function getAddress() {
+        return $this->address;
+    }
+
+    public function setAddress($address) {
+        $this->address = $address;
+    }
+
+    // Getter và Setter cho totalPrice
+    public function getTotalPrice() {
+        return $this->totalPrice;
+    }
+
+    public function setTotalPrice($totalPrice) {
+        if (is_numeric($totalPrice) && $totalPrice >= 0) {
+            $this->totalPrice = number_format((float)$totalPrice, 2, '.', '');
+        } else {
+            $this->totalPrice = 0.00; // Giá trị mặc định nếu không hợp lệ
+        }
+    }
+
+    // Getter và Setter cho paymentMethod
+    public function getPaymentMethod() {
+        return $this->paymentMethod;
+    }
+
+    public function setPaymentMethod($paymentMethod) {
+        $validMethods = ['cod', 'bank', 'paypal'];
+        if (in_array($paymentMethod, $validMethods)) {
+            $this->paymentMethod = $paymentMethod;
+        } else {
+            $this->paymentMethod = 'cod'; // Giá trị mặc định
+        }
+    }
+
+    // Getter và Setter cho status
+    public function getStatus() {
+        return $this->status;
+    }
+
+    public function setStatus($status) {
+        $validStatuses = ['cho_xac_nhan', 'da_xac_nhan', 'dang_giao', 'da_giao', 'thanh_cong', 'huy'];
+        if (in_array($status, $validStatuses)) {
+            $this->status = $status;
+        } else {
+            $this->status = 'cho_xac_nhan'; // Giá trị mặc định
+        }
+    }
+
+    // Getter và Setter cho createdAt
+    public function getCreatedAt() {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt($createdAt) {
+        $this->createdAt = $createdAt;
+    }
+
+    // Getter và Setter cho updatedAt
+    public function getUpdatedAt() {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt($updatedAt) {
+        $this->updatedAt = $updatedAt;
+    }
+
     // ====================== 🧾 TẠO ĐƠN HÀNG ======================
     public function createOrder($user_id, $fullname, $phone, $address, $payment_method, $cart, $total)
     {

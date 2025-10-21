@@ -3,8 +3,108 @@
 require_once ROOT . "core/database.php";
 require_once ROOT . "core/helpers.php"; // dùng generateSlug
 
-class CategoryModel extends Database
-{
+class CategoryModel extends Database{
+    private $id;
+    private $name;
+    private $thumbnail;
+    private $icon;
+    private $banner;
+    private $slug;
+    private $parentId;
+    private $description;
+
+    // Constructor
+    public function _construct(
+        $id = null,
+        $name = '',
+        $thumbnail = null,
+        $icon = null,
+        $banner = null,
+        $slug = null,
+        $parentId = null,
+        $description = null
+    ) {
+        $this->id = $id;
+        $this->name = $name;
+        $this->thumbnail = $thumbnail;
+        $this->icon = $icon;
+        $this->banner = $banner;
+        $this->slug = $slug;
+        $this->parentId = $parentId;
+        $this->description = $description;
+    }
+
+    // Getter và Setter cho id
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    // Getter và Setter cho name
+    public function getName() {
+        return $this->name;
+    }
+
+    public function setName($name) {
+        $this->name = $name;
+    }
+
+    // Getter và Setter cho thumbnail
+    public function getThumbnail() {
+        return $this->thumbnail;
+    }
+
+    public function setThumbnail($thumbnail) {
+        $this->thumbnail = $thumbnail;
+    }
+
+    // Getter và Setter cho icon
+    public function getIcon() {
+        return $this->icon;
+    }
+
+    public function setIcon($icon) {
+        $this->icon = $icon;
+    }
+
+    // Getter và Setter cho banner
+    public function getBanner() {
+        return $this->banner;
+    }
+
+    public function setBanner($banner) {
+        $this->banner = $banner;
+    }
+
+    // Getter và Setter cho slug
+    public function getSlug() {
+        return $this->slug;
+    }
+
+    public function setSlug($slug) {
+        $this->slug = $slug;
+    }
+
+    // Getter và Setter cho parentId
+    public function getParentId() {
+        return $this->parentId;
+    }
+
+    public function setParentId($parentId) {
+        $this->parentId = $parentId;
+    }
+
+    // Getter và Setter cho description
+    public function getDescription() {
+        return $this->description;
+    }
+
+    public function setDescription($description) {
+        $this->description = $description;
+    }
     protected $table = "categories";
 
     //  Lấy tất cả category + đếm sản phẩm trong mỗi danh mục

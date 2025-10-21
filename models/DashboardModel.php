@@ -4,7 +4,7 @@ require_once ROOT . "core/database.php";
 class DashboardModel extends Database {
 
     public function getDashboardData() {
-        $currentDate = '2025-09-27';  
+        $currentDate = date('Y-m-d');  
         $currentMonth = date('Y-m', strtotime($currentDate));
         $currentYear = date('Y', strtotime($currentDate));
         $lastMonth = date('Y-m', strtotime('-1 month', strtotime($currentDate)));

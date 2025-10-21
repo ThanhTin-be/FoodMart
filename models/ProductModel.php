@@ -3,8 +3,216 @@
 require_once ROOT . "core/database.php";
 require_once ROOT . "core/helpers.php"; // dùng generateSlug
 
-class ProductModel extends Database
-{
+class ProductModel extends Database {
+     private $id;
+    private $categoryId;
+    private $name;
+    private $slug;
+    private $description;
+    private $shortDesc;
+    private $unit;
+    private $price;
+    private $oldPrice;
+    private $image;
+    private $gallery;
+    private $stock;
+    private $isFeatured;
+    private $status;
+    private $createdAt;
+    private $updatedAt;
+
+    // Constructor
+    public function _construct(
+        $id = null,
+        $categoryId = null,
+        $name = '',
+        $slug = null,
+        $description = null,
+        $shortDesc = null,
+        $unit = '1 Unit',
+        $price = 0.00,
+        $oldPrice = null,
+        $image = null,
+        $gallery = null,
+        $stock = 0,
+        $isFeatured = 0,
+        $status = 1,
+        $createdAt = null,
+        $updatedAt = null
+    ) {
+        $this->id = $id;
+        $this->categoryId = $categoryId;
+        $this->name = $name;
+        $this->slug = $slug;
+        $this->description = $description;
+        $this->shortDesc = $shortDesc;
+        $this->unit = $unit;
+        $this->price = $price;
+        $this->oldPrice = $oldPrice;
+        $this->image = $image;
+        $this->gallery = $gallery;
+        $this->stock = $stock;
+        $this->isFeatured = $isFeatured;
+        $this->status = $status;
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
+    }
+
+    // Getter và Setter cho id
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    // Getter và Setter cho categoryId
+    public function getCategoryId() {
+        return $this->categoryId;
+    }
+
+    public function setCategoryId($categoryId) {
+        $this->categoryId = $categoryId;
+    }
+
+    // Getter và Setter cho name
+    public function getName() {
+        return $this->name;
+    }
+
+    public function setName($name) {
+        $this->name = $name;
+    }
+
+    // Getter và Setter cho slug
+    public function getSlug() {
+        return $this->slug;
+    }
+
+    public function setSlug($slug) {
+        $this->slug = $slug;
+    }
+
+    // Getter và Setter cho description
+    public function getDescription() {
+        return $this->description;
+    }
+
+    public function setDescription($description) {
+        $this->description = $description;
+    }
+
+    // Getter và Setter cho shortDesc
+    public function getShortDesc() {
+        return $this->shortDesc;
+    }
+
+    public function setShortDesc($shortDesc) {
+        $this->shortDesc = $shortDesc;
+    }
+
+    // Getter và Setter cho unit
+    public function getUnit() {
+        return $this->unit;
+    }
+
+    public function setUnit($unit) {
+        $this->unit = $unit;
+    }
+
+    // Getter và Setter cho price
+    public function getPrice() {
+        return $this->price;
+    }
+
+    public function setPrice($price) {
+        if (is_numeric($price) && $price >= 0) {
+            $this->price = number_format((float)$price, 2, '.', '');
+        } else {
+            $this->price = 0.00; // Giá trị mặc định nếu không hợp lệ
+        }
+    }
+
+    // Getter và Setter cho oldPrice
+    public function getOldPrice() {
+        return $this->oldPrice;
+    }
+
+    public function setOldPrice($oldPrice) {
+        if (is_numeric($oldPrice) && $oldPrice >= 0) {
+            $this->oldPrice = number_format((float)$oldPrice, 2, '.', '');
+        } else {
+            $this->oldPrice = null; // Giá trị mặc định là NULL nếu không hợp lệ
+        }
+    }
+
+    // Getter và Setter cho image
+    public function getImage() {
+        return $this->image;
+    }
+
+    public function setImage($image) {
+        $this->image = $image;
+    }
+
+    // Getter và Setter cho gallery
+    public function getGallery() {
+        return $this->gallery;
+    }
+
+    public function setGallery($gallery) {
+        $this->gallery = $gallery;
+    }
+
+    // Getter và Setter cho stock
+    public function getStock() {
+        return $this->stock;
+    }
+
+    public function setStock($stock) {
+        if (is_numeric($stock) && $stock >= 0) {
+            $this->stock = (int)$stock;
+        } else {
+            $this->stock = 0; // Giá trị mặc định nếu không hợp lệ
+        }
+    }
+
+    // Getter và Setter cho isFeatured
+    public function getIsFeatured() {
+        return $this->isFeatured;
+    }
+
+    public function setIsFeatured($isFeatured) {
+        $this->isFeatured = (bool)$isFeatured;
+    }
+
+    // Getter và Setter cho status
+    public function getStatus() {
+        return $this->status;
+    }
+
+    public function setStatus($status) {
+        $this->status = (int)$status;
+    }
+
+    // Getter và Setter cho createdAt
+    public function getCreatedAt() {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt($createdAt) {
+        $this->createdAt = $createdAt;
+    }
+
+    // Getter và Setter cho updatedAt
+    public function getUpdatedAt() {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt($updatedAt) {
+        $this->updatedAt = $updatedAt;
+    }
     protected $table = "products";
 
     // Lấy tất cả sản phẩm

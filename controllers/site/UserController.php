@@ -210,6 +210,9 @@ class UserController extends Controller
                 );
 
                 if ($ok) {
+                    // Gửi email chào mừng
+                    $mailModel = $this->Model("MailModel");
+                    $emailSent = $mailModel->sendWelcomeEmail($data['email'], $data['name']);
                     // ✅ Lưu flash message vào session
                     session_start();
                     $_SESSION['success_message'] = 'Đăng ký thành công! Vui lòng đăng nhập.';

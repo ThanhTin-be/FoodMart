@@ -144,7 +144,6 @@ class CheckoutController extends Controller
         // ✅ Gọi model lưu đơn hàng
         $orderModel = $this->model('OrderModel');
         $orderId = $orderModel->createOrder($userId, $fullname, $phone, $address, $paymentMethod, $cart, $grand);
-        $orderId = $orderModel->createOrder($userId, $fullname, $phone, $address, $paymentMethod, $cart, $grand);
 
         if ($orderId) {
             // Giảm lượt dùng voucher (nếu có)

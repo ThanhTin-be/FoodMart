@@ -3,10 +3,88 @@ require_once ROOT . "core/database.php";
 require_once ROOT . "core/helpers.php"; // dùng generateSlug
 
 class CartModel extends Database {
-    public function __construct() {
-        parent::__construct();
-        $this->conn->set_charset('utf8');
+     private $id;
+    private $userId;
+    private $productId;
+    private $quantity;
+    private $createdAt;
+    private $updatedAt;
+
+    // Constructor
+    public function _construct(
+        $id = null,
+        $userId = null,
+        $productId = null,
+        $quantity = 1,
+        $createdAt = null,
+        $updatedAt = null
+    ) {
+        $this->id = $id;
+        $this->userId = $userId;
+        $this->productId = $productId;
+        $this->quantity = $quantity;
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
     }
+
+    // Getter và Setter cho id
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    // Getter và Setter cho userId
+    public function getUserId() {
+        return $this->userId;
+    }
+
+    public function setUserId($userId) {
+        $this->userId = $userId;
+    }
+
+    // Getter và Setter cho productId
+    public function getProductId() {
+        return $this->productId;
+    }
+
+    public function setProductId($productId) {
+        $this->productId = $productId;
+    }
+
+    // Getter và Setter cho quantity
+    public function getQuantity() {
+        return $this->quantity;
+    }
+
+    public function setQuantity($quantity) {
+        if ($quantity > 0) {
+            $this->quantity = $quantity;
+        } else {
+            $this->quantity = 1; // Giá trị mặc định nếu nhỏ hơn hoặc bằng 0
+        }
+    }
+
+    // Getter và Setter cho createdAt
+    public function getCreatedAt() {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt($createdAt) {
+        $this->createdAt = $createdAt;
+    }
+
+    // Getter và Setter cho updatedAt
+    public function getUpdatedAt() {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt($updatedAt) {
+        $this->updatedAt = $updatedAt;
+    }
+
 
     public function getCartByUserId($userId) {
         $stmt = $this->conn->prepare("
