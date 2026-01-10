@@ -35,12 +35,12 @@ Mô tả ngắn: FoodMartLab là một dự án mẫu cửa hàng thương mại
 Lưu ý: dữ liệu demo phụ thuộc vào file SQL import. Nếu tài khoản dưới đây không tồn tại, dùng script reset hoặc tạo thủ công trong bảng `customers`/`admin`.
 
 - Admin (mẫu):
-   - Email: `admin@example.com`
-   - Mật khẩu: `admin123` (nếu không có, dùng `scripts/reset_admin_password.php` để đặt lại)
+   - Email: `admin@demo.com`
+   - Mật khẩu: `123456` (nếu không có, dùng `scripts/reset_admin_password.php` để đặt lại)
 
 - Người dùng (mẫu):
-   - Email: `user@example.com`
-   - Mật khẩu: `user123`
+   - Email: `user@demo.com`
+   - Mật khẩu: `123456`
 
 Hướng dẫn reset nhanh (ví dụ):
 1. Mở trình duyệt tới `http://localhost/FoodMartLab/scripts/reset_admin_password.php`.
@@ -74,3 +74,4 @@ Nếu bạn muốn, tôi có thể:
 README đã được cập nhật.
 
  
+
